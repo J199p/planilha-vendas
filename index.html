@@ -2,122 +2,149 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLANILHA GESTÃO - L. Shaday</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>body{font-family:system-ui;background:#f1f4f2;margin:0}*{box-sizing:border-box}.no-scrollbar::-webkit-scrollbar{display:none}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#087f3f">
+<meta name="description" content="Planilha de gestão de vendas de gás e água - El Shaday Gás e Água">
+<title>EL SHADAY GÁS E ÁGUA - Gestão de Vendas</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--verde:#087f3f;--verde2:#0a9b50;--azul:#1557a6;--vermelho:#d92727;--laranja:#ef7d00;--roxo:#7b1fa2;--cinza:#657c89;--teal:#00897b;--fundo:#eef3f0;--texto:#17251d;--branco:#fff;--borda:#ddd}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:var(--fundo);color:var(--texto);min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+header{background:var(--verde);color:#fff;padding:16px 10px;position:sticky;top:0;z-index:20;text-align:center;box-shadow:0 2px 8px #0003}
+header h1{font-size:20px;font-weight:900}
+nav{display:flex;gap:6px;overflow-x:auto;background:#fff;padding:8px;position:sticky;top:62px;z-index:19;border-bottom:1px solid #ddd;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{background:#e7eee9;color:#14562f;padding:10px 13px;border-radius:10px;font-weight:bold;white-space:nowrap;font-size:13px}
+nav button.active{background:var(--verde);color:#fff}
+main{max-width:1200px;margin:auto;padding:10px}
+.tela{display:none}
+.tela.active{display:block}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px #0001}
+h2{font-size:17px;margin-bottom:10px}
+h3{font-size:15px;margin-bottom:8px}
+.grid{display:grid;gap:10px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+label{display:block;font-weight:bold;font-size:12px;margin:6px 0 4px}
+input,select{width:100%;padding:11px;border:2px solid #aaa;border-radius:10px;background:#fff;outline:none}
+input:focus,select:focus{border-color:var(--verde)}
+.btn{padding:10px 13px;border-radius:10px;color:#fff;font-weight:bold;margin:3px;font-size:13px}
+.btn:hover{opacity:.9}
+.green{background:var(--verde)}.blue{background:var(--azul)}.red{background:var(--vermelho)}.purple{background:var(--roxo)}.orange{background:var(--laranja)}.gray{background:var(--cinza)}.black{background:#111}.teal{background:var(--teal)}.zap{background:#25D366}
+.acoes{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.stat{color:#fff;padding:13px;border-radius:13px;min-height:80px;box-shadow:0 2px 7px #0002}
+.stat small{font-weight:bold;font-size:11px}
+.stat strong{display:block;font-size:21px;margin-top:6px}
+.sblue{background:var(--azul)}.sgreen{background:var(--verde)}.sred{background:var(--vermelho)}.spurple{background:var(--roxo)}.sorange{background:var(--laranja)}.steal{background:var(--teal)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left;vertical-align:middle}
+th{background:#204574;color:#fff;position:sticky;top:0;z-index:1}
+.tabela{overflow:auto;max-height:500px}
+.estoque{border:2px solid #244f83;border-radius:12px;padding:12px 8px;text-align:center;background:#fafdff}
+.estoque b{display:block;font-size:25px;margin:6px}
+.badge{display:inline-block;padding:4px 7px;border-radius:20px;font-size:10px;font-weight:bold}
+.pendente{background:#fff0bd;color:#805500}.vencida{background:#ffd7d7;color:#a00000}.paga{background:#d6f5dc;color:#126b2e}.parcial{background:#dbeafe;color:#1e40af}.fechada{background:#e5e7eb;color:#374151}
+.vazio{text-align:center;color:#777;padding:20px}
+.info{background:#f1f8f4;border-left:4px solid var(--verde);padding:10px;border-radius:8px;margin:10px 0;font-size:12px}
+#toast{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:11px 16px;border-radius:10px;z-index:99;font-weight:bold;font-size:13px;box-shadow:0 4px 15px #0004}
+.botoes-folha{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.btn-folha{border:2px solid #000;border-radius:12px;padding:16px;color:#fff;font-weight:900;font-size:15px}
+.relatorioDia{border:2px dashed var(--verde);border-radius:12px;padding:10px;margin:10px 0;background:#f6fffa}
+.relItem{border:1px solid #ddd;padding:9px;border-radius:8px;margin:5px 0;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:11px;background:#fff;gap:8px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal.active{display:flex}
+.modalBox{background:#fff;border-radius:14px;padding:20px;max-width:420px;width:100%;box-shadow:0 10px 40px #0005}
+.resumo-box{line-height:1.8;font-size:13px}
+.total-destaque{font-size:22px;font-weight:900;color:var(--verde)}
+.mini{font-size:11px;color:#666}
+@media(max-width:700px){header h1{font-size:17px}nav{top:56px}main{padding:8px}.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}table{font-size:12px}th,td{padding:7px}.btn{font-size:12px;padding:9px 11px}}
+</style>
 </head>
 <body>
-<header class="bg-[#0F5132] text-white text-center py-3 sticky top-0 z-50">
-<div class="font-black text-[18px]">🔥 PLANILHA GESTÃO DE VENDAS 💧</div>
+<header>
+  <h1>🔥 PLANILHA GESTÃO DE VENDAS 💧</h1>
 </header>
-<div class="max-w-[420px] mx-auto p-3 pb-24">
-<div class="flex gap-2 overflow-x-auto py-2 no-scrollbar">
-<button onclick="showTab('d')" id="btn-d" class="px-4 py-2 rounded-full bg-[#0F5132] text-white text-xs font-bold">📊 Dashboard</button>
-<button onclick="showTab('c')" id="btn-c" class="px-4 py-2 rounded-full bg-white text-xs font-bold">👤 Clientes</button>
-<button onclick="showTab('v')" id="btn-v" class="px-4 py-2 rounded-full bg-white text-xs font-bold">🛒 Vendas</button>
-<button onclick="showTab('r')" id="btn-r" class="px-4 py-2 rounded-full bg-white text-xs font-bold">💰 Receber</button>
-<button onclick="showTab('e')" id="btn-e" class="px-4 py-2 rounded-full bg-white text-xs font-bold">📦 Estoque</button>
-<button onclick="showTab('p')" id="btn-p" class="px-4 py-2 rounded-full bg-white text-xs font-bold">✏️ Produtos</button>
-<button onclick="showTab('f')" id="btn-f" class="px-4 py-2 rounded-full bg-white text-xs font-bold">📅 Fechar Mês</button>
-</div>
-
-<div id="tab-d">
-<div class="grid grid-cols-2 gap-2 mt-2">
-<div class="bg-[#15803D] text-white rounded-2xl p-3"><div class="text-[10px]">VENDAS MÊS</div><div id="vMes" class="text-lg font-black">R$ 0,00</div></div>
-<div class="bg-[#1D4ED8] text-white rounded-2xl p-3"><div class="text-[10px]">A RECEBER</div><div id="vRec" class="text-lg font-black">R$ 0,00</div></div>
-<div class="bg-[#DC2626] text-white rounded-2xl p-3"><div class="text-[10px]">DESPESAS</div><div id="vDesp" class="text-lg font-black">R$ 0,00</div></div>
-<div class="bg-[#EA580C] text-white rounded-2xl p-3"><div class="text-[10px]">LUCRO</div><div id="vLucro" class="text-lg font-black">R$ 0,00</div></div>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-sm">📦 Estoque Atual</div><div class="grid grid-cols-2 gap-2 mt-3"><div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">GÁS CHEIO</div><div id="eGas" class="text-2xl font-black">200</div></div><div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">ÁGUA CHEIA</div><div id="eAgua" class="text-2xl font-black">80</div></div></div><button onclick="showTab('e')" class="w-full mt-3 bg-[#0F5132] text-white py-2 rounded-full text-xs font-bold">GERENCIAR ESTOQUE</button></div>
-<div class="bg-white rounded-2xl p-4 mt-3"><div class="flex justify-between"><span class="font-bold text-xs">Últimas vendas</span><button onclick="baixarPDF()" class="bg-green-600 text-white px-3 py-1 rounded-full text-[10px]">PDF</button></div><div id="lvDash" class="mt-2"></div></div>
-</div>
-
-<div id="tab-v" class="hidden">
-<div class="bg-white rounded-2xl p-4 mt-2">
-<div class="font-bold text-sm mb-3">Registrar nova venda</div>
-<select id="selCli" class="w-full border rounded-xl p-3 mb-3 text-sm bg-gray-50"></select>
-<div class="grid grid-cols-5 gap-2 mb-3">
-<div class="col-span-3"><label class="text-[10px] font-bold">Produto</label><select id="selProd" class="w-full border rounded-xl p-3 text-sm bg-gray-50" onchange="changeProd()"></select></div>
-<div class="col-span-2"><label class="text-[10px] font-bold">Qtd</label><input id="inpQtd" type="number" value="1" min="1" class="w-full border rounded-xl p-3 text-center font-bold text-lg" oninput="calc()"></div>
-</div>
-<div class="grid grid-cols-2 gap-2 mb-3">
-<div><label class="text-[10px] font-bold">Valor unt R$</label><input id="inpUnit" type="number" value="110" class="w-full border-2 border-orange-200 rounded-xl p-3 text-sm font-bold bg-orange-50" oninput="calc()"></div>
-<div class="bg-green-50 border border-green-100 rounded-xl p-3 flex flex-col justify-center"><span class="text-[10px] font-bold text-green-800">TOTAL AUTOMÁTICO</span><span id="txtTotal" class="font-black text-green-900 text-[18px]">R$ 110,00</span></div>
-</div>
-<div class="space-y-2 mb-3">
-<label class="flex items-center gap-2 p-3 border-2 rounded-xl bg-green-50 border-green-700"><input type="radio" name="tp" value="avista" checked onchange="showMisto()"><span class="text-sm font-bold flex-1">💰 À VISTA</span><span class="flex gap-2 text-xs"><label><input type="radio" name="av" value="din" checked> Din</label><label><input type="radio" name="av" value="pix"> Pix</label></span></label>
-<label class="flex items-center gap-2 p-3 border rounded-xl"><input type="radio" name="tp" value="prazo" onchange="showMisto()"><span class="text-sm font-bold">📝 A PRAZO</span></label>
-<label class="flex items-center gap-2 p-3 border rounded-xl bg-orange-50"><input type="radio" name="tp" value="misto" onchange="showMisto()"><span class="text-sm font-bold">💰🤝 MISTO</span></label>
-</div>
-<div id="boxMisto" class="hidden bg-orange-50 border border-orange-200 rounded-xl p-3 mb-3">
-<div class="grid grid-cols-2 gap-2"><div><div class="text-[10px]">Dinheiro R$</div><input id="inpDin" type="number" value="0" class="w-full border rounded-lg p-2" oninput="calcM()"></div><div><div class="text-[10px]">Pix R$</div><input id="inpPix" type="number" value="0" class="w-full border rounded-lg p-2" oninput="calcM()"></div></div>
-<div id="txtMisto" class="text-xs font-bold mt-2 bg-white rounded-full px-3 py-2">Fiado: R$ 110,00</div>
-</div>
-<button onclick="registrar()" class="w-full bg-[#0F3D2E] text-white py-4 rounded-full font-black text-[16px]">REGISTRAR VENDA</button>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-xs mb-2">Últimas vendas</div><div id="lv" class="space-y-2"></div></div>
-</div>
-
-<div id="tab-c" class="hidden"><div class="bg-white rounded-2xl p-4 mt-2"><input id="nomeC" placeholder="Nome" class="w-full border rounded-xl p-3 mb-2 text-sm"><input id="foneC" placeholder="WhatsApp" class="w-full border rounded-xl p-3 mb-2 text-sm"><button onclick="addCli()" class="w-full bg-[#0F5132] text-white py-3 rounded-full font-bold text-sm">Salvar cliente</button></div><div id="lc" class="mt-3 space-y-2"></div></div>
-<div id="tab-r" class="hidden"><div class="bg-[#1D4ED8] text-white rounded-2xl p-4 mt-2"><div class="text-xs">TOTAL A RECEBER</div><div id="totRec" class="text-2xl font-black">R$ 0,00</div></div><div id="lr" class="mt-3 space-y-2"></div></div>
-
-<div id="tab-e" class="hidden">
-<div class="bg-white rounded-2xl p-5 mt-2 text-center"><div class="text-sm font-bold">Estoque Principal</div><div id="eGas2" class="text-[60px] font-black text-[#0F5132]">200</div><div class="flex justify-center gap-3 mt-4"><button onclick="mudaEst(-1)" class="bg-red-100 text-red-600 w-14 h-14 rounded-full font-black">-1</button><button onclick="mudaEst(1)" class="bg-green-100 text-green-600 w-14 h-14 rounded-full font-black">+1</button></div></div>
-<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-sm">📦 Estoque 3 Bases</div><div class="grid grid-cols-3 gap-2 mt-3"><div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">TABULEIRO</div><div id="estB1" class="text-xl font-black">0</div></div><div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">STA LÚCIA</div><div id="estB2" class="text-xl font-black">0</div></div><div class="bg-orange-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">BENEDITO</div><div id="estB3" class="text-xl font-black">0</div></div></div><div class="text-[10px] text-center mt-2">Total: <span id="totalBases">0</span> gás</div></div>
-<div class="bg-white rounded-2xl p-4 mt-3"><select id="selTransBase" class="w-full border-2 border-blue-200 rounded-xl p-3 bg-blue-50 font-bold"></select><div class="grid grid-cols-2 gap-2 mt-2"><div><label class="text-[10px] font-bold">Qtd transferir</label><input id="qtdTrans" type="number" value="10" class="w-full border rounded-xl p-3 text-center font-black text-lg" oninput="updateApos()"></div><div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[10px] font-bold">APÓS</div><div id="estApos" class="font-black text-lg">190</div></div></div><button onclick="transferir()" class="w-full bg-[#1D4ED8] text-white py-4 rounded-full font-black text-sm mt-3">🔄 TRANSFERIR</button></div>
-<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-xs">Histórico Transferências</div><div id="listaTrans" class="mt-2 space-y-2"></div></div>
-<div class="mt-3 flex gap-2"><button onclick="fBackup()" class="flex-1 bg-slate-800 text-white py-3 rounded-full text-xs font-bold">⬇️ BACKUP</button><button onclick="document.getElementById('fileImp').click()" class="flex-1 bg-white border py-3 rounded-full text-xs font-bold">⬆️ RESTAURAR</button><input type="file" id="fileImp" class="hidden" onchange="fRestore(event)"></div>
-</div>
-
-<div id="tab-p" class="hidden"><div class="bg-white rounded-2xl p-4 mt-2"><div class="font-bold text-sm">✏️ Produtos</div><div class="grid grid-cols-2 gap-2 mt-3"><div class="bg-green-50 rounded-xl p-3"><div class="text-[10px] font-bold">Gás R$</div><input id="pGas" type="number" value="110" class="w-full border rounded-lg p-3 mt-1 font-bold" oninput="salvaProd()"></div><div class="bg-blue-50 rounded-xl p-3"><div class="text-[10px] font-bold">Água R$</div><input id="pAgua" type="number" value="10" class="w-full border rounded-lg p-3 mt-1 font-bold" oninput="salvaProd()"></div></div></div></div>
-
-<div id="tab-f" class="hidden"><div class="bg-white rounded-2xl p-4 mt-2"><div class="font-bold text-sm">📅 Fechar Mês</div><div class="grid grid-cols-2 gap-2 mt-3"><div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">HOJE</div><div id="vHoje" class="text-lg font-black">R$ 0,00</div></div><div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">MÊS</div><div id="vMes2" class="text-lg font-black">R$ 0,00</div></div></div><button onclick="zerarMes()" class="w-full mt-3 bg-red-600 text-white py-3 rounded-full font-bold text-xs">🗑️ ZERAR TUDO</button></div></div>
-
-</div>
+<nav>
+  <button class="active" onclick="abrir('dashboard',this)">📊 Dashboard</button>
+  <button onclick="abrir('clientes',this)">👤 Clientes</button>
+  <button onclick="abrir('vendas',this)">🛒 Vendas</button>
+  <button onclick="abrir('receber',this)">💰 Receber</button>
+  <button onclick="abrir('estoque',this)">📦 Estoque</button>
+  <button onclick="abrir('despesas',this)">💸 Despesas</button>
+  <button onclick="abrir('mes',this)">📅 Mês</button>
+  <button onclick="abrir('backup',this)">💾 Backup</button>
+</nav>
+<main>
+<section id="dashboard" class="tela active">
+  <div class="grid g4" id="dashboardStats"></div>
+  <div class="grid g2">
+    <div class="card"><h2>💰 Resumo financeiro</h2><div id="financeiro"></div></div>
+    <div class="card"><h2>📦 Estoque atual</h2><div class="grid g2" id="estoqueResumo"></div></div>
+  </div>
+  <div class="card"><h2>🛒 Últimas vendas</h2><div class="tabela"><table><thead><tr><th>Data</th><th>Cliente</th><th>Produto</th><th>Total</th><th>Status</th></tr></thead><tbody id="ultimasVendas"></tbody></table></div></div>
+</section>
+<section id="clientes" class="tela">
+  <div class="card"><h2>👤 Cadastrar Cliente</h2><form id="formCliente"><input type="hidden" id="clienteId"><div class="grid g2"><div><label>Nome *</label><input id="clienteNome" required></div><div><label>WhatsApp *</label><input id="clienteWhatsApp" required placeholder="(82) 99999-9999"></div><div><label>Endereço</label><input id="clienteEndereco"></div><div><label>Bairro</label><input id="clienteBairro"></div><div><label>Cidade</label><input id="clienteCidade" value="Maceió"></div><div><label>Observações</label><input id="clienteObs"></div></div><div class="acoes"><button class="btn green" type="submit">💾 Salvar</button><button class="btn gray" type="button" onclick="limparCliente()">Limpar</button></div></form></div>
+  <div class="card"><h2>🔎 Clientes cadastrados</h2><input id="buscaCliente" placeholder="Buscar nome ou telefone..." oninput="mostrarClientes()"><br><br><div class="tabela"><table><thead><tr><th>Cliente</th><th>WhatsApp</th><th>Endereço</th><th>Débito</th><th>Ações</th></tr></thead><tbody id="listaClientes"></tbody></table></div></div>
+</section>
+<section id="vendas" class="tela">
+  <div class="card"><h2>🛒 Registrar Venda</h2><form id="formVenda"><div class="grid g3"><div><label>Cliente</label><select id="vendaCliente"></select></div><div><label>Produto</label><select id="vendaProduto"><option value="Gás">Gás</option><option value="Água">Água</option><option value="Outro">Outro</option></select></div><div><label>Quantidade</label><input id="vendaQuantidade" type="number" min="1" value="1"></div><div><label>Valor unitário R$</label><input id="vendaValor" type="number" min="0" step="0.01" value="120"></div><div><label>Data</label><input id="vendaData" type="date"></div><div><label>Pagamento</label><select id="vendaPagamento"><option value="PIX">PIX</option><option value="DINHEIRO">Dinheiro</option><option value="CARTAO">Cartão</option><option value="FIADO">Fiado</option></select></div><div><label>Vencimento</label><input id="vendaVencimento" type="date"></div><div><label>Observação</label><input id="vendaObs"></div></div><div class="acoes"><button class="btn green" type="submit">🛒 Registrar Venda</button><button class="btn gray" type="button" onclick="limparVenda()">Limpar</button></div></form><div class="botoes-folha"><button class="btn-folha green" onclick="addVendaRapida()">+1 VENDA</button><button class="btn-folha red" onclick="removerUltimaVenda()">-1 VENDA</button></div><div class="info">📒 <b>Folha do dia:</b> use +1 Venda para registrar rapidamente.</div></div>
+  <div class="card"><h2>📋 Vendas de Hoje</h2><div class="tabela"><table><thead><tr><th>Data</th><th>Cliente</th><th>Prod.</th><th>Qtd.</th><th>Total</th><th>Pag.</th><th>Status</th><th>Ação</th></tr></thead><tbody id="listaVendas"></tbody></table></div><div class="acoes"><button class="btn teal" onclick="zerarDia()">✅ ZERAR DIA</button><button class="btn blue" onclick="compartilharMes()">📲 WhatsApp MÊS</button></div></div>
+  <div class="card"><div class="relatorioDia"><h2>📅 Dias fechados</h2><div id="listaDiasZerados">Nenhum dia fechado ainda.</div></div></div>
+</section>
+<section id="receber" class="tela">
+  <div class="grid g4" id="receberStats"></div>
+  <div class="card"><h2>💰 Contas a Receber</h2><div class="info">📲 <b>Zap</b> envia cobrança. 💵 <b>50%</b> metade. 🧩 <b>Pedaço</b> qualquer valor. ✅ <b>Total</b> quita.</div><input id="buscaReceber" placeholder="Buscar cliente..." oninput="mostrarReceber()"><br><br><div class="tabela"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Original</th><th>Pendente</th><th>Status</th><th>Ações</th></tr></thead><tbody id="listaReceber"></tbody></table></div></div>
+</section>
+<section id="estoque" class="tela">
+  <div class="card"><h2>📦 Estoque</h2><div class="grid g4" id="estoqueCards"></div></div>
+  <div class="card"><h2>⚙️ Ajustar Estoque</h2><div class="grid g3"><div><label>Produto</label><select id="estoqueProduto"><option value="gasCheio">Gás cheio</option><option value="gasVazio">Gás vazio</option><option value="aguaCheia">Água cheia</option><option value="aguaVazia">Água vazia</option></select></div><div><label>Quantidade</label><input id="estoqueQuantidade" type="number" min="1" value="1"></div><div><label>Operação</label><select id="estoqueOperacao"><option value="entrada">Entrada</option><option value="saida">Saída</option></select></div></div><div class="acoes"><button class="btn green" onclick="ajustarEstoque()">💾 Salvar</button></div></div>
+</section>
+<section id="despesas" class="tela">
+  <div class="card"><h2>💸 Registrar Despesa</h2><form id="formDespesa"><div class="grid g3"><div><label>Valor R$</label><input id="despesaValor" type="number" step="0.01" min="0" required></div><div><label>Data</label><input id="despesaData" type="date"></div><div><label>Motivo</label><input id="despesaMotivo" required></div></div><div class="acoes"><button class="btn red" type="submit">💸 Registrar</button></div></form></div>
+  <div class="card"><h2>📋 Histórico de Despesas</h2><div class="tabela"><table><thead><tr><th>Data</th><th>Motivo</th><th>Valor</th><th>Ação</th></tr></thead><tbody id="listaDespesas"></tbody></table></div></div>
+</section>
+<section id="mes" class="tela">
+  <div class="card"><h2>📅 Acumulado Mensal</h2><label>Selecionar mês</label><input id="mesSelecionado" type="month" onchange="mostrarMes()"><br><br><div class="grid g4" id="mesStats"></div></div>
+  <div class="card"><h2>📊 Resumo do Mês</h2><div class="tabela"><table><tbody id="resumoMes"></tbody></table></div><div class="acoes"><button class="btn green" onclick="compartilharMes()">📲 WhatsApp MÊS</button><button class="btn teal" onclick="zerarDia()">✅ ZERAR DIA</button><button class="btn red" onclick="fecharMes()">🔒 FECHAR MÊS</button></div></div>
+  <div class="card"><h2>📅 Dias fechados no mês</h2><div id="listaDiasMes">Nenhum dia.</div></div>
+</section>
+<section id="backup" class="tela">
+  <div class="card"><h2>💾 Backup e Segurança</h2><div class="info">O backup salva clientes, vendas, despesas, estoque e histórico dos dias fechados.</div><div class="acoes"><button class="btn blue" onclick="baixarBackup()">💾 Baixar Backup</button><label class="btn purple" style="display:inline-block;cursor:pointer">📂 Restaurar Backup<input type="file" id="arquivoBackup" accept=".json" hidden></label><button class="btn red" onclick="apagarTudo()">🗑️ Apagar Tudo</button></div></div>
+</section>
+</main>
+<div id="modalParcial" class="modal" onclick="if(event.target===this)fecharModal()"><div class="modalBox"><h2>💰 Receber em pedaços</h2><p id="modalInfo" style="margin:10px 0;font-size:13px"></p><label>Quanto recebeu agora? R$</label><input id="modalValor" type="number" min="0" step="0.01" placeholder="Ex.: 50"><div class="acoes"><button class="btn green" onclick="confirmarParcial()">✅ Confirmar</button><button class="btn gray" onclick="fecharModal()">Cancelar</button></div></div></div>
+<div id="toast"></div>
 <script>
-let clientes=JSON.parse(localStorage.getItem('gc_cli')||'[{"nome":"Base Tabuleiro","fone":"81999999999"},{"nome":"Base Santa Lúcia","fone":"81988888888"},{"nome":"Base Benedito","fone":"81977777777"}]');
-let vendas=JSON.parse(localStorage.getItem('gc_vendas')||'[]');
-let produtos=JSON.parse(localStorage.getItem('gc_prod')||'[{"nome":"Gás P13","preco":110},{"nome":"Água 20L","preco":10}]');
-let estoque=parseInt(localStorage.getItem('gc_est')||'200');
-let estoqueBases=JSON.parse(localStorage.getItem('gc_est_bases')||'{"Base Tabuleiro":0,"Base Santa Lúcia":0,"Base Benedito":0}');
-let transacoes=JSON.parse(localStorage.getItem('gc_trans')||'[]');
-function save(){localStorage.setItem('gc_cli',JSON.stringify(clientes));localStorage.setItem('gc_vendas',JSON.stringify(vendas));localStorage.setItem('gc_prod',JSON.stringify(produtos));localStorage.setItem('gc_est',String(estoque));localStorage.setItem('gc_est_bases',JSON.stringify(estoqueBases));localStorage.setItem('gc_trans',JSON.stringify(transacoes));}
-function showTab(t){['d','c','v','r','e','p','f'].forEach(x=>{document.getElementById('tab-'+x).classList.add('hidden');document.getElementById('btn-'+x).classList.remove('bg-[#0F5132]','text-white');document.getElementById('btn-'+x).classList.add('bg-white');});document.getElementById('tab-'+t).classList.remove('hidden');document.getElementById('btn-'+t).classList.add('bg-[#0F5132]','text-white');}
-function changeProd(){let sel=document.getElementById('selProd');if(!sel.options.length)return;let preco=parseFloat(sel.options[sel.selectedIndex].dataset.preco)||0;document.getElementById('inpUnit').value=preco;calc();}
-function calc(){let unit=parseFloat(document.getElementById('inpUnit').value)||0;let qtd=parseInt(document.getElementById('inpQtd').value)||0;let tot=qtd*unit;document.getElementById('txtTotal').innerText='R$ '+tot.toFixed(2).replace('.',',');calcM();return tot;}
-function showMisto(){let tp=document.querySelector('input[name="tp"]:checked').value;document.getElementById('boxMisto').classList.toggle('hidden',tp!=='misto');}
-function calcM(){let unit=parseFloat(document.getElementById('inpUnit').value)||0;let qtd=parseInt(document.getElementById('inpQtd').value)||0;let tot=qtd*unit;let d=parseFloat(document.getElementById('inpDin').value)||0;let p=parseFloat(document.getElementById('inpPix').value)||0;let f=Math.max(0,tot-d-p);document.getElementById('txtMisto').innerText='Fiado: R$ '+f.toFixed(2)+' | Dinheiro R$ '+d.toFixed(2)+' + Pix R$ '+p.toFixed(2);}
-function registrar(){try{let cli=document.getElementById('selCli').value||'Cliente';let prod=document.getElementById('selProd').value||'Gás P13';let qtd=parseInt(document.getElementById('inpQtd').value)||1;let unit=parseFloat(document.getElementById('inpUnit').value)||0;let tot=qtd*unit;if(tot<=0){alert('Total R$ 0,00 - verifique Qtd e Valor');return;}let tp=document.querySelector('input[name="tp"]:checked').value;let din=0,pix=0,fiado=0,status='PAGO';if(tp==='avista'){let av=document.querySelector('input[name="av"]:checked').value;if(av==='din')din=tot;else pix=tot;}else if(tp==='prazo'){fiado=tot;status='FIADO';}else{let d=parseFloat(document.getElementById('inpDin').value)||0;let p=parseFloat(document.getElementById('inpPix').value)||0;let f=Math.max(0,tot-d-p);din=d;pix=p;fiado=f;status=fiado>0?'MISTO':'PAGO';}vendas.unshift({id:Date.now(),cliente:cli,produto:prod,qtd,unit,total:tot,dinheiro:din,pix,fiado,status,data:new Date().toLocaleDateString()});estoque-=qtd;if(estoque<0)estoque=0;save();render();}catch(e){alert('Erro: '+e.message);}}
-function addCli(){let n=document.getElementById('nomeC').value.trim();let f=document.getElementById('foneC').value.trim();if(!n)return;clientes.push({nome:n,fone:f});document.getElementById('nomeC').value='';document.getElementById('foneC').value='';save();render();}
-function mudaEst(v){estoque+=v;if(estoque<0)estoque=0;save();render();}
-function updateApos(){let q=parseInt(document.getElementById('qtdTrans').value)||0;document.getElementById('estApos').innerText=estoque-q;}
-function transferir(){let base=document.getElementById('selTransBase').value;let q=parseInt(document.getElementById('qtdTrans').value)||0;if(q<=0||q>estoque){alert('Qtd inválida');return;}estoque-=q;estoqueBases[base]=(estoqueBases[base]||0)+q;transacoes.unshift({base,q,data:new Date().toLocaleDateString()});save();render();}
-function delVenda(id){if(!confirm('Apagar?'))return;vendas=vendas.filter(v=>v.id!=id);save();render();}
-function zerarMes(){if(!confirm('ZERAR TUDO?'))return;vendas=[];transacoes=[];estoque=200;estoqueBases={"Base Tabuleiro":0,"Base Santa Lúcia":0,"Base Benedito":0};save();render();}
-function salvaProd(){let g=parseFloat(document.getElementById('pGas').value)||110;let a=parseFloat(document.getElementById('pAgua').value)||10;produtos=[{nome:'Gás P13',preco:g},{nome:'Água 20L',preco:a}];save();render();}
-function fBackup(){let blob=new Blob([JSON.stringify({clientes,vendas,produtos,estoque,estoqueBases,transacoes})],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup-lshaday.json';a.click();}
-function fRestore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>{try{let d=JSON.parse(ev.target.result);clientes=d.clientes||clientes;vendas=d.vendas||vendas;produtos=d.produtos||produtos;estoque=d.estoque||estoque;estoqueBases=d.estoqueBases||estoqueBases;transacoes=d.transacoes||[];save();render();alert('Restaurado!');}catch{alert('Arquivo inválido');}};r.readAsText(f);}
-function baixarPDF(){let txt='VENDAS L SHADAY\n';vendas.forEach(v=>{txt+=`${v.cliente} - ${v.produto} x${v.qtd} - Total R$${v.total} - ${v.status} - ${v.data}\n`;});let b=new Blob([txt],{type:'text/plain'});let a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='vendas.txt';a.click();}
-function render(){
-document.getElementById('selProd').innerHTML=produtos.map(p=>`<option value="${p.nome}" data-preco="${p.preco}">${p.nome} - R$${p.preco}</option>`).join('');
-document.getElementById('selCli').innerHTML=clientes.map(c=>`<option value="${c.nome}">${c.nome}</option>`).join('');
-document.getElementById('selTransBase').innerHTML=['Base Tabuleiro','Base Santa Lúcia','Base Benedito'].map(n=>`<option value="${n}">${n}</option>`).join('');
-let htmlV=vendas.map(v=>`<div class="border rounded-xl p-3 bg-white"><div class="flex justify-between"><div class="font-bold text-xs">${v.cliente} • ${v.produto} x${v.qtd} (R$${v.unit})</div><button onclick="delVenda(${v.id})" class="text-red-500 font-bold">X</button></div><div class="text-[11px] mt-1">${v.dinheiro>0?'💵 Din R$'+v.dinheiro+' ':''}${v.pix>0?'📱 Pix R$'+v.pix+' ':''}${v.fiado>0?'🟠 Fiado R$'+v.fiado:''}</div><div class="text-[9px] text-gray-400">Total R$ ${v.total.toFixed(2)} • ${v.status} • ${v.data}</div></div>`).join('')||'<div class="text-center text-gray-400 text-xs py-6">Nenhuma venda ainda</div>';
-document.getElementById('lv').innerHTML=htmlV;
-document.getElementById('lvDash').innerHTML=htmlV;
-document.getElementById('lc').innerHTML=clientes.map(c=>`<div class="bg-white rounded-xl p-3 flex justify-between text-xs"><span class="font-bold">${c.nome}</span><span>${c.fone}</span></div>`).join('');
-let totRec=vendas.reduce((s,v)=>s+v.fiado,0);let totV=vendas.reduce((s,v)=>s+v.total,0);
-document.getElementById('vMes').innerText='R$ '+totV.toFixed(2);document.getElementById('vMes2').innerText='R$ '+totV.toFixed(2);document.getElementById('vRec').innerText='R$ '+totRec.toFixed(2);document.getElementById('totRec').innerText='R$ '+totRec.toFixed(2);document.getElementById('vLucro').innerText='R$ '+totV.toFixed(2);
-let hoje=new Date().toLocaleDateString();let vHoje=vendas.filter(v=>v.data===hoje).reduce((s,v)=>s+v.total,0);document.getElementById('vHoje').innerText='R$ '+vHoje.toFixed(2);
-document.getElementById('eGas').innerText=estoque;document.getElementById('eGas2').innerText=estoque;document.getElementById('eAgua').innerText='80';
-document.getElementById('estB1').innerText=estoqueBases['Base Tabuleiro']||0;document.getElementById('estB2').innerText=estoqueBases['Base Santa Lúcia']||0;document.getElementById('estB3').innerText=estoqueBases['Base Benedito']||0;
-document.getElementById('totalBases').innerText=(estoqueBases['Base Tabuleiro']||0)+(estoqueBases['Base Santa Lúcia']||0)+(estoqueBases['Base Benedito']||0);
-document.getElementById('listaTrans').innerHTML=transacoes.map(t=>`<div class="border rounded-xl p-2 text-xs bg-white">${t.q} gás → ${t.base} - ${t.data}</div>`).join('')||'<div class="text-xs text-gray-400">Nenhuma transferência</div>';
-document.getElementById('lr').innerHTML=vendas.filter(v=>v.fiado>0).map(v=>`<div class="bg-white rounded-xl p-3"><div class="font-bold text-xs">${v.cliente} - R$ ${v.fiado.toFixed(2)}</div><div class="text-[10px]">${v.produto} x${v.qtd} - ${v.data}</div><button onclick="let val=prompt('Quanto recebeu?');if(val){let n=parseFloat(val);v.fiado-=n;if(v.fiado<0)v.fiado=0;if(v.fiado==0)v.status='PAGO';save();render();}" class="mt-2 bg-green-600 text-white px-3 py-1 rounded-full text-xs">Receber</button></div>`).join('')||'<div class="text-xs text-center py-4 text-gray-400">Nenhum a receber</div>';
-calc();updateApos();
-}
-render();showTab('d');
-</script>
-</body>
-</html>
+const CHAVE="EL_SHADAY_GESTAO_FINAL_V4",CHAVE_Z="EL_SHADAY_DIAS_FECHADOS_V4",CHAVE_M="EL_SHADAY_MESES_FECHADOS_V4";
+let banco=null,diasZerados=[],mesesFechados=[];
+try{banco=JSON.parse(localStorage.getItem(CHAVE))}catch(e){banco=null}
+try{diasZerados=JSON.parse(localStorage.getItem(CHAVE_Z))||[]}catch(e){diasZerados=[]}
+try{mesesFechados=JSON.parse(localStorage.getItem(CHAVE_M))||[]}catch(e){mesesFechados=[]}
+if(!banco){banco={clientes:[],vendas:[],despesas:[],estoque:{gasCheio:200,gasVazio:0,aguaCheia:150,aguaVazia:0}}}
+function salvar(){localStorage.setItem(CHAVE,JSON.stringify(banco));localStorage.setItem(CHAVE_Z,JSON.stringify(diasZerados));localStorage.setItem(CHAVE_M,JSON.stringify(mesesFechados));atualizarTudo()}
+function hoje(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function mesAtual(){return hoje().slice(0,7)}
+function dinheiro(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function dataBR(d){if(!d)return"-";const p=d.split("-");if(p.length!==3)return d;return p[2]+"/"+p[1]+"/"+p[0]}
+function escapar(t){const d=document.createElement("div");d.textContent=t==null?"":String(t);return d.innerHTML}
+function idNovo(){return Date.now().toString(36)+Math.random().toString(36).substr(2,7)}
+function aviso(t){const el=document.getElementById("toast");el.textContent=t;el.style.display="block";clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(function(){el.style.display="none"},2500)}
+function abrir(id,btn){document.querySelectorAll(".tela").forEach(function(x){x.classList.remove("active")});const tela=document.getElementById(id);if(tela)tela.classList.add("active");document.querySelectorAll("nav button").forEach(function(x){x.classList.remove("active")});if(btn)btn.classList.add("active");atualizarTudo()}
+function getCliente(id){return banco.clientes.find(function(x){return x.id===id})}
+function nomeCliente(id){const c=getCliente(id);return c?c.nome:"Consumidor"}
+function limparTel(t){return String(t||"").replace(/\D/g,"")}
+document.getElementById("formCliente").onsubmit=function(e){e.preventDefault();const nome=document.getElementById("clienteNome").value.trim();const whatsapp=document.getElementById("clienteWhatsApp").value.trim();if(!nome){aviso("Digite o nome");return}if(!whatsapp){aviso("Digite WhatsApp");return}const id=document.getElementById("clienteId").value||idNovo();const cli={id,nome,whatsapp,endereco:document.getElementById("clienteEndereco").value.trim(),bairro:document.getElementById("clienteBairro").value.trim(),cidade:document.getElementById("clienteCidade").value.trim()||"Maceió",obs:document.getElementById("clienteObs").value.trim()};const pos=banco.clientes.findIndex(function(x){return x.id===id});if(pos>=0)banco.clientes[pos]=cli;else banco.clientes.push(cli);salvar();limparCliente();aviso("Cliente salvo!")}
+function limparCliente(){document.getElementById("formCliente").reset();document.getElementById("clienteId").value="";document.getElementById("clienteCidade").value="Maceió"}
+function editarCliente(id){const c=getCliente(id);if(!c)return;document.getElementById("clienteId").value=c.id;document.getElementById("clienteNome").value=c.nome||"";document.getElementById("clienteWhatsApp").value=c.whatsapp||"";document.getElementById("clienteEndereco").value=c.endereco||"";document.getElementById("clienteBairro").value=c.bairro||"";document.getElementById("clienteCidade").value=c.cidade||"Maceió";document.getElementById("clienteObs").value=c.obs||"";abrir('clientes',document.querySelectorAll('nav button')[1]);window.scrollTo({top:0,behavior:"smooth"})}
+function debitoCliente(id){return banco.vendas.filter(function(v){return v.clienteId===id&&v.pagamento==="FIADO"&&v.status!=="PAGO"&&Number(v.total)>0}).reduce(function(s,v){return s+Number(v.total||0)},0)}
+function mostrarClientes(){const busca=(document.getElementById("buscaCliente").value||"").toLowerCase().trim();const lista=banco.clientes.filter(function(c){return (String(c.nome||"")+" "+String(c.whatsapp||"")).toLowerCase().includes(busca)});let html="";lista.forEach(function(c){const debito=debitoCliente(c.id);const tel=limparTel(c.whatsapp);const zap=tel?"<button class='btn zap' onclick='abrirWhatsCliente(\""+c.id+"\")'>📲 Zap</button>":"";html+="<tr><td><b>"+escapar(c.nome)+"</b></td><td>"+escapar(c.whatsapp)+"<br>"+zap+"</td><td>"+escapar(c.endereco||"-")+"<br><small>"+escapar(c.bairro||"")+"</small></td><td><b>"+dinheiro(debito)+"</b></td><td><button class='btn blue' onclick='editarCliente(\""+c.id+"\")'>Ed</button></td></tr>"});document.getElementById("listaClientes").innerHTML=html||"<tr><td colspan='5' class='vazio'>Nenhum cliente</td></tr>"}
+function abrirWhatsCliente(id){const c=getCliente(id);if(!c)return;let tel=limparTel(c.whatsapp);if(tel.length<10){aviso("WhatsApp inválido");return}if(tel.length<=11)tel="55"+tel;window.open("https://wa.me/"+tel,"_blank")}
+function carregarClientesVenda(){const sel=document.getElementById("vendaCliente");let html="<option value=''>Consumidor</option>";banco.clientes.forEach(function(c){html+="<option value='"+c.id+"'>"+escapar(c.nome)+"</option>"});sel.innerHTML=html}
+function ajustarEstoqueVenda(produto,qtd){qtd=Number(qtd||0);if(qtd<=0)return;if(produto==="Gás"){banco.estoque.gasCheio=Math.max(0,Number(banco.estoque.gasCheio||0)-qtd);banco.estoque.gasVazio=Number(banco.estoque.gasVazio||0)+qtd}if(produto==="Água"){banco.estoque.aguaCheia=Math.max(0,Number(banco.estoque.aguaCheia||0)-qtd);banco.estoque.aguaVazia=Number(banco.estoque.aguaVazia||0)+qtd}}
+function devolverEstoqueVenda(v){const qtd=Number(v.quantidade||0);if(qtd<=0)return;if(v.produto==="Gás"){banco.estoque.gasCheio=Number(banco.estoque.gasCheio||0)+qtd;banco.estoque.gasVazio=Math.max(0,Number(banco.estoque.gasVazio||0)-qtd)}if(v.produto==="Água"){banco.estoque.aguaCheia=Number(banco.estoque.aguaCheia||0)+qtd;banco.estoque.aguaVazia=Math.max(0,Number(banco.estoque.aguaVazia||0)-qtd)}}
+document.getElementById("formVenda").onsubmit=function(e){e.preventDefault();const qtd=Number(document.getElementById("vendaQuantidade").value||0);const valor=Number(document.getElementById("vendaValor").value||0);if(qtd<=0){aviso("Qtd inválida");return}if(valor<0){aviso("Valor inválido");return}const produto=document.getElementById("vendaProduto").value;const pagamento=document.getElementById("vendaPagamento").value;const data=document.getElementById("vendaData").value||hoje();const total=Math.round(qtd*valor*100)/100;const venda={id:idNovo(),clienteId:document.getElementById("vendaCliente").value,produto,quantidade:qtd,valor,total,totalOriginal:total,recebido:pagamento==="FIADO"?0:total,data,pagamento,vencimento:document.getElementById("vendaVen
