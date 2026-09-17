@@ -1,55 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PLANILHA GESTÃO - L. Shaday - 3 Bases</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<title>PLANILHA GESTÃO - L. Shaday - 3 Bases FINAL</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{font-family:system-ui,-apple-system,sans-serif;background:#f1f4f2;margin:0}
-*{box-sizing:border-box}
-</style>
+<style>body{font-family:system-ui,sans-serif;background:#f1f4f2;margin:0}*{box-sizing:border-box}.no-scrollbar::-webkit-scrollbar{display:none}</style>
 </head>
 <body>
 <header class="bg-[#0F5132] text-white text-center py-3 sticky top-0 z-50">
 <div class="font-black text-[18px]">🔥 PLANILHA GESTÃO DE VENDAS 💧</div>
+<div class="text-[10px] opacity-80">L. Shaday - 3 Bases - FINAL 100%</div>
 </header>
-
 <div class="max-w-[420px] mx-auto p-3 pb-24">
-<!-- ABAS -->
 <div class="flex gap-2 overflow-x-auto py-2 no-scrollbar">
-<button onclick="showTab('d')" id="btn-d" class="px-4 py-2 rounded-full bg-[#0F5132] text-white text-xs font-bold shrink-0">📊 Dashboard</button>
-<button onclick="showTab('c')" id="btn-c" class="px-4 py-2 rounded-full bg-white text-xs font-bold shrink-0">👤 Clientes</button>
-<button onclick="showTab('v')" id="btn-v" class="px-4 py-2 rounded-full bg-white text-xs font-bold shrink-0">🛒 Vendas</button>
-<button onclick="showTab('r')" id="btn-r" class="px-4 py-2 rounded-full bg-white text-xs font-bold shrink-0">💰 Receber</button>
-<button onclick="showTab('e')" id="btn-e" class="px-4 py-2 rounded-full bg-white text-xs font-bold shrink-0">📦 Estoque</button>
-<button onclick="showTab('p')" id="btn-p" class="px-4 py-2 rounded-full bg-white text-xs font-bold shrink-0">✏️ Produtos</button>
-<button onclick="showTab('f')" id="btn-f" class="px-4 py-2 rounded-full bg-white text-xs font-bold shrink-0">📅 Fechar Mês</button>
+<button onclick="showTab('d')" id="btn-d" class="px-4 py-2 rounded-full bg-[#0F5132] text-white text-xs font-bold">📊 Dashboard</button>
+<button onclick="showTab('c')" id="btn-c" class="px-4 py-2 rounded-full bg-white text-xs font-bold">👤 Clientes</button>
+<button onclick="showTab('v')" id="btn-v" class="px-4 py-2 rounded-full bg-white text-xs font-bold">🛒 Vendas</button>
+<button onclick="showTab('r')" id="btn-r" class="px-4 py-2 rounded-full bg-white text-xs font-bold">💰 Receber</button>
+<button onclick="showTab('e')" id="btn-e" class="px-4 py-2 rounded-full bg-white text-xs font-bold">📦 Estoque</button>
+<button onclick="showTab('p')" id="btn-p" class="px-4 py-2 rounded-full bg-white text-xs font-bold">✏️ Produtos</button>
+<button onclick="showTab('f')" id="btn-f" class="px-4 py-2 rounded-full bg-white text-xs font-bold">📅 Fechar Mês</button>
 </div>
 
-<!-- DASHBOARD -->
 <div id="tab-d">
 <div class="grid grid-cols-2 gap-2 mt-2">
 <div class="bg-[#15803D] text-white rounded-2xl p-3"><div class="text-[10px]">VENDAS MÊS</div><div id="vMes" class="text-lg font-black">R$ 0,00</div></div>
@@ -61,14 +34,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f1f4f2;margin:0}
 <div class="font-bold text-sm">📦 Estoque Atual</div>
 <div class="grid grid-cols-2 gap-2 mt-3">
 <div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">GÁS CHEIO</div><div id="eGas" class="text-2xl font-black">200</div></div>
-<div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">ÁGUA CHEIA</div><div class="text-2xl font-black">80</div></div>
+<div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">ÁGUA CHEIA</div><div id="eAgua" class="text-2xl font-black">80</div></div>
 </div>
 <button onclick="showTab('e')" class="w-full mt-3 bg-[#0F5132] text-white py-2 rounded-full text-xs font-bold">GERENCIAR ESTOQUE</button>
 </div>
-<div class="bg-white rounded-2xl p-4 mt-3"><div class="flex justify-between"><span class="font-bold text-xs">Últimas vendas</span><button onclick="baixarPDF()" class="bg-green-600 text-white px-3 py-1 rounded-full text-[10px]">PDF</button></div><div id="lvDash" class="mt-2 text-center text-xs text-gray-400 py-4">Nenhuma venda</div></div>
+<div class="bg-white rounded-2xl p-4 mt-3"><div class="flex justify-between"><span class="font-bold text-xs">Últimas vendas</span><button onclick="baixarPDF()" class="bg-green-600 text-white px-3 py-1 rounded-full text-[10px]">PDF</button></div><div id="lvDash" class="mt-2"></div></div>
 </div>
 
-<!-- VENDAS -->
 <div id="tab-v" class="hidden">
 <div class="bg-white rounded-2xl p-4 mt-2">
 <div class="font-bold text-sm mb-3">Registrar nova venda</div>
@@ -82,232 +54,76 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f1f4f2;margin:0}
 <div class="bg-green-50 border border-green-100 rounded-xl p-3 flex flex-col justify-center"><span class="text-[10px] font-bold text-green-800">TOTAL AUTOMÁTICO</span><span id="txtTotal" class="font-black text-green-900 text-[18px]">R$ 150,00</span><span class="text-[9px] text-gray-500">Qtd x Valor unt</span></div>
 </div>
 <div class="space-y-2 mb-3">
-<label class="flex items-center gap-2 p-3 border-2 rounded-xl bg-green-50 border-green-700"><input type="radio" name="tp" value="avista" checked onchange="showMisto()"><span class="text-sm font-bold flex-1">💰 À VISTA</span><span class="flex gap-2 text-xs"><label><input type="radio" name="av" value="din" checked> Dinheiro</label><label><input type="radio" name="av" value="pix"> Pix</label></span></label>
+<label class="flex items-center gap-2 p-3 border-2 rounded-xl bg-green-50 border-green-700"><input type="radio" name="tp" value="avista" checked onchange="showMisto()"><span class="text-sm font-bold flex-1">💰 À VISTA</span><span class="flex gap-2 text-xs"><label><input type="radio" name="av" value="din"> Dinheiro</label><label><input type="radio" name="av" value="pix" checked> Pix</label></span></label>
 <label class="flex items-center gap-2 p-3 border rounded-xl"><input type="radio" name="tp" value="prazo" onchange="showMisto()"><span class="text-sm font-bold">📝 A PRAZO - fiado/peito</span></label>
 <label class="flex items-center gap-2 p-3 border rounded-xl bg-orange-50"><input type="radio" name="tp" value="misto" onchange="showMisto()"><span class="text-sm font-bold">💰🤝 MISTO</span></label>
 </div>
 <div id="boxMisto" class="hidden bg-orange-50 border border-orange-200 rounded-xl p-3 mb-3">
-<div class="text-xs font-bold mb-2">Um pedaço em dinheiro, um pedaço no Pix:</div>
 <div class="grid grid-cols-2 gap-2"><div><div class="text-[10px]">Dinheiro R$</div><input id="inpDin" type="number" value="0" class="w-full border rounded-lg p-2" oninput="calcM()"></div><div><div class="text-[10px]">Pix R$</div><input id="inpPix" type="number" value="0" class="w-full border rounded-lg p-2" oninput="calcM()"></div></div>
 <div id="txtMisto" class="text-xs font-bold mt-2 bg-white rounded-full px-3 py-2">Fiado: R$ 150,00</div>
 </div>
-<button onclick="registrar()" class="w-full bg-[#0F3D2E] text-white py-4 rounded-full font-black text-[16px] active:scale-95">REGISTRAR VENDA</button>
+<button onclick="registrar()" class="w-full bg-[#0F3D2E] text-white py-4 rounded-full font-black text-[16px]">REGISTRAR VENDA</button>
 </div>
-<div class="bg-white rounded-2xl p-4 mt-3">
-<div class="font-bold text-xs mb-2">Últimas vendas</div>
-<button onclick="baixarPDF()" class="w-full bg-[#15803D] text-white py-3 rounded-full text-xs font-bold mb-3">📄 BAIXAR PDF</button>
-<div id="lv" class="space-y-2"></div>
-</div>
+<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-xs mb-2">Últimas vendas</div><div id="lv" class="space-y-2"></div></div>
 </div>
 
-<!-- CLIENTES -->
-<div id="tab-c" class="hidden">
-<div class="bg-white rounded-2xl p-4 mt-2"><input id="nomeC" placeholder="Nome da Base ou Cliente" class="w-full border rounded-xl p-3 mb-2 text-sm"><input id="foneC" placeholder="WhatsApp 819..." class="w-full border rounded-xl p-3 mb-2 text-sm"><button onclick="addCli()" class="w-full bg-[#0F5132] text-white py-3 rounded-full font-bold text-sm">Salvar cliente</button></div>
-<div id="lc" class="mt-3 space-y-2"></div>
-</div>
+<div id="tab-c" class="hidden"><div class="bg-white rounded-2xl p-4 mt-2"><input id="nomeC" placeholder="Nome da Base ou Cliente" class="w-full border rounded-xl p-3 mb-2 text-sm"><input id="foneC" placeholder="WhatsApp" class="w-full border rounded-xl p-3 mb-2 text-sm"><button onclick="addCli()" class="w-full bg-[#0F5132] text-white py-3 rounded-full font-bold text-sm">Salvar cliente</button></div><div id="lc" class="mt-3 space-y-2"></div></div>
 
-<!-- RECEBER -->
-<div id="tab-r" class="hidden">
-<div class="bg-[#1D4ED8] text-white rounded-2xl p-4 mt-2"><div class="text-xs">TOTAL A RECEBER</div><div id="totRec" class="text-2xl font-black">R$ 0,00</div></div>
-<div id="lr" class="mt-3 space-y-2"></div>
-</div>
+<div id="tab-r" class="hidden"><div class="bg-[#1D4ED8] text-white rounded-2xl p-4 mt-2"><div class="text-xs">TOTAL A RECEBER</div><div id="totRec" class="text-2xl font-black">R$ 0,00</div></div><div id="lr" class="mt-3 space-y-2"></div></div>
 
-<!-- ESTOQUE - 3 BASES -->
 <div id="tab-e" class="hidden">
-<div class="bg-white rounded-2xl p-5 mt-2 text-center">
-<div class="text-sm font-bold text-gray-600">Estoque Principal</div>
-<div id="eGas2" class="text-[60px] font-black leading-none my-2 text-[#0F5132]">200</div>
-<div class="text-xs text-gray-500">Gás P13 no estoque central</div>
-<div class="flex justify-center gap-3 mt-4">
-<button onclick="mudaEst(-1)" class="bg-red-100 text-red-600 w-14 h-14 rounded-full font-black text-xl active:scale-90">-1</button>
-<button onclick="mudaEst(1)" class="bg-green-100 text-green-600 w-14 h-14 rounded-full font-black text-xl active:scale-90">+1</button>
-</div>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3">
-<div class="font-bold text-sm">📦 Estoque das 3 Bases</div>
-<div class="grid grid-cols-3 gap-2 mt-3">
-<div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">TABULEIRO</div><div id="estB1" class="text-xl font-black text-green-800">0</div><div class="text-[9px]">gás</div></div>
-<div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">SANTA LÚCIA</div><div id="estB2" class="text-xl font-black text-blue-800">0</div><div class="text-[9px]">gás</div></div>
-<div class="bg-orange-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">BENEDITO</div><div id="estB3" class="text-xl font-black text-orange-800">0</div><div class="text-[9px]">gás</div></div>
-</div>
-<div class="text-[10px] text-gray-400 mt-2 text-center">Total nas 3 bases: <span id="totalBases">0</span> gás</div>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3">
-<div class="font-bold text-sm">🔄 Transferir do Estoque Principal para as 3 Bases</div>
-<div class="text-[11px] text-gray-500 mt-1">Você tem 3 bases - escolha para qual transferir</div>
-<div class="mt-3 space-y-3">
-<div><label class="text-[10px] font-bold">Para qual das 3 bases?</label><select id="selTransBase" class="w-full border-2 border-blue-200 rounded-xl p-3 text-sm bg-blue-50 mt-1 font-bold"></select></div>
-<div class="grid grid-cols-2 gap-2">
-<div><label class="text-[10px] font-bold">Qtd Gás P13 para transferir</label><input id="qtdTrans" type="number" value="68" min="1" class="w-full border-2 border-blue-200 rounded-xl p-3 text-center font-black text-lg bg-blue-50" oninput="updateApos()"></div>
-<div class="bg-blue-50 border border-blue-100 rounded-xl p-3 flex flex-col justify-center text-center"><span class="text-[10px] font-bold">ESTOQUE APÓS</span><span id="estApos" class="font-black text-lg text-[#0F5132]">132</span></div>
-</div>
-<button onclick="transferir()" class="w-full bg-[#1D4ED8] text-white py-4 rounded-full font-black text-sm">🔄 TRANSFERIR PARA A BASE</button>
-</div>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3">
-<div class="font-bold text-xs">Histórico - Transferências</div>
-<div id="listaTrans" class="mt-2 space-y-2"></div>
-</div>
-<div class="mt-3 flex gap-2"><button onclick="fBackup()" class="flex-1 bg-slate-800 text-white py-3 rounded-full text-xs font-bold">⬇️ BACKUP</button><button onclick="document.getElementById('fileImp').click()" class="flex-1 bg-white border py-3 rounded-full text-xs font-bold">⬆️ RESTAURAR</button><input type="file" id="fileImp" class="hidden" onchange="fRestore(event)"></div>
+<div class="bg-white rounded-2xl p-5 mt-2 text-center"><div class="text-sm font-bold">Estoque Principal</div><div id="eGas2" class="text-[60px] font-black text-[#0F5132]">200</div><div class="flex justify-center gap-3 mt-4"><button onclick="mudaEst(-1)" class="bg-red-100 text-red-600 w-14 h-14 rounded-full font-black text-xl">-1</button><button onclick="mudaEst(1)" class="bg-green-100 text-green-600 w-14 h-14 rounded-full font-black text-xl">+1</button></div></div>
+<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-sm">📦 Estoque das 3 Bases</div><div class="grid grid-cols-3 gap-2 mt-3"><div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">TABULEIRO</div><div id="estB1" class="text-xl font-black">0</div></div><div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">SANTA LÚCIA</div><div id="estB2" class="text-xl font-black">0</div></div><div class="bg-orange-50 rounded-xl p-3 text-center"><div class="text-[8px] font-bold">BENEDITO</div><div id="estB3" class="text-xl font-black">0</div></div></div></div>
+<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-sm">🔄 Transferir para Bases</div><select id="selTransBase" class="w-full border-2 border-blue-200 rounded-xl p-3 text-sm bg-blue-50 mt-2 font-bold"></select><div class="grid grid-cols-2 gap-2 mt-2"><div><label class="text-[10px] font-bold">Qtd Gás</label><input id="qtdTrans" type="number" value="10" class="w-full border rounded-xl p-3 text-center font-black text-lg" oninput="updateApos()"></div><div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[10px] font-bold">ESTOQUE APÓS</div><div id="estApos" class="font-black text-lg">190</div></div></div><button onclick="transferir()" class="w-full bg-[#1D4ED8] text-white py-4 rounded-full font-black text-sm mt-3">🔄 TRANSFERIR</button></div>
+<div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-xs">Histórico Transferências</div><div id="listaTrans" class="mt-2 space-y-2"></div></div>
 </div>
 
-<!-- PRODUTOS -->
-<div id="tab-p" class="hidden">
-<div class="bg-white rounded-2xl p-4 mt-2">
-<div class="font-bold text-sm">✏️ Editar Gás P13 e Água 20L</div>
-<div class="grid grid-cols-2 gap-2 mt-3">
-<div class="bg-green-50 rounded-xl p-3"><div class="text-[10px] font-bold">Gás P13 R$</div><input id="pGas" type="number" value="150" class="w-full border rounded-lg p-3 mt-1 font-bold" oninput="salvaProd()"></div>
-<div class="bg-blue-50 rounded-xl p-3"><div class="text-[10px] font-bold">Água 20L R$</div><input id="pAgua" type="number" value="10" class="w-full border rounded-lg p-3 mt-1 font-bold" oninput="salvaProd()"></div>
-</div>
-<div id="lp" class="mt-3 space-y-2"></div>
-<button onclick="addProd()" class="w-full mt-3 bg-[#0F5132] text-white py-2 rounded-full text-xs font-bold">+ Adicionar produto</button>
-</div>
-</div>
+<div id="tab-p" class="hidden"><div class="bg-white rounded-2xl p-4 mt-2"><div class="font-bold text-sm">✏️ Editar Produtos</div><div class="grid grid-cols-2 gap-2 mt-3"><div class="bg-green-50 rounded-xl p-3"><div class="text-[10px] font-bold">Gás P13 R$</div><input id="pGas" type="number" value="150" class="w-full border rounded-lg p-3 mt-1 font-bold" oninput="salvaProd()"></div><div class="bg-blue-50 rounded-xl p-3"><div class="text-[10px] font-bold">Água 20L R$</div><input id="pAgua" type="number" value="10" class="w-full border rounded-lg p-3 mt-1 font-bold" oninput="salvaProd()"></div></div></div></div>
 
-<!-- FECHAR MÊS -->
-<div id="tab-f" class="hidden">
-<div class="bg-white rounded-2xl p-4 mt-2">
-<div class="font-bold text-sm">📊 Relatório do Dia a Dia</div>
-<div class="text-[11px] text-gray-500">Vendas vão acumulando conforme você vende</div>
-<div class="grid grid-cols-2 gap-2 mt-3">
-<div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">HOJE</div><div id="vHoje" class="text-lg font-black">R$ 0,00</div><div id="qHoje" class="text-[10px]">0 gás</div></div>
-<div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">ESTE MÊS</div><div id="vMes2" class="text-lg font-black">R$ 0,00</div><div id="qMes2" class="text-[10px]">0 gás</div></div>
-</div>
-<button onclick="gravarDia()" class="w-full mt-3 bg-[#15803D] text-white py-3 rounded-full font-bold text-xs">📝 GRAVAR RELATÓRIO DO DIA</button>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3">
-<div class="font-bold text-sm">📅 Fechar Mês</div>
-<div class="text-[11px] text-gray-500 mt-1">Fecha o mês, grava histórico e zera para começar novo mês</div>
-<div class="mt-3 space-y-2">
-<button onclick="fecharMes()" class="w-full bg-[#0F5132] text-white py-4 rounded-full font-black text-sm">📅 FECHAR MÊS ATUAL</button>
-<button onclick="zerarMes()" class="w-full bg-red-600 text-white py-3 rounded-full font-bold text-xs">🗑️ ZERAR MÊS - Começar do zero</button>
-</div>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3">
-<div class="flex justify-between items-center"><div class="font-bold text-sm">📜 Histórico Mensal</div><button onclick="baixarPDFMes()" class="bg-[#15803D] text-white px-3 py-1 rounded-full text-[10px]">PDF MÊS</button></div>
-<div id="listaHistorico" class="mt-3 space-y-2"></div>
-</div>
-<div class="bg-white rounded-2xl p-4 mt-3">
-<div class="font-bold text-sm">📋 Relatórios Diários</div>
-<div id="listaDias" class="mt-2 space-y-2"></div>
-</div>
-</div>
+<div id="tab-f" class="hidden"><div class="bg-white rounded-2xl p-4 mt-2"><div class="font-bold text-sm">📊 Relatório</div><div class="grid grid-cols-2 gap-2 mt-3"><div class="bg-green-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">HOJE</div><div id="vHoje" class="text-lg font-black">R$ 0,00</div></div><div class="bg-blue-50 rounded-xl p-3 text-center"><div class="text-[9px] font-bold">ESTE MÊS</div><div id="vMes2" class="text-lg font-black">R$ 0,00</div></div></div><button onclick="zerarMes()" class="w-full mt-3 bg-red-600 text-white py-3 rounded-full font-bold text-xs">🗑️ ZERAR TUDO</button></div><div class="bg-white rounded-2xl p-4 mt-3"><div class="font-bold text-sm">📜 Histórico</div><div id="listaHistorico" class="mt-2"></div></div></div>
 
 </div>
-
 <script>
-// DADOS
-let clientes = JSON.parse(localStorage.getItem('gc_cli')||'[{"nome":"Base Tabuleiro","fone":"81999999999"},{"nome":"Base Santa Lúcia","fone":"81988888888"},{"nome":"Base Benedito","fone":"81977777777"}]');
-let vendas = JSON.parse(localStorage.getItem('gc_vendas')||'[]');
-let historicoMeses = JSON.parse(localStorage.getItem('gc_hist_meses')||'[]');
-let relatoriosDias = JSON.parse(localStorage.getItem('gc_rel_dias')||'[]');
-let produtos = JSON.parse(localStorage.getItem('gc_prod')||'[{"nome":"Gás P13","preco":150},{"nome":"Água 20L","preco":10}]');
-let estoque = parseInt(localStorage.getItem('gc_est')||'200');
-let estoqueBases = JSON.parse(localStorage.getItem('gc_est_bases')||'{"Base Tabuleiro":0,"Base Santa Lúcia":0,"Base Benedito":0}');
-
-function save(){
- localStorage.setItem('gc_cli',JSON.stringify(clientes));
- localStorage.setItem('gc_vendas',JSON.stringify(vendas));
- localStorage.setItem('gc_prod',JSON.stringify(produtos));
- localStorage.setItem('gc_est',String(estoque));
- localStorage.setItem('gc_est_bases',JSON.stringify(estoqueBases));
- localStorage.setItem('gc_hist_meses',JSON.stringify(historicoMeses));
- localStorage.setItem('gc_rel_dias',JSON.stringify(relatoriosDias));
-}
-
-function showTab(t){
- ['d','c','v','r','e','p','f'].forEach(x=>{
-   document.getElementById('tab-'+x).classList.add('hidden');
-   document.getElementById('btn-'+x).classList.remove('bg-[#0F5132]','text-white');
-   document.getElementById('btn-'+x).classList.add('bg-white');
- });
- document.getElementById('tab-'+t).classList.remove('hidden');
- document.getElementById('btn-'+t).classList.add('bg-[#0F5132]','text-white');
-}
-
-function changeProd(){
- const sel=document.getElementById('selProd');
- if(!sel||!sel.options.length) return;
- const preco=parseFloat(sel.options[sel.selectedIndex].dataset.preco)||0;
- document.getElementById('inpUnit').value=preco;
- calc();
-}
-
-function calc(){
- const unit=parseFloat(document.getElementById('inpUnit').value)||0;
- const qtd=parseInt(document.getElementById('inpQtd').value)||0;
- const tot=qtd*unit;
- document.getElementById('txtTotal').innerText='R$ '+tot.toFixed(2).replace('.',',');
- const d=parseFloat(document.getElementById('inpDin').value)||0;
- const p=parseFloat(document.getElementById('inpPix').value)||0;
- const f=Math.max(0,tot-d-p);
- const el=document.getElementById('txtMisto');
- if(el) el.innerText='Fiado: R$ '+f.toFixed(2)+' | Dinheiro R$ '+d.toFixed(2)+' + Pix R$ '+p.toFixed(2);
- return tot;
-}
-
-function showMisto(){
- const tp=document.querySelector('input[name="tp"]:checked').value;
- document.getElementById('boxMisto').classList.toggle('hidden', tp!=='misto');
-}
-
-function calcM(){
- const unit=parseFloat(document.getElementById('inpUnit').value)||0;
- const qtd=parseInt(document.getElementById('inpQtd').value)||0;
- const tot=qtd*unit;
- document.getElementById('txtTotal').innerText='R$ '+tot.toFixed(2).replace('.',',');
- const d=parseFloat(document.getElementById('inpDin').value)||0;
- const p=parseFloat(document.getElementById('inpPix').value)||0;
- const f=Math.max(0,tot-d-p);
- const el=document.getElementById('txtMisto');
- if(el) el.innerText='Fiado/peito: R$ '+f.toFixed(2)+' | Dinheiro R$ '+d.toFixed(2)+' + Pix R$ '+p.toFixed(2);
- return {d,p,f,tot};
-}
-
-function registrar(){
- try{
-  const cli=document.getElementById('selCli').value||'Cliente';
-  const prod=document.getElementById('selProd').value||'Gás P13';
-  const qtd=parseInt(document.getElementById('inpQtd').value)||1;
-  const unit=parseFloat(document.getElementById('inpUnit').value)||0;
-  const tot=qtd*unit;
-  if(tot<=0){ alert('Valor total R$ 0,00 - verifique Qtd e Valor unt'); return; }
-  const tp=document.querySelector('input[name="tp"]:checked').value;
-  let din=0,pix=0,fiado=0,status='PAGO';
-  if(tp==='avista'){
-    const av=document.querySelector('input[name="av"]:checked').value;
-    if(av==='din') din=tot; else pix=tot;
-  }else if(tp==='prazo'){ fiado=tot; status='FIADO'; }
-  else{
-    const d=parseFloat(document.getElementById('inpDin').value)||0;
-    const p=parseFloat(document.getElementById('inpPix').value)||0;
-    const f=Math.max(0,tot-d-p);
-    din=d; pix=p; fiado=f; status=fiado>0?'MISTO':'PAGO';
-  }
-  vendas.unshift({id:Date.now(),cliente:cli,produto:prod,qtd,unit,total:tot,dinheiro:din,pix,fiado,status,data:new Date().toLocaleDateString()});
-  estoque-=qtd; if(estoque<0) estoque=0;
-  save(); render();
-  alert('✅ Venda registrada! '+cli+' - '+prod+' x'+qtd);
- }catch(e){ alert('Erro: '+e.message); }
-}
-
+let clientes=JSON.parse(localStorage.getItem('gc_cli')||'[{"nome":"Base Tabuleiro","fone":"81999999999"},{"nome":"Base Santa Lúcia","fone":"81988888888"},{"nome":"Base Benedito","fone":"81977777777"}]');
+let vendas=JSON.parse(localStorage.getItem('gc_vendas')||'[]');
+let produtos=JSON.parse(localStorage.getItem('gc_prod')||'[{"nome":"Gás P13","preco":150},{"nome":"Água 20L","preco":10}]');
+let estoque=parseInt(localStorage.getItem('gc_est')||'200');
+let estoqueBases=JSON.parse(localStorage.getItem('gc_est_bases')||'{"Base Tabuleiro":0,"Base Santa Lúcia":0,"Base Benedito":0}');
+let transacoes=JSON.parse(localStorage.getItem('gc_trans')||'[]');
+function save(){localStorage.setItem('gc_cli',JSON.stringify(clientes));localStorage.setItem('gc_vendas',JSON.stringify(vendas));localStorage.setItem('gc_prod',JSON.stringify(produtos));localStorage.setItem('gc_est',String(estoque));localStorage.setItem('gc_est_bases',JSON.stringify(estoqueBases));localStorage.setItem('gc_trans',JSON.stringify(transacoes));}
+function showTab(t){['d','c','v','r','e','p','f'].forEach(x=>{document.getElementById('tab-'+x).classList.add('hidden');document.getElementById('btn-'+x).classList.remove('bg-[#0F5132]','text-white');document.getElementById('btn-'+x).classList.add('bg-white');});document.getElementById('tab-'+t).classList.remove('hidden');document.getElementById('btn-'+t).classList.add('bg-[#0F5132]','text-white');}
+function changeProd(){const sel=document.getElementById('selProd');const preco=parseFloat(sel.options[sel.selectedIndex].dataset.preco)||0;document.getElementById('inpUnit').value=preco;calc();}
+function calc(){const unit=parseFloat(document.getElementById('inpUnit').value)||0;const qtd=parseInt(document.getElementById('inpQtd').value)||0;const tot=qtd*unit;document.getElementById('txtTotal').innerText='R$ '+tot.toFixed(2).replace('.',',');calcM();return tot;}
+function showMisto(){const tp=document.querySelector('input[name="tp"]:checked').value;document.getElementById('boxMisto').classList.toggle('hidden',tp!=='misto');}
+function calcM(){const unit=parseFloat(document.getElementById('inpUnit').value)||0;const qtd=parseInt(document.getElementById('inpQtd').value)||0;const tot=qtd*unit;const d=parseFloat(document.getElementById('inpDin').value)||0;const p=parseFloat(document.getElementById('inpPix').value)||0;const f=Math.max(0,tot-d-p);document.getElementById('txtMisto').innerText='Fiado: R$ '+f.toFixed(2)+' | Dinheiro R$ '+d.toFixed(2)+' + Pix R$ '+p.toFixed(2);}
+function registrar(){const cli=document.getElementById('selCli').value||'Cliente';const prod=document.getElementById('selProd').value||'Gás P13';const qtd=parseInt(document.getElementById('inpQtd').value)||1;const unit=parseFloat(document.getElementById('inpUnit').value)||0;const tot=qtd*unit;if(tot<=0){alert('Valor total R$ 0,00 - verifique Qtd e Valor unt');return;}const tp=document.querySelector('input[name="tp"]:checked').value;let din=0,pix=0,fiado=0,status='PAGO';if(tp==='avista'){const av=document.querySelector('input[name="av"]:checked').value;if(av==='din')din=tot;else pix=tot;}else if(tp==='prazo'){fiado=tot;status='FIADO';}else{const d=parseFloat(document.getElementById('inpDin').value)||0;const p=parseFloat(document.getElementById('inpPix').value)||0;const f=Math.max(0,tot-d-p);din=d;pix=p;fiado=f;status=fiado>0?'MISTO':'PAGO';}vendas.unshift({id:Date.now(),cliente:cli,produto:prod,qtd,unit,total:tot,dinheiro:din,pix,fiado,status,data:new Date().toLocaleDateString()});estoque-=qtd;if(estoque<0)estoque=0;save();render();alert('✅ Venda registrada! '+cli+' - '+prod+' x'+qtd);}
+function addCli(){const n=document.getElementById('nomeC').value.trim();const f=document.getElementById('foneC').value.trim();if(!n)return;clientes.push({nome:n,fone:f});document.getElementById('nomeC').value='';document.getElementById('foneC').value='';save();render();}
+function mudaEst(v){estoque+=v;if(estoque<0)estoque=0;save();render();}
+function updateApos(){const q=parseInt(document.getElementById('qtdTrans').value)||0;document.getElementById('estApos').innerText=estoque-q;}
+function transferir(){const base=document.getElementById('selTransBase').value;const q=parseInt(document.getElementById('qtdTrans').value)||0;if(q<=0||q>estoque){alert('Qtd inválida ou estoque insuficiente');return;}estoque-=q;estoqueBases[base]=(estoqueBases[base]||0)+q;transacoes.unshift({base,q,data:new Date().toLocaleDateString()});save();render();alert('✅ Transferido '+q+' gás para '+base);}
+function delVenda(id){if(!confirm('Apagar venda?'))return;vendas=vendas.filter(v=>v.id!=id);save();render();}
+function zerarMes(){if(!confirm('ZERAR TUDO? Apaga vendas e transferências!'))return;vendas=[];transacoes=[];estoque=200;estoqueBases={"Base Tabuleiro":0,"Base Santa Lúcia":0,"Base Benedito":0};save();render();}
+function salvaProd(){const g=parseFloat(document.getElementById('pGas').value)||150;const a=parseFloat(document.getElementById('pAgua').value)||10;produtos=[{nome:'Gás P13',preco:g},{nome:'Água 20L',preco:a}];save();render();}
+function baixarPDF(){let txt='Vendas L Shaday\n\n';vendas.forEach(v=>{txt+=`${v.cliente} - ${v.produto} x${v.qtd} - Total R$${v.total} - ${v.status} - ${v.data}\n`;});let blob=new Blob([txt],{type:'text/plain'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='vendas_lshaday.txt';a.click();}
 function render(){
- document.getElementById('selProd').innerHTML=produtos.map(p=>`<option value="${p.nome}" data-preco="${p.preco}">${p.nome} - R$${p.preco}</option>`).join('');
- document.getElementById('selCli').innerHTML=clientes.map(c=>`<option value="${c.nome}">${c.nome}</option>`).join('');
- const bases=['Base Tabuleiro','Base Santa Lúcia','Base Benedito'];
- document.getElementById('selTransBase').innerHTML=bases.map(n=>`<option value="${n}">${n}</option>`).join('');
-
- const htmlV=vendas.map(v=>{
-   const isTrans=v.status.includes('TRANSFERÊNCIA');
-   if(isTrans){ return `<div class="border rounded-xl p-3 bg-white"><div class="font-bold text-xs">${v.cliente} • ${v.qtd} gás transferido</div></div>`; }
-   const titulo=`${v.cliente} • ${v.produto} x${v.qtd} (R$${v.unit} unit)`;
-   const det=`<div class="text-[11px] mt-1">${v.dinheiro>0?'💵 Dinheiro R$'+v.dinheiro.toFixed(0)+' ':''}${v.pix>0?'📱 Pix R$'+v.pix.toFixed(0)+' ':''}${v.fiado>0?'🟠 Fiado R$'+v.fiado.toFixed(0):''}</div>`;
-   return `<div class="border rounded-xl p-3 bg-white"><div class="font-bold text-xs">${titulo}</div>${det}<div class="text-[9px] text-gray-400 mt-1">Total R$ ${v.total.toFixed(2)} • ${v.status} • ${v.data}</div></div>`;
- }).join('')||'<div class="text-center text-gray-400 text-xs py-6">Nenhuma venda ainda</div>';
- document.getElementById('lv').innerHTML=htmlV;
- document.getElementById('lvDash').innerHTML=htmlV;
-
- const totF=vendas.filter(v=>!v.status.includes('TRANSFERÊNCIA')).reduce((s,v)=>s+v.fiado,0);
- const totV=vendas.filter(v=>!v.status.includes('TRANSFERÊNCIA')).reduce((s,v)=>s+v.total,0);
- const totHojeStr=new Date().toLocaleDateString();
- const vendasHoje=ve
+document.getElementById('selProd').innerHTML=produtos.map(p=>`<option value="${p.nome}" data-preco="${p.preco}">${p.nome} - R$${p.preco}</option>`).join('');
+document.getElementById('selCli').innerHTML=clientes.map(c=>`<option value="${c.nome}">${c.nome}</option>`).join('');
+document.getElementById('selTransBase').innerHTML=['Base Tabuleiro','Base Santa Lúcia','Base Benedito'].map(n=>`<option value="${n}">${n}</option>`).join('');
+document.getElementById('pGas').value=produtos.find(p=>p.nome.includes('Gás'))?.preco||150;
+document.getElementById('pAgua').value=produtos.find(p=>p.nome.includes('Água'))?.preco||10;
+const htmlV=vendas.map(v=>`<div class="border rounded-xl p-3 bg-white"><div class="flex justify-between"><div class="font-bold text-xs">${v.cliente} • ${v.produto} x${v.qtd} (R$${v.unit})</div><button onclick="delVenda(${v.id})" class="text-red-500 font-bold">X</button></div><div class="text-[11px] mt-1">${v.dinheiro>0?'💵 Din R$'+v.dinheiro+' ':''}${v.pix>0?'📱 Pix R$'+v.pix+' ':''}${v.fiado>0?'🟠 Fiado R$'+v.fiado:''}</div><div class="text-[9px] text-gray-400">Total R$ ${v.total.toFixed(2)} • ${v.status} • ${v.data}</div></div>`).join('')||'<div class="text-center text-gray-400 text-xs py-6">Nenhuma venda ainda</div>';
+document.getElementById('lv').innerHTML=htmlV;document.getElementById('lvDash').innerHTML=htmlV;
+document.getElementById('lc').innerHTML=clientes.map(c=>`<div class="bg-white rounded-xl p-3 flex justify-between"><span class="text-xs font-bold">${c.nome}</span><span class="text-xs">${c.fone}</span></div>`).join('');
+const totRec=vendas.reduce((s,v)=>s+v.fiado,0);const totVendas=vendas.reduce((s,v)=>s+v.total,0);
+document.getElementById('vMes').innerText='R$ '+totVendas.toFixed(2);document.getElementById('vMes2').innerText='R$ '+totVendas.toFixed(2);document.getElementById('vRec').innerText='R$ '+totRec.toFixed(2);document.getElementById('totRec').innerText='R$ '+totRec.toFixed(2);document.getElementById('vDesp').innerText='R$ 0,00';document.getElementById('vLucro').innerText='R$ '+totVendas.toFixed(2);
+const hoje=new Date().toLocaleDateString();const vHoje=vendas.filter(v=>v.data===hoje).reduce((s,v)=>s+v.total,0);document.getElementById('vHoje').innerText='R$ '+vHoje.toFixed(2);
+document.getElementById('eGas').innerText=estoque;document.getElementById('eGas2').innerText=estoque;document.getElementById('eAgua').innerText='80';
+document.getElementById('estB1').innerText=estoqueBases['Base Tabuleiro']||0;document.getElementById('estB2').innerText=estoqueBases['Base Santa Lúcia']||0;document.getElementById('estB3').innerText=estoqueBases['Base Benedito']||0;
+document.getElementById('listaTrans').innerHTML=transacoes.map(t=>`<div class="border rounded-xl p-2 text-xs">${t.q} gás → ${t.base} - ${t.data}</div>`).join('')||'<div class="text-xs text-gray-400">Nenhuma transferência</div>';
+document.getElementById('lr').innerHTML=vendas.filter(v=>v.fiado>0).map(v=>`<div class="bg-white rounded-xl p-3"><div class="font-bold text-xs">${v.cliente} - R$ ${v.fiado.toFixed(2)} fiado</div><div class="text-[10px] text-gray-400">${v.produto} x${v.qtd} - ${v.data}</div><button onclick="let val=prompt('Quanto recebeu?');if(val){let n=parseFloat(val);if(n>0){v.fiado-=n;if(v.fiado<0)v.fiado=0;if(v.fiado==0)v.status='PAGO';save();render();}}" class="mt-2 bg-green-600 text-white px-3 py-1 rounded-full text-xs">Receber</button></div>`).join('')||'<div class="text-xs text-gray-400 text-center py-4">Nenhum a receber</div>';
+calc();updateApos();
+}
+render();showTab('d');
+</script>
+</body>
+  </html>
