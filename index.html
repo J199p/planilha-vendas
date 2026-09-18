@@ -4,272 +4,273 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#087f3f">
-<title>PLANILHA GESTÃO DE VENDAS</title>
+<title>El Shaday - Vendas</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#eef3f0}
-header{background:#087f3f;color:#fff;padding:12px;text-align:center;position:sticky;top:0;z-index:10}
-header h1{font-size:18px;font-weight:900}
-nav{display:flex;gap:6px;overflow-x:auto;background:#fff;padding:8px;position:sticky;top:42px;z-index:9;border-bottom:2px solid #087f3f}
-nav button{flex:0 0 auto;padding:10px 14px;border-radius:10px;font-weight:900;font-size:12px;border:0;background:#e7eee9;color:#14562f}
-nav button.active{background:#087f3f;color:#fff}
-main{max-width:1200px;margin:auto;padding:10px}
-.tela{display:none}.tela.active{display:block}
-.card{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 2px 6px #0001}
-.btn{padding:10px 14px;border-radius:10px;color:#fff;font-weight:900;border:0;font-size:13px}
-.green{background:#087f3f}.blue{background:#1557a6}.red{background:#d92727}.gray{background:#657c89}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:7px;border-bottom:1px solid #eee;text-align:left}th{background:#204574;color:#fff}
-.tabela{overflow:auto;max-height:350px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 14px;border-radius:10px;display:none;z-index:99}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#eef3f0;color:#0f172a}
+header{background:#087f3f;color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between}
+header b{font-size:18px;letter-spacing:.3px}
+nav{display:flex;gap:8px;overflow:auto;padding:10px 12px;background:#fff;border-bottom:1px solid #ddd;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{white-space:nowrap;border:1px solid #ddd;background:#f8faf9;padding:8px 12px;border-radius:20px;font-size:13px;cursor:pointer}
+nav button.on{background:#087f3f;color:#fff;border-color:#087f3f;font-weight:700}
+main{max-width:900px;margin:0 auto;padding:12px;display:grid;gap:12px}
+.card{background:#fff;border-radius:12px;padding:14px;border:1px solid #e5e7eb;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+h2{font-size:15px;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px;color:#087f3f}
+label{font-size:12px;color:#475569;display:block;margin:8px 0 4px}
+input,select{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;background:#fff}
+input:focus,select:focus{outline:2px solid #087f3f33;border-color:#087f3f}
+.row{display:flex;gap:8px}
+.row>*{flex:1}
+.btn{background:#087f3f;color:#fff;border:0;padding:10px 14px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px}
+.btn.ghost{background:#fff;color:#087f3f;border:1px solid #087f3f}
+.btn.red{background:#d92727}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.produto-imagem{height:110px;border-radius:12px;display:grid;place-items:center;font-size:48px;transition:all .4s ease;transform-style:preserve-3d;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),0 8px 18px rgba(0,0,0,.12)}
+.produto-imagem.gas{background:radial-gradient(120% 120% at 30% 20%,#fef08a,#facc15 40%,#ef7d00 80%);border:2px solid #b45309}
+.produto-imagem.agua{background:radial-gradient(120% 120% at 30% 20%,#e0f2fe,#7dd3fc 45%,#0ea5e9 85%);border:2px solid #0369a1}
+.produto-imagem.outro{background:radial-gradient(120% 120% at 30% 20%,#f5f3ff,#c4b5fd 45%,#7c3aed 85%);border:2px solid #5b21b6}
+.small{font-size:11px;color:#64748b}
+.kpi{padding:10px;border-radius:10px;background:#f8fafc;border:1px dashed #cbd5e1}
+.kpi b{display:block;font-size:18px;margin-top:4px}
+.item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #f1f5f9;gap:8px}
+.item:last-child{border:0}
+.badge{font-size:10px;padding:3px 7px;border-radius:20px;background:#e7eee9;color:#087f3f;border:1px solid #cbd5e1;font-weight:700}
+.estoque{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.est{border-radius:14px;padding:12px;color:#fff;position:relative;overflow:hidden;min-height:96px;display:flex;flex-direction:column;justify-content:space-between}
+.est i{font-style:normal;font-size:28px}
+.est.g13{background:linear-gradient(135deg,#f59e0b,#ef7d00)}
+.est.g45{background:linear-gradient(135deg,#dc2626,#991b1b)}
+.est.a20{background:linear-gradient(135deg,#0ea5e9,#0369a1)}
+.est.out{background:linear-gradient(135deg,#8b5cf6,#5b21b6)}
+.hide{display:none}
 </style>
 </head>
 <body>
-<header><h1>🔥 PLANILHA GESTÃO DE VENDAS 💧</h1></header>
-<nav id="menu">
-<button data-t="dashboard" class="active">📊 Dashboard</button>
-<button data-t="clientes">👤 Clientes</button>
-<button data-t="vendas">🛒 Vendas</button>
-<button data-t="receber">💰 Receber</button>
-<button data-t="estoque">📦 Estoque</button>
-<button data-t="despesas">💸 Despesas</button>
-<button data-t="mes">📅 Mês</button>
-<button data-t="backup">💾 Backup</button>
+<header><b>EL SHADAY GÁS E ÁGUA</b><span style="font-size:11px;opacity:.9">FINAL V4</span></header>
+<nav id="nav">
+<button data-t="cli" class="on">Clientes</button>
+<button data-t="ven">Vendas</button>
+<button data-t="dash">Dashboard</button>
+<button data-t="dia">Dia</button>
+<button data-t="est">Estoque 3D</button>
+<button data-t="rec">A Receber</button>
+<button data-t="mes">Mês</button>
+<button data-t="bkp">Backup</button>
 </nav>
 <main>
-<section id="dashboard" class="tela active">
-<div id="dashResumo" class="card">Carregando...</div>
-<div class="card"><b>FECHAMENTO DE HOJE - <span id="hojeTxt"></span></b><br><button class="btn green" style="width:100%;margin-top:8px" id="btnZerar">✅ ZERAR DIA (fechar hoje)</button></div>
-<div class="card"><b>FECHAMENTO DO MÊS</b><br><div id="mesResumo"></div><button class="btn blue" style="margin-top:8px" id="btnZap">📲 WhatsApp MÊS</button> <button class="btn gray" id="btnVerMes">Ver detalhes mês</button></div>
-<div class="card"><b>💰 Resumo Financeiro</b><div id="resFin"></div></div>
-<div class="card"><b>📦 Estoque Atual - 3D dinâmico</b><div id="est3d"></div></div>
-<div class="card"><b>🛒 Últimas vendas - ícone 3D</b><div class="tabela"><table><thead><tr><th>Data</th><th>Cliente</th><th>Prod</th><th>Total</th></tr></thead><tbody id="ultVendas"></tbody></table></div></div>
+<section id="cli" class="card">
+<h2>Clientes</h2>
+<label>Nome</label><input id="c_nome" placeholder="Ex: Maria Silva">
+<label>Whatsapp (11 dígitos)</label><input id="c_zap" placeholder="(11) 91234-5678" maxlength="15">
+<div class="row" style="margin-top:10px"><button class="btn" id="c_add">Salvar cliente</button><input id="c_busca" placeholder="Buscar..." style="max-width:180px"></div>
+<div id="c_lista" style="margin-top:12px"></div>
 </section>
 
-<section id="clientes" class="tela">
-<div class="card"><h3>👤 Cadastrar Cliente</h3><form id="fCli"><input type="hidden" id="cId"><input id="cNome" placeholder="Nome *" required style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><input id="cZap" placeholder="WhatsApp *" required style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><input id="cEnd" placeholder="Endereço" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><input id="cBairro" placeholder="Bairro" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><button class="btn green" type="submit" style="width:100%;margin-top:6px">Salvar Cliente</button></form></div>
-<div class="card"><input id="buscaCli" placeholder="Buscar cliente..." style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px" oninput="mostrarClientes()"><div class="tabela" style="margin-top:8px"><table><thead><tr><th>Cliente</th><th>Whats</th><th>Débito</th><th>Ação</th></tr></thead><tbody id="listaCli"></tbody></table></div></div>
+<section id="ven" class="card hide">
+<h2>Nova venda</h2>
+<div id="p_img" class="produto-imagem gas">🔥</div>
+<div class="grid2" style="margin-top:10px">
+<div><label>Cliente</label><select id="v_cli"></select></div>
+<div><label>Produto</label><select id="v_prod"><option>GÁS</option><option>ÁGUA</option><option>OUTRO</option></select></div>
+</div>
+<div class="grid2">
+<div><label>Qtd</label><input id="v_qtd" type="number" value="1" min="1"></div>
+<div><label>Valor total R$</label><input id="v_val" type="number" step="0.01" placeholder="0,00"></div>
+</div>
+<div class="grid2">
+<div><label>Data</label><input id="v_data" type="date"></div>
+<div><label>Pagamento</label><select id="v_pag"><option>PIX</option><option>DINHEIRO</option><option>CARTÃO</option><option>FIADO</option><option>MISTO</option></select></div>
+</div>
+<div id="misto_box" class="card hide" style="background:#fff7ed;border-color:#fed7aa;margin-top:10px">
+<b style="font-size:12px">MISTO - divida o total</b>
+<div class="grid2" style="margin-top:8px">
+<div><label>PIX</label><input id="m_pix" type="number" step="0.01" value="0"></div>
+<div><label>DINHEIRO</label><input id="m_din" type="number" step="0.01" value="0"></div>
+</div>
+<div class="grid2">
+<div><label>CARTÃO</label><input id="m_cart" type="number" step="0.01" value="0"></div>
+<div><label>FIADO</label><input id="m_fiado" type="number" step="0.01" value="0"></div>
+</div>
+<div class="small" id="m_sum">Soma: R$ 0,00</div>
+</div>
+<button class="btn" id="v_add" style="margin-top:12px;width:100%">Lançar venda</button>
+<div id="v_lista" style="margin-top:14px"></div>
 </section>
 
-<section id="vendas" class="tela">
-<div class="card"><h3>🛒 Registrar Venda</h3><form id="fVenda"><select id="vCli" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"></select><select id="vProd" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><option value="Gás">Gás</option><option value="Água">Água</option></select><input id="vQtd" type="number" value="1" min="1" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><input id="vValor" type="number" value="120" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><input id="vData" type="date" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><select id="vPag" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><option value="PIX">PIX</option><option value="DINHEIRO">Dinheiro</option><option value="CARTAO">Cartão</option><option value="FIADO">Fiado</option></select><button class="btn green" type="submit" style="width:100%">Registrar Venda</button></form>
-<div style="display:flex;gap:6px;margin-top:10px"><button class="btn green" style="flex:1;padding:14px" id="btnMais1">+1 VENDA RÁPIDA</button><button class="btn red" style="flex:1;padding:14px" id="btnMenos1">-1 ÚLTIMA</button></div></div>
-<div class="card"><h3>Vendas de Hoje - <span id="qtdHoje">0</span> vendas</h3><div class="tabela"><table><thead><tr><th>Cliente</th><th>Prod</th><th>Total</th><th>X</th></tr></thead><tbody id="listaVendas"></tbody></table></div></div>
+<section id="dash" class="card hide">
+<h2>Dashboard - <span id="dash_mes"></span></h2>
+<div class="grid2">
+<div class="kpi">PIX <b id="k_pix">R$ 0</b></div>
+<div class="kpi">DINHEIRO <b id="k_din">R$ 0</b></div>
+<div class="kpi">CARTÃO <b id="k_cart">R$ 0</b></div>
+<div class="kpi">FIADO <b id="k_fiado">R$ 0</b></div>
+</div>
+<div class="grid2" style="margin-top:8px">
+<div class="kpi" style="background:#f0fdf4">VENDAS <b id="k_vendas">R$ 0</b></div>
+<div class="kpi" style="background:#eff6ff">RECEBIDO <b id="k_rec">R$ 0</b></div>
+<div class="kpi" style="background:#fef2f2">A RECEBER <b id="k_arec">R$ 0</b></div>
+<div class="kpi">DESPESAS <b id="k_desp">R$ 0</b><input id="inp_desp" type="number" step="0.01" placeholder="Despesa mês" style="margin-top:6px"></div>
+</div>
+<div class="kpi" style="margin-top:8px;background:#087f3f;color:#fff">LUCRO <b id="k_lucro" style="color:#fff">R$ 0</b></div>
 </section>
 
-<section id="receber" class="tela"><div class="card"><h3>💰 A Receber</h3><div id="receberStats"></div><div class="tabela" style="margin-top:8px"><table><thead><tr><th>Cliente</th><th>Pendente</th><th>Ação</th></tr></thead><tbody id="listaReceber"></tbody></table></div></div></section>
-<section id="estoque" class="tela"><div class="card"><h3>📦 Estoque</h3><div id="estCards"></div><div style="display:flex;gap:6px;margin-top:10px"><select id="eProd"><option value="gasCheio">Gás cheio</option><option value="gasVazio">Gás vazio</option><option value="aguaCheia">Água cheia</option><option value="aguaVazia">Água vazia</option></select><input id="eQtd" type="number" value="1" style="width:80px"><select id="eOp"><option value="entrada">Entrada</option><option value="saida">Saída</option></select><button class="btn green" id="btnEst">Salvar</button></div></div></section>
-<section id="despesas" class="tela"><div class="card"><h3>💸 Despesa</h3><form id="fDesp"><input id="dValor" type="number" step="0.01" placeholder="Valor" required style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><input id="dData" type="date" style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><input id="dMot" placeholder="Motivo" required style="width:100%;padding:10px;border:2px solid #aaa;border-radius:10px;margin:4px 0"><button class="btn red" type="submit" style="width:100%">Registrar Despesa</button></form></div><div class="card"><div class="tabela"><table><thead><tr><th>Data</th><th>Motivo</th><th>Valor</th><th>X</th></tr></thead><tbody id="listaDesp"></tbody></table></div></div></section>
-<section id="mes" class="tela"><div class="card"><h3>📅 Mês <input id="mesSel" type="month"></h3><div id="mesCards"></div><div id="mesRes"></div></div></section>
-<section id="backup" class="tela"><div class="card"><h3>💾 Backup</h3><button class="btn blue" id="btnDown">Baixar Backup</button> <button class="btn red" id="btnApagar">Apagar Tudo</button></div></section>
+<section id="dia" class="card hide">
+<h2>Fechamento do Dia - <span id="dia_hoje"></span></h2>
+<div id="dia_break"></div>
+<div class="kpi" style="margin-top:10px;background:#0f172a;color:#fff">TOTAL HOJE <b id="dia_total" style="color:#fff">R$ 0</b></div>
+<button class="btn red" id="dia_zerar" style="width:100%;margin-top:10px">ZERAR DIA (arquiva e limpa hoje)</button>
+<div class="small" style="margin-top:8px">Histórico Z:</div><div id="z_hist"></div>
+</section>
+
+<section id="est" class="card hide">
+<h2>Estoque 3D</h2>
+<div class="estoque" id="est_grid"></div>
+<div class="small" style="margin-top:8px">Toque + ou - para ajustar. Salvo em EL_SHADAY_FINAL_V4</div>
+</section>
+
+<section id="rec" class="card hide">
+<h2>A Receber (Fiados)</h2>
+<div id="rec_lista"></div>
+</section>
+
+<section id="mes" class="card hide">
+<h2>Filtro Mês</h2>
+<input id="mes_filtro" type="month"><div id="mes_lista" style="margin-top:10px"></div>
+</section>
+
+<section id="bkp" class="card hide">
+<h2>Backup</h2>
+<button class="btn" id="bkp_down">Baixar JSON</button>
+<div class="small" style="margin-top:10px">Restaura colando JSON e recarregando. Chaves: EL_SHADAY_FINAL_V4, EL_SHADAY_Z_V4, EL_SHADAY_M_V4</div>
+<textarea id="bkp_txt" style="margin-top:8px;height:160px;font-size:11px" placeholder="Cole backup aqui e salve manualmente no localStorage se precisar"></textarea>
+</section>
 </main>
-<div id="toast"></div>
 <script>
-const CHAVE="EL_SHADAY_V6_FIX_BOTOES";
-let banco=null;
-try{banco=JSON.parse(localStorage.getItem(CHAVE))}catch(e){banco=null}
-if(!banco){banco={clientes:[],vendas:[],despesas:[],estoque:{gasCheio:200,gasVazio:0,aguaCheia:150,aguaVazia:0}}}
-function salvar(){localStorage.setItem(CHAVE,JSON.stringify(banco));atualizar()}
-function hoje(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function dinheiro(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
-function dataBR(d){if(!d)return"-";const p=d.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
-function escapar(t){const d=document.createElement("div");d.textContent=t||"";return d.innerHTML}
-function idNovo(){return Date.now().toString(36)+Math.random().toString(36).substr(2,4)}
-function aviso(t){const el=document.getElementById("toast");el.textContent=t;el.style.display="block";clearTimeout(window._tt);window._tt=setTimeout(()=>el.style.display="none",2000)}
-function abrirTela(id){
-  document.querySelectorAll(".tela").forEach(x=>x.classList.remove("active"));
-  const el=document.getElementById(id);
-  if(el) el.classList.add("active");
-  document.querySelectorAll("#menu button").forEach(b=>b.classList.remove("active"));
-  const btn=document.querySelector('#menu button[data-t="'+id+'"]');
-  if(btn) btn.classList.add("active");
-  window.scrollTo(0,0);
+const K1='EL_SHADAY_FINAL_V4',K2='EL_SHADAY_Z_V4',K3='EL_SHADAY_M_V4';
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}}
+let DB=load(K1,{c:[],v:[],d:0,e:{g13:22,g45:6,a20:35,out:80}});
+let Z=load(K2,[]);
+let M=load(K3,{});
+function save(){localStorage.setItem(K1,JSON.stringify(DB));localStorage.setItem(K2,JSON.stringify(Z));localStorage.setItem(K3,JSON.stringify(M));}
+function fmt(v){return Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function mask(v){let d=v.replace(/\D/g,'').slice(0,11);if(d.length<=2)return '('+d;if(d.length<=6)return '('+d.slice(0,2)+') '+d.slice(2);if(d.length<=10)return '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6);return '('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7)}
+const $=s=>document.querySelector(s);
+function renderCli(){
+let b=$('#c_busca').value.toLowerCase();
+let list=DB.c.filter(x=>x.nome.toLowerCase().includes(b)||x.zap.includes(b));
+$('#c_lista').innerHTML=list.map(x=>'<div class="item"><div><b>'+x.nome+'</b><div class="small">'+x.zap+'</div></div><div class="row"><a class="badge" href="https://wa.me/55'+x.zap.replace(/\D/g,'')+'" target="_blank">ZAP</a><button data-del="'+x.id+'" class="badge" style="background:#fef2f2">X</button></div></div>').join('')||'<div class="small">Nenhum cliente</div>';
+$('#v_cli').innerHTML='<option value="">Avulso</option>'+DB.c.map(x=>'<option value="'+x.id+'">'+x.nome+'</option>').join('');
+$('#c_lista').querySelectorAll('[data-del]').forEach(btn=>btn.onclick=()=>{DB.c=DB.c.filter(c=>c.id!==btn.dataset.del);save();renderCli();renderVendas();renderDash()});
 }
-document.getElementById("menu").addEventListener("click",function(e){
-  const b=e.target.closest("button[data-t]");
-  if(!b) return;
-  abrirTela(b.getAttribute("data-t"));
+function prodClass(p){if(p==='GÁS')return 'gas';if(p==='ÁGUA')return 'agua';return 'outro'}
+function prodEmoji(p){if(p==='GÁS')return '🔥';if(p==='ÁGUA')return '💧';return '📦'}
+function renderVendas(){
+$('#p_img').className='produto-imagem '+prodClass($('#v_prod').value);$('#p_img').textContent=prodEmoji($('#v_prod').value);
+let html=DB.v.slice().reverse().slice(0,60).map(v=>'<div class="item"><div><b>'+v.produto+' x'+v.qtd+'</b> - '+v.clienteNome+'<div class="small">'+v.data+' • '+v.pag+' • '+fmt(v.valor)+(v.fiadoPago? ' • pago '+fmt(v.fiadoPago):'')+'</div></div><div><span class="badge">'+fmt(v.valor)+'</span> <button data-dv="'+v.id+'" class="badge" style="background:#fef2f2">X</button></div></div>').join('');
+$('#v_lista').innerHTML=html||'<div class="small">Sem vendas</div>';
+$('#v_lista').querySelectorAll('[data-dv]').forEach(b=>b.onclick=()=>{if(confirm('Excluir venda?')){DB.v=DB.v.filter(x=>x.id!==b.dataset.dv);save();renderVendas();renderDash();renderDia();renderRec();renderMes()}});
+}
+function calcMes(mes){
+let vs=DB.v.filter(v=>v.data.slice(0,7)===mes);
+let tot=0,pix=0,din=0,cart=0,fiado=0,arec=0;
+vs.forEach(v=>{
+tot+=Number(v.valor);
+let fp=v.fiadoPago||0;
+if(v.pag==='PIX')pix+=v.valor;
+else if(v.pag==='DINHEIRO')din+=v.valor;
+else if(v.pag==='CARTÃO')cart+=v.valor;
+else if(v.pag==='FIADO'){fiado+=v.valor;arec+= (v.valor-fp);}
+else if(v.pag==='MISTO'){pix+=Number(v.misto?.pix||0);din+=Number(v.misto?.din||0);cart+=Number(v.misto?.cart||0);fiado+=Number(v.misto?.fiado||0);arec+= (Number(v.misto?.fiado||0)-fp);}
 });
-document.getElementById("btnZerar").addEventListener("click",zerarDia);
-document.getElementById("btnZap").addEventListener("click",compartilharMes);
-document.getElementById("btnVerMes").addEventListener("click",()=>abrirTela("mes"));
-document.getElementById("btnMais1").addEventListener("click",addVendaRapida);
-document.getElementById("btnMenos1").addEventListener("click",removerUltimaVenda);
-document.getElementById("btnEst").addEventListener("click",ajustarEstoque);
-document.getElementById("btnDown").addEventListener("click",baixarBackup);
-document.getElementById("btnApagar").addEventListener("click",apagarTudo);
-
-function getCli(id){return banco.clientes.find(x=>x.id===id)}
-function nomeCli(id){const c=getCli(id);return c?c.nome:"Consumidor"}
-document.getElementById("fCli").onsubmit=function(e){
-  e.preventDefault();
-  const id=document.getElementById("cId").value||idNovo();
-  const cli={id,nome:document.getElementById("cNome").value.trim(),whatsapp:document.getElementById("cZap").value.trim(),endereco:document.getElementById("cEnd").value.trim(),bairro:document.getElementById("cBairro").value.trim()};
-  const pos=banco.clientes.findIndex(x=>x.id===id);
-  if(pos>=0) banco.clientes[pos]=cli; else banco.clientes.push(cli);
-  salvar(); this.reset(); aviso("Cliente salvo!");
-  abrirTela("clientes");
+return {vs,tot,pix,din,cart,fiado,arec}
 }
-function mostrarClientes(){
-  const busca=(document.getElementById("buscaCli").value||"").toLowerCase();
-  const lista=banco.clientes.filter(c=>(c.nome+" "+c.whatsapp).toLowerCase().includes(busca));
-  let html="";
-  lista.forEach(c=>{
-    const debito=banco.vendas.filter(v=>v.clienteId===c.id&&v.pagamento==="FIADO"&&v.status!=="PAGO").reduce((s,v)=>s+Number(v.total||0),0);
-    html+=`<tr><td><b>${escapar(c.nome)}</b></td><td>${escapar(c.whatsapp)}</td><td>${dinheiro(debito)}</td><td><button class="btn blue" data-edit="${c.id}">Ed</button></td></tr>`;
-  });
-  document.getElementById("listaCli").innerHTML=html||"<tr><td colspan='4' style='text-align:center'>Nenhum</td></tr>";
-  document.querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>editarCliente(b.getAttribute("data-edit"))));
+function renderDash(){
+let mes=$('#mes_filtro').value||new Date().toISOString().slice(0,7);
+$('#dash_mes').textContent=mes;$('#dia_hoje').textContent=new Date().toLocaleDateString('pt-BR');
+let c=calcMes(mes);
+$('#k_pix').textContent=fmt(c.pix);$('#k_din').textContent=fmt(c.din);$('#k_cart').textContent=fmt(c.cart);$('#k_fiado').textContent=fmt(c.fiado);
+$('#k_vendas').textContent=fmt(c.tot);$('#k_rec').textContent=fmt(c.tot-c.arec);$('#k_arec').textContent=fmt(c.arec);
+$('#k_desp').textContent=fmt(DB.d);$('#inp_desp').value=DB.d;
+$('#k_lucro').textContent=fmt((c.tot-c.arec)-DB.d);
 }
-function editarCliente(id){
-  const c=getCli(id); if(!c) return;
-  document.getElementById("cId").value=c.id;
-  document.getElementById("cNome").value=c.nome;
-  document.getElementById("cZap").value=c.whatsapp;
-  document.getElementById("cEnd").value=c.endereco||"";
-  document.getElementById("cBairro").value=c.bairro||"";
-  abrirTela("clientes");
+function renderDia(){
+let hoje=new Date().toISOString().slice(0,10);
+let vs=DB.v.filter(v=>v.data===hoje);
+let tot=0,map={PIX:0,DINHEIRO:0,CARTÃO:0,FIADO:0};
+vs.forEach(v=>{
+tot+=Number(v.valor);
+if(v.pag==='MISTO'){map.PIX+=Number(v.misto?.pix||0);map.DINHEIRO+=Number(v.misto?.din||0);map.CARTÃO+=Number(v.misto?.cart||0);map.FIADO+=Number(v.misto?.fiado||0);}
+else map[v.pag]=(map[v.pag]||0)+Number(v.valor);
+});
+$('#dia_break').innerHTML=Object.entries(map).map(([k,val])=>'<div class="item"><span>'+k+'</span><b>'+fmt(val)+'</b></div>').join('')+'<div class="small">'+vs.length+' vendas hoje</div>';
+$('#dia_total').textContent=fmt(tot);
+$('#z_hist').innerHTML=Z.slice().reverse().slice(0,10).map(z=>'<div class="item"><span>'+z.data+'</span><b>'+fmt(z.total)+'</b></div>').join('')||'<div class="small">Sem fechamentos</div>';
 }
-function carregarClientesVenda(){
-  const sel=document.getElementById("vCli");
-  let html="<option value=''>Consumidor</option>";
-  banco.clientes.forEach(c=>{html+=`<option value="${c.id}">${escapar(c.nome)}</option>`});
-  sel.innerHTML=html;
+function renderEst(){
+let grid=$('#est_grid');
+grid.innerHTML=''+
+'<div class="est g13"><div><i>🔥</i><div><b>GÁS P13</b><div class="small" style="color:#fff">'+DB.e.g13+' un</div></div></div><div class="row"><button class="btn ghost" data-e="g13" data-a="-1">-</button><button class="btn" data-e="g13" data-a="1">+</button></div></div>'+
+'<div class="est g45"><div><i>🔥</i><div><b>GÁS P45</b><div class="small" style="color:#fff">'+DB.e.g45+' un</div></div></div><div class="row"><button class="btn ghost" data-e="g45" data-a="-1">-</button><button class="btn" data-e="g45" data-a="1">+</button></div></div>'+
+'<div class="est a20"><div><i>💧</i><div><b>ÁGUA 20L</b><div class="small" style="color:#fff">'+DB.e.a20+' un</div></div></div><div class="row"><button class="btn ghost" data-e="a20" data-a="-1">-</button><button class="btn" data-e="a20" data-a="1">+</button></div></div>'+
+'<div class="est out"><div><i>📦</i><div><b>OUTROS</b><div class="small" style="color:#fff">'+DB.e.out+' un</div></div></div><div class="row"><button class="btn ghost" data-e="out" data-a="-1">-</button><button class="btn" data-e="out" data-a="1">+</button></div></div>';
+grid.querySelectorAll('button').forEach(b=>b.onclick=()=>{let k=b.dataset.e;DB.e[k]=Math.max(0,DB.e[k]+Number(b.dataset.a));save();renderEst()});
 }
-function ajustarEstoqueVenda(p,q){
-  q=Number(q||0);
-  if(p==="Gás"){banco.estoque.gasCheio=Math.max(0,banco.estoque.gasCheio-q);banco.estoque.gasVazio+=q}
-  if(p==="Água"){banco.estoque.aguaCheia=Math.max(0,banco.estoque.aguaCheia-q);banco.estoque.aguaVazia+=q}
+function fiadoRestante(v){
+let totalFiado=v.pag==='FIADO'? v.valor : (v.misto?.fiado||0);
+return Math.max(0,totalFiado-(v.fiadoPago||0));
 }
-function devolverEstoqueVenda(v){
-  const q=Number(v.quantidade||0);
-  if(v.produto==="Gás"){banco.estoque.gasCheio+=q;banco.estoque.gasVazio=Math.max(0,banco.estoque.gasVazio-q)}
-  if(v.produto==="Água"){banco.estoque.aguaCheia+=q;banco.estoque.aguaVazia=Math.max(0,banco.estoque.aguaVazia-q)}
+function renderRec(){
+let list=DB.v.filter(v=>fiadoRestante(v)>0.009 && !v.quitado);
+$('#rec_lista').innerHTML=list.map(v=>{
+let rest=fiadoRestante(v);
+let zap=DB.c.find(c=>c.id===v.clienteId)?.zap||'';
+let link=zap? 'https://wa.me/55'+zap.replace(/\D/g,'')+'?text='+encodeURIComponent('Olá '+v.clienteNome+'! Faltam '+fmt(rest)+' do seu fiado de '+v.produto+'. El Shaday Gás e Água 🔥') : '#';
+return '<div class="item"><div><b>'+v.clienteNome+'</b> - '+v.produto+'<div class="small">'+v.data+' • resta '+fmt(rest)+' de '+fmt(v.pag==='FIADO'?v.valor:v.misto.fiado)+'</div></div><div style="display:flex;flex-wrap:wrap;gap:6px;max-width:220px;justify-content:flex-end"><button class="badge" data-50="'+v.id+'">50%</button><button class="badge" data-ped="'+v.id+'">PEDAÇO</button><button class="badge" style="background:#dcfce7" data-tot="'+v.id+'">TOTAL</button><a class="badge" href="'+link+'" target="_blank">ZAP</a></div></div>'
+}).join('')||'<div class="small">Nenhum fiado em aberto 🎉</div>';
+$('#rec_lista').querySelectorAll('[data-50]').forEach(b=>b.onclick=()=>{let v=DB.v.find(x=>x.id===b.dataset[50]);let r=fiadoRestante(v);v.fiadoPago=(v.fiadoPago||0)+r/2;if(fiadoRestante(v)<0.01)v.quitado=true;save();renderRec();renderDash();renderVendas()});
+$('#rec_lista').querySelectorAll('[data-ped]').forEach(b=>b.onclick=()=>{let v=DB.v.find(x=>x.id===b.dataset.ped);let val=prompt('Valor do pedaço? Resta '+fmt(fiadoRestante(v)));if(!val)return;let n=Number(val.replace(',','.'));if(isNaN(n)||n<=0)return alert('Valor inválido');v.fiadoPago=(v.fiadoPago||0)+n;if(fiadoRestante(v)<0.01)v.quitado=true;save();renderRec();renderDash()});
+$('#rec_lista').querySelectorAll('[data-tot]').forEach(b=>b.onclick=()=>{let v=DB.v.find(x=>x.id===b.dataset.tot);v.fiadoPago=(v.pag==='FIADO'?v.valor:v.misto.fiado);v.quitado=true;save();renderRec();renderDash()});
 }
-document.getElementById("fVenda").onsubmit=function(e){
-  e.preventDefault();
-  const qtd=Number(document.getElementById("vQtd").value||0);
-  const valor=Number(document.getElementById("vValor").value||0);
-  if(qtd<=0) return;
-  const produto=document.getElementById("vProd").value;
-  const pagamento=document.getElementById("vPag").value;
-  const data=document.getElementById("vData").value||hoje();
-  const total=Math.round(qtd*valor*100)/100;
-  const venda={id:idNovo(),clienteId:document.getElementById("vCli").value,produto,quantidade:qtd,valor,total,totalOriginal:total,recebido:pagamento==="FIADO"?0:total,data,pagamento,status:pagamento==="FIADO"?"PENDENTE":"PAGO",fechado:false};
-  banco.vendas.push(venda);
-  ajustarEstoqueVenda(produto,qtd);
-  salvar();
-  this.reset();
-  document.getElementById("vData").value=hoje();
-  document.getElementById("vQtd").value=1;
-  document.getElementById("vValor").value=120;
-  carregarClientesVenda();
-  aviso("Venda registrada!");
+function renderMes(){
+let mes=$('#mes_filtro').value||new Date().toISOString().slice(0,7);
+let vs=DB.v.filter(v=>v.data.slice(0,7)===mes);
+$('#mes_lista').innerHTML=vs.reverse().map(v=>'<div class="item"><div><b>'+v.produto+' x'+v.qtd+'</b> '+v.clienteNome+'<div class="small">'+v.data+' '+v.pag+' '+fmt(v.valor)+'</div></div></div>').join('')||'<div class="small">Sem vendas no mês</div>';
 }
-function mostrarVendas(){
-  const lista=banco.vendas.filter(v=>v.data===hoje()&&!v.fechado);
-  let html="";
-  lista.forEach(v=>{
-    html+=`<tr><td>${escapar(nomeCli(v.clienteId))}</td><td>${escapar(v.produto)}</td><td>${dinheiro(v.total)}</td><td><button class="btn red" data-delv="${v.id}">X</button></td></tr>`;
-  });
-  document.getElementById("listaVendas").innerHTML=html||"<tr><td colspan='4' style='text-align:center'>Nenhuma hoje</td></tr>";
-  document.getElementById("qtdHoje").textContent=lista.length;
-  document.querySelectorAll("[data-delv]").forEach(b=>b.addEventListener("click",()=>excluirVenda(b.getAttribute("data-delv"))));
+function initTabs(){
+document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{
+document.querySelectorAll('#nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+document.querySelectorAll('main>section').forEach(s=>s.classList.add('hide'));$('#'+b.dataset.t).classList.remove('hide');
+if(b.dataset.t==='dash')renderDash();if(b.dataset.t==='dia')renderDia();if(b.dataset.t==='rec')renderRec();if(b.dataset.t==='mes')renderMes();if(b.dataset.t==='est')renderEst();
+});
 }
-function excluirVenda(id){
-  if(!confirm("Excluir?")) return;
-  const v=banco.vendas.find(x=>x.id===id);
-  if(v) devolverEstoqueVenda(v);
-  banco.vendas=banco.vendas.filter(x=>x.id!==id);
-  salvar();
-}
-function addVendaRapida(){
-  const ultima=banco.vendas[banco.vendas.length-1];
-  const produto=ultima?ultima.produto:"Gás";
-  const valor=ultima?Number(ultima.valor||120):120;
-  const venda={id:idNovo(),clienteId:ultima?ultima.clienteId:"",produto,quantidade:1,valor,total:valor,totalOriginal:valor,recebido:valor,data:hoje(),[STRIPPED] venda rápida!")}
-}
-function removerUltimaVenda(){
-  const lista=banco.vendas.filter(v=>v.data===hoje()&&!v.fechado);
-  if(!lista.length){aviso("Nada hoje");return}
-  const ultima=lista[lista.length-1];
-  devolverEstoqueVenda(ultima);
-  banco.vendas=banco.vendas.filter(v=>v.id!==ultima.id);
-  salvar();
-}
-function zerarDia(){
-  const data=hoje();
-  const vendasHoje=banco.vendas.filter(v=>v.data===data&&!v.fechado);
-  if(!vendasHoje.length){aviso("Nada hoje");return}
-  if(!confirm("ZERAR DIA? Vai pro histórico.")) return;
-  vendasHoje.forEach(v=>v.fechado=true);
-  salvar(); aviso("Dia fechado!");
-}
-function mostrarReceber(){
-  const lista=banco.vendas.filter(v=>v.pagamento==="FIADO"&&v.status!=="PAGO"&&Number(v.total)>0);
-  let html="";
-  lista.forEach(v=>{
-    html+=`<tr><td><b>${escapar(nomeCli(v.clienteId))}</b></td><td style="color:#d92727"><b>${dinheiro(v.total)}</b></td><td><button class="btn green" data-rec="${v.id}">Receber</button></td></tr>`;
-  });
-  document.getElementById("listaReceber").innerHTML=html||"<tr><td colspan='3' style='text-align:center'>Nenhum fiado</td></tr>";
-  document.getElementById("receberStats").innerHTML="A RECEBER: "+dinheiro(lista.reduce((s,v)=>s+Number(v.total||0),0));
-  document.querySelectorAll("[data-rec]").forEach(b=>b.addEventListener("click",()=>{const v=banco.vendas.find(x=>x.id===b.getAttribute("data-rec")); if(v){v.total=0;v.status="PAGO";salvar()}}));
-}
-function mostrarEstoque(){
-  const e=banco.estoque;
-  document.getElementById("estCards").innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="card">🔥 GÁS CHEIO<br><b>${e.gasCheio}</b></div><div class="card">GÁS VAZIO<br><b>${e.gasVazio}</b></div><div class="card">💧 ÁGUA CHEIA<br><b>${e.aguaCheia}</b></div><div class="card">ÁGUA VAZIA<br><b>${e.aguaVazia}</b></div></div>`;
-  document.getElementById("est3d").innerHTML=document.getElementById("estCards").innerHTML;
-}
-function ajustarEstoque(){
-  const prod=document.getElementById("eProd").value;
-  const qtd=Number(document.getElementById("eQtd").value||0);
-  const op=document.getElementById("eOp").value;
-  if(op==="entrada") banco.estoque[prod]+=qtd; else banco.estoque[prod]=Math.max(0,banco.estoque[prod]-qtd);
-  salvar(); aviso("Estoque ok!");
-}
-document.getElementById("fDesp").onsubmit=function(e){
-  e.preventDefault();
-  const valor=Number(document.getElementById("dValor").value||0);
-  if(valor<=0) return;
-  banco.despesas.push({id:idNovo(),valor,data:document.getElementById("dData").value||hoje(),[STRIPPED]
-}
-function mostrarDespesas(){
-  let html="";
-  banco.despesas.forEach(d=>{
-    html+=`<tr><td>${dataBR(d.data)}</td><td>${escapar(d.motivo)}</td><td>${dinheiro(d.valor)}</td><td><button class="btn red" data-deld="${d.id}">X</button></td></tr>`;
-  });
-  document.getElementById("listaDesp").innerHTML=html||"<tr><td colspan='4' style='text-align:center'>Nenhuma</td></tr>";
-  document.querySelectorAll("[data-deld]").forEach(b=>b.addEventListener("click",()=>{banco.despesas=banco.despesas.filter(x=>x.id!==b.getAttribute("data-deld")); salvar()}));
-}
-function totalVendasMes(mes){
-  return banco.vendas.filter(v=>String(v.data||"").slice(0,7)===mes).reduce((s,v)=>s+Number(v.totalOriginal||v.total||0),0)
-}
-function mostrarDashboard(){
-  const mes=hoje().slice(0,7);
-  const total=totalVendasMes(mes);
-  const recebido=banco.vendas.filter(v=>String(v.data).slice(0,7)===mes&&v.pagamento!=="FIADO").reduce((s,v)=>s+Number(v.totalOriginal||v.total||0),0);
-  const aReceber=banco.vendas.filter(v=>v.pagamento==="FIADO"&&v.status!=="PAGO").reduce((s,v)=>s+Number(v.total||0),0);
-  document.getElementById("dashResumo").innerHTML=`VENDAS MÊS: <b>${dinheiro(total)}</b> | RECEBIDO: <b>${dinheiro(recebido)}</b> | A RECEBER: <b>${dinheiro(aReceber)}</b>`;
-  document.getElementById("hojeTxt").textContent=dataBR(hoje());
-  document.getElementById("mesResumo").textContent="Total mês "+dinheiro(total);
-  document.getElementById("resFin").innerHTML=`Vendas: ${dinheiro(total)}<br>Recebido: ${dinheiro(recebido)}<br>A receber: ${dinheiro(aReceber)}`;
-  const ultimas=banco.vendas.slice().sort((a,b)=>String(b.data).localeCompare(String(a.data))).slice(0,5);
-  let html="";
-  ultimas.forEach(v=>{html+=`<tr><td>${dataBR(v.data)}</td><td>${escapar(nomeCli(v.clienteId))}</td><td>${escapar(v.produto)}</td><td>${dinheiro(v.totalOriginal||v.total)}</td></tr>`});
-  document.getElementById("ultVendas").innerHTML=html||"<tr><td colspan='4' style='text-align:center'>Sem vendas</td></tr>";
-}
-function compartilharMes(){
-  const mes=document.getElementById("mesSel").value||hoje().slice(0,7);
-  window.open("https://wa.me/?text="+encodeURIComponent("EL SHADAY Mês "+mes+" Total "+dinheiro(totalVendasMes(mes))),"_blank")
-}
-function baixarBackup(){
-  const blob=new Blob([JSON.stringify(banco,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a"); a.href=url; a.download="backup-"+hoje()+".json"; a.click();
-}
-function apagarTudo(){if(!confirm("APAGAR TUDO?"))return;localStorage.removeItem(CHAVE);location.reload()}
-function atualizar(){
-  carregarClientesVenda();
-  mostrarClientes();
-  mostrarVendas();
-  mostrarReceber();
-  mostrarEstoque();
- 
+$('#c_zap').addEventListener('input',e=>e.target.value=mask(e.target.value));
+$('#c_add').onclick=()=>{
+let nome=$('#c_nome').value.trim();let zap=$('#c_zap').value.trim();
+if(!nome)return alert('Nome obrigatório');if(onlyDigits(zap).length!==11)return alert('Whatsapp precisa 11 dígitos');
+DB.c.push({id:Date.now().toString(),nome,zap});$('#c_nome').value='';$('#c_zap').value='';save();renderCli();
+};
+$('#c_busca').addEventListener('input',renderCli);
+$('#v_prod').addEventListener('change',renderVendas);
+$('#v_pag').addEventListener('change',()=>{let m=$('#v_pag').value==='MISTO';$('#misto_box').classList.toggle('hide',!m)});
+function calcMisto(){let s=Number($('#m_pix').value||0)+Number($('#m_din').value||0)+Number($('#m_cart').value||0)+Number($('#m_fiado').value||0);$('#m_sum').textContent='Soma: '+fmt(s)+' / total: '+fmt(Number($('#v_val').value||0));}
+['#m_pix','#m_din','#m_cart','#m_fiado','#v_val'].forEach(s=>$(s).addEventListener('input',calcMisto));
+$('#v_add').onclick=()=>{
+let cliId=$('#v_cli').value;let cliNome=cliId? DB.c.find(c=>c.id===cliId)?.nome||'Avulso' : 'Avulso';
+let prod=$('#v_prod').value, qtd=Number($('#v_qtd').value||1), valor=Number($('#v_val').value||0), data=$('#v_data').value||new Date().toISOString().slice(0,10), pag=$('#v_pag').value;
+if(valor<=0)return alert('Valor obrigatório');if(qtd<=0)return alert('Qtd inválida');
+let misto=null;if(pag==='MISTO'){let pix=Number($('#m_pix').value||0),din=Number($('#m_din').value||0),cart=Number($('#m_cart').value||0),fiado=Number($('#m_fiado').value||0);let soma=pix+din+cart+fiado;if(Math.abs(soma-valor)>0.01)return alert('MISTO: soma '+fmt(soma)+' diferente do total '+fmt(valor));misto={pix,din,cart,fiado};}
+DB.v.push({id:Date.now().toString(),clienteId:cliId,clienteNome:cliNome,produto:prod,qtd,valor,data,pag,misto,fiadoPago:0,quitado:false});
+save();$('#v_val').value='';$('#m_pix').value=0;$('#m_din').value=0;$('#m_cart').value=0;$('#m_fiado').value=0;renderVendas();renderDash();renderDia();renderRec();alert('Venda lançada!');
+};
+$('#inp_desp').addEventListener('change',e=>{DB.d=Number(e.target.value||0);save();renderDash()});
+$('#dia_zerar').onclick=()=>{
+if(!confirm('ZERAR DIA? Vai arquivar hoje em '+K2+' e apagar vendas de hoje.'))return;
+let hoje=new Date().toISOString().slice(0,10);let vs=DB.v.filter(v=>v.data===hoje);let tot=vs.reduce((s,v)=>s+Number(v.valor),0);
+Z.push({data:hoje,total:tot,qtd:vs.length,detalhe:vs});DB.v=DB.v.filter(v=>v.data!==hoje);save();renderVendas();renderDia();renderDash();alert('Dia zerado! Total: '+fmt(tot));
+};
+$('#mes_filtro').addEventListener('change',()=>{renderMes();renderDash()});
+$('#bkp_down').onclick=()=>{
+let blob=new Blob([JSON.stringify({final:DB,z:Z,m:M},null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='el_shaday_backup_'+new Date().toISOString().slice(0,10)+'.json';a.click();
+};
+$('#v_data').valueAsDate=new Date();$('#mes_filtro').valu
