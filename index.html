@@ -1,3 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRUPO EL SHADAI GAS - FINAL</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+:root{--bg:#0a0a0a;--card:#151515;--yellow:#facc15;--green:#22c55e;--text:#fff;--muted:#9ca3af;--border:#262626}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial}
+body{background:var(--bg);color:var(--text);padding-bottom:90px}
+header{position:sticky;top:0;z-index:50;background:#0a0a0a;border-bottom:1px solid var(--border);padding:12px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900}.logo span{color:var(--yellow)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 12px}
+.tab{white-space:nowrap;padding:8px 14px;border-radius:999px;background:#1e1e1e;border:1px solid var(--border);font-size:13px;cursor:pointer}
+.tab.active{background:var(--yellow);color:#000;font-weight:800}
+.card{background:#151515;border:1px solid var(--border);border-radius:16px;padding:14px;margin:10px 12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi h3{font-size:11px;color:var(--muted);text-transform:uppercase}
+.kpi b{font-size:18px;display:block;margin-top:4px}
+label{font-size:11px;color:var(--muted);margin:6px 0 4px 4px;display:block}
+input,select{width:100%;background:#0f0f0f;border:1px solid var(--border);border-radius:12px;padding:12px;color:#fff}
+.btn{width:100%;padding:13px;border-radius:12px;border:0;font-weight:800;cursor:pointer}
+.btn-y{background:linear-gradient(90deg,#facc15,#f59e0b);color:#000}
+.btn-g{background:linear-gradient(90deg,#1A4D2E,#22c55e);color:#fff}
+.btn-b{background:#222;color:#fff;border:1px solid #333}
+.item{background:#1e1e1e;border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+.badge{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.badge-green{background:#22c55e22;color:#22c55e;border:1px solid #22c55e44}
+.badge-red{background:#ef444422;color:#ef4444;border:1px solid #ef444444}
+.badge-yellow{background:#facc1522;color:#facc15;border:1px solid #facc1544}
+.wa{width:36px;height:36px;border-radius:999px;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-weight:900}
+.wa-cobrar{background:#25D366;color:#fff;border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.hidden{display:none!important}
+.perfil-el{background:#22c55e;color:#fff;width:36px;height:36px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:900}
+</style>
+</head>
+<body>
+<header><div class="logo">GRUPO <span>EL SHADAI GAS</span><br><small style="font-size:10px;color:#9ca3af">GAS P13 - SISTEMA PRO</small></div><div class="perfil-el">EL</div></header>
+<div class="tabs">
+<div class="tab active" data-tab="dash">Dashboard</div>
+<div class="tab" data-tab="clientes">Clientes</div>
+<div class="tab" data-tab="vendas">Vendas</div>
+<div class="tab" data-tab="receber">Receber</div>
+<div class="tab" data-tab="estoque">Estoque</div>
+<div class="tab" data-tab="despesa">Despesas</div>
+<div class="tab" data-tab="fech">Fechamento</div>
+<div class="tab" data-tab="backup">Backup</div>
+</div>
+<section id="dash"><div class="grid2" style="margin:10px 12px 0"><div class="card kpi" style="margin:0"><h3>VENDAS HOJE</h3><b id="kpiVendasHoje">R$ 0,00</b><small id="kpiVendasHojeQ">0</small></div><div class="card kpi" style="margin:0"><h3>A RECEBER</h3><b id="kpiAReceber">R$ 0,00</b><small id="kpiAReceberQ">0</small></div><div class="card kpi" style="margin:0"><h3>LUCRO REAL</h3><b id="kpiLucro">R$ 0,00</b></div><div class="card kpi" style="margin:0"><h3>CLIENTES</h3><b id="kpiClientes">0</b></div></div><div class="card"><b>Estoque Visual</b><div class="grid2" style="margin-top:10px"><div><small>Gas Cheio</small><b id="estGC">20</b></div><div><small>Gas Vazio</small><b id="estGV">20</b></div><div><small>Agua Cheia</small><b id="estAC">20</b></div><div><small>Agua Vazia</small><b id="estAV">20</b></div></div></div><div class="card"><b>Ultimas vendas</b><div id="ultimasVendas"></div></div></section>
+<section id="clientes" class="hidden"><div class="card"><b>Clientes</b><input id="cNome" placeholder="Nome *"><input id="cZap" placeholder="Zap" style="margin-top:8px"><input id="cEnd" placeholder="Endereco" style="margin-top:8px"><button class="btn btn-y" style="margin-top:10px" onclick="salvarCliente()">Salvar</button><hr style="margin:12px 0;border:0;border-top:1px solid #222"><input id="buscaCli" placeholder="Buscar" oninput="renderClientes()"><div id="listaClientes"></div></div></section>
+<section id="vendas" class="hidden"><div class="card"><b>Venda</b><select id="vCliente" style="margin-top:10px"></select><select id="vProduto" style="margin-top:8px"><option value="G">Gas P13</option><option value="A">Agua 20L</option></select><div class="grid2" style="margin-top:8px"><div><label>QTD</label><input id="vQtd" type="number" value="1"></div><div><label>UNIT R$</label><input id="vUnit" type="number" value="86"></div></div><div class="grid2" style="margin-top:8px"><div><label>Dinheiro DH</label><input id="vDin" type="number" placeholder="Ex: 3000"></div><div><label>Pix R$</label><input id="vPix" type="number" placeholder="Pix"></div></div><div><label>Cartao R$</label><input id="vCart" type="number" placeholder="Cartao"></div><div style="background:#fffbeb;color:#000;border-radius:12px;padding:12px;margin-top:10px"><b id="vFormula">1x R$86 = R$86</b><span style="float:right;font-weight:900" id="vTotalAuto">R$ 86,00</span><br><small>Pago: <b id="vPagoAgora" style="color:#1A4D2E">R$ 0,00</b> | Fiado: <b id="vFiado" style="color:#ef4444">R$ 86,00</b></small></div><button class="btn btn-y" style="margin-top:10px" onclick="registrarVenda()">Registrar</button><div id="listaVendas" style="margin-top:10px"></div></div></section>
+<section id="receber" class="hidden"><div class="card"><b>A Receber</b> <span class="badge badge-yellow" id="totalReceberBadge">R$ 0,00</span><div id="listaReceber"></div></div></section>
+<section id="estoque" class="hidden"><div class="card"><b>Estoque - 20 Gas / 20 Agua</b><div class="grid2" style="margin-top:10px"><div><label>Gas Cheio</label><input id="eGC" type="number" value="20"></div><div><label>Gas Vazio</label><input id="eGV" type="number" value="20"></div><div><label>Agua Cheia</label><input id="eAC" type="number" value="20"></div><div><label>Agua Vazia</label><input id="eAV" type="number" value="20"></div></div><button class="btn btn-y" style="margin-top:12px" onclick="salvarEstoque()">Salvar</button></div></section>
 <section id="despesa" class="hidden"><div class="card"><b>Despesas</b><div style="display:flex;gap:8px;margin-top:10px"><input id="dDesc" placeholder="Descricao"><input id="dValor" type="number" placeholder="Valor"><button class="btn btn-y" style="width:auto" onclick="addDespesa()">Add</button></div><div id="listaDespesas"></div></div></section>
 <section id="fech" class="hidden"><div class="card"><b>Fechamento</b><div id="fechamentoBox" style="margin-top:10px"></div><button class="btn btn-y" style="margin-top:12px" onclick="baixarPDFFechamento()">PDF IGUAL PLANILHA</button><button class="btn btn-b" style="margin-top:8px" onclick="baixarRelatorioDiaPDF()">Dia PDF</button></div></section>
 <section id="backup" class="hidden"><div class="card"><b>Backup</b><button class="btn btn-y" style="margin-top:10px" onclick="baixarBackup()">Backup JSON</button><button class="btn btn-g" style="margin-top:10px" onclick="baixarRelatorioDia()">TXT</button><button class="btn btn-b" style="margin-top:10px" onclick="baixarRelatorioDiaPDF()">PDF</button><input type="file" id="fileRestore" accept=".json" style="margin-top:12px"><button class="btn" style="background:#ef4444;color:#fff;margin-top:12px" onclick="apagarTudo()">Apagar tudo</button></div></section>
@@ -56,3 +111,6 @@ renderAll();calcTotal();
 </script>
 </body>
 </html>
+
+
+  
