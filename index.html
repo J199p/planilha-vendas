@@ -1,114 +1,107 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RG OLIVEIRA PRO V3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRUPO EL SHADAI GAS</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui}
-body{background:#0f1115;color:#fff;padding:10px}
-.header{background:linear-gradient(135deg,#ff6a00,#ff9a3c);padding:15px;border-radius:12px;text-align:center}
-.card{background:#1a1d24;border-radius:12px;padding:12px;margin:10px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.kpi{text-align:center;padding:10px;background:#22252f;border-radius:10px}
-.kpi b{display:block;color:#ff6a00;font-size:18px}
-.btn{width:100%;padding:12px;border:none;border-radius:10px;font-weight:bold;background:#ff6a00;color:#fff;margin-top:8px}
-.btn-green{background:#00e676;color:#000}
-.input{width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#0f1115;color:#fff;margin:5px 0}
-.lock{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;place-items:center;z-index:99;padding:20px}
-.lock.show{display:grid}
-.badge.pro{background:#00e676;color:#000}
+:root{--bg:#0a0a0a;--card:#151515;--card2:#1e1e1e;--yellow:#facc15;--text:#fff;--muted:#9ca3af;--border:#262626}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial}
+body{background:var(--bg);color:var(--text);padding-bottom:90px}
+header{position:sticky;top:0;z-index:50;background:#0a0a0a;border-bottom:1px solid var(--border);padding:12px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900}.logo span{color:var(--yellow)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 12px}
+.tab{white-space:nowrap;padding:8px 14px;border-radius:999px;background:#1e1e1e;border:1px solid var(--border);font-size:13px;cursor:pointer}
+.tab.active{background:var(--yellow);color:#000;font-weight:800}
+.card{background:#151515;border:1px solid var(--border);border-radius:16px;padding:14px;margin:10px 12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi h3{font-size:11px;color:var(--muted);text-transform:uppercase}
+.kpi b{font-size:18px;display:block;margin-top:4px}
+input,select{width:100%;background:#0f0f0f;border:1px solid var(--border);border-radius:12px;padding:12px;color:#fff}
+.btn{width:100%;padding:13px;border-radius:12px;border:0;font-weight:800;cursor:pointer}
+.btn-y{background:linear-gradient(90deg,#facc15,#f59e0b);color:#000}
+.btn-g{background:linear-gradient(90deg,#1A4D2E,#22c55e);color:#fff}
+.btn-b{background:#222;color:#fff;border:1px solid #333}
+.item{background:#1e1e1e;border:1px solid var(--border);border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+.badge{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}
+.badge-green{background:#22c55e22;color:#22c55e;border:1px solid #22c55e44}
+.badge-red{background:#ef444422;color:#ef4444;border:1px solid #ef444444}
+.badge-yellow{background:#facc1522;color:#facc15;border:1px solid #facc1544}
+.wa{width:36px;height:36px;border-radius:999px;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-weight:900}
+.wa-cobrar{background:#25D366;color:#fff;border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
-<div class="header">
-<h2>🔥 RG OLIVEIRA GÁS</h2>
-<div id="badge" style="background:#333;padding:4px 10px;border-radius:20px;display:inline-block;margin-top:5px;font-size:12px">PRO INATIVO</div>
+<header><div class="logo">GRUPO <span>EL SHADAI GAS</span><br><small style="font-size:10px;color:#9ca3af">GAS P13 - SISTEMA PRO</small></div><div style="width:36px;height:36px;border-radius:999px;background:#facc15;color:#000;display:flex;align-items:center;justify-content:center;font-weight:900">ES</div></header>
+<div class="tabs">
+<div class="tab active" data-tab="dash">Dashboard</div>
+<div class="tab" data-tab="clientes">Clientes</div>
+<div class="tab" data-tab="vendas">Vendas</div>
+<div class="tab" data-tab="receber">Receber</div>
+<div class="tab" data-tab="estoque">Estoque</div>
+<div class="tab" data-tab="despesa">Despesas</div>
+<div class="tab" data-tab="fech">Fechamento</div>
+<div class="tab" data-tab="backup">Backup</div>
 </div>
-
-<div id="lockScreen" class="lock">
-<div class="card" style="max-width:400px;width:100%">
-<h3 style="text-align:center">🔒 PRO EXPIRADO</h3>
-<p style="text-align:center;margin:8px">5 vendas grátis acabaram!</p>
-<div style="background:#0f1115;padding:10px;border-radius:10px">
-<small>Sua chave:</small>
-<b id="pixKey" style="color:#ff6a00;word-break:break-all;display:block">...</b>
-<button class="btn" onclick="copiar()">📋 COPIAR CHAVE</button>
-<button class="btn btn-green" onclick="jaPaguei()">✅ JÁ PAGUEI</button>
-</div>
-<input id="codInput" class="input" placeholder="Cole código RG-XXXX aqui">
-<button class="btn" onclick="validar()">🔓 ATIVAR PRO R$39,99</button>
-</div>
-</div>
-
-<div class="grid">
-<div class="kpi"><small>VENDAS MÊS</small><b id="kV">R$0</b></div>
-<div class="kpi"><small>A RECEBER</small><b id="kR">R$0</b></div>
-<div class="kpi"><small>DESPESAS</small><b id="kD" style="color:#ff5252">R$0</b></div>
-<div class="kpi"><small>LUCRO</small><b id="kL" style="color:#00e676">R$0</b></div>
-</div>
-
-<div class="card">
-<h4>➕ Venda Rápida</h4>
-<div class="grid">
-<button class="btn" onclick="venda('GÁS P13',110)">GÁS P13 R$110</button>
-<button class="btn" onclick="venda('ÁGUA',10)">ÁGUA R$10</button>
-<button class="btn" onclick="venda('GÁS P8',85)">P8 R$85</button>
-<button class="btn" onclick="venda('P45',380)">P45 R$380</button>
-</div>
-</div>
-
-<div class="card">
-<h4>👥 Clientes</h4>
-<input id="nCli" class="input" placeholder="Nome cliente">
-<input id="zCli" class="input" placeholder="WhatsApp">
-<button class="btn" onclick="addCli()">Salvar Cliente</button>
-<input id="busca" class="input" placeholder="🔍 Buscar..." oninput="render()">
-<div id="lCli"></div>
-</div>
-
-<div class="card">
-<h4>🧾 Vendas</h4>
-<div id="lVen"></div>
-<button class="btn btn-green" onclick="fechar()">📲 Fechamento no Zap</button>
-</div>
-
-<div class="card">
-<button class="btn" style="background:#333" onclick="document.getElementById('admin').classList.add('show')">🔑 ADMIN</button>
-<button class="btn" style="background:#333" onclick="backup()">💾 Backup</button>
-</div>
-
-<div id="admin" class="lock">
-<div class="card" style="max-width:400px">
-<h3>ADMIN - Senha: RgOliveira2026</h3>
-<input id="sAdmin" type="password" class="input" placeholder="Senha">
-<button class="btn" onclick="if(document.getElementById('sAdmin').value=='RgOliveira2026'){document.getElementById('cAdmin').style.display='block'}else alert('errada')">Entrar</button>
-<div id="cAdmin" style="display:none">
-<input id="cPix" class="input" placeholder="Chave cliente">
-<select id="cDias" class="input"><option value="30">30 dias</option><option value="90">90 dias</option><option value="9999">Vitalício</option></select>
-<button class="btn btn-green" onclick="gerar()">Gerar Código RG-</button>
-<b id="cGer"></b>
-</div>
-<button class="btn" onclick="document.getElementById('admin').classList.remove('show')">Fechar</button>
-</div>
-</div>
-
+<section id="dash"><div class="grid2" style="margin:10px 12px 0"><div class="card kpi" style="margin:0"><h3>VENDAS HOJE</h3><b id="kpiVendasHoje">R$ 0,00</b><small id="kpiVendasHojeQ">0</small></div><div class="card kpi" style="margin:0"><h3>A RECEBER</h3><b id="kpiAReceber">R$ 0,00</b><small id="kpiAReceberQ">0</small></div><div class="card kpi" style="margin:0"><h3>LUCRO REAL</h3><b id="kpiLucro">R$ 0,00</b></div><div class="card kpi" style="margin:0"><h3>CLIENTES</h3><b id="kpiClientes">0</b></div></div><div class="card"><b>Estoque</b><div class="grid2" style="margin-top:10px"><div><small>Gas Cheio</small><b id="estGC">20</b></div><div><small>Gas Vazio</small><b id="estGV">10</b></div><div><small>Agua Cheia</small><b id="estAC">30</b></div><div><small>Agua Vazia</small><b id="estAV">15</b></div></div></div><div class="card"><b>Ultimas vendas</b><div id="ultimasVendas"></div></div></section>
+<section id="clientes" class="hidden"><div class="card"><b>Clientes</b><input id="cNome" placeholder="Nome *"><input id="cZap" placeholder="Zap" style="margin-top:8px"><input id="cEnd" placeholder="Endereco" style="margin-top:8px"><button class="btn btn-y" style="margin-top:10px" onclick="salvarCliente()">Salvar</button><hr style="margin:12px 0;border:0;border-top:1px solid #222"><input id="buscaCli" placeholder="Buscar" oninput="renderClientes()"><div id="listaClientes"></div></div></section>
+<section id="vendas" class="hidden"><div class="card"><b>Venda - Gas P13</b><select id="vCliente" style="margin-top:10px"></select><select id="vProduto" style="margin-top:8px"><option value="G">Gas P13</option><option value="A">Agua 20L</option></select><div class="grid2" style="margin-top:8px"><input id="vQtd" type="number" value="1" placeholder="Qtd"><input id="vUnit" type="number" value="86" placeholder="Unit R$"></div><div class="grid2" style="margin-top:8px"><input id="vDin" type="number" placeholder="Dinheiro DH"><input id="vPix" type="number" placeholder="Pix"></div><input id="vCart" type="number" placeholder="Cartao" style="margin-top:8px"><div style="background:#fffbeb;color:#000;border-radius:12px;padding:12px;margin-top:8px"><b id="vFormula">1x R$86 = R$86</b><span style="float:right;font-weight:900" id="vTotalAuto">R$ 86,00</span><br><small>Pago: <b id="vPagoAgora">R$ 0,00</b> | Fiado: <b id="vFiado">R$ 86,00</b></small></div><button class="btn btn-y" style="margin-top:10px" onclick="registrarVenda()">Registrar</button><div id="listaVendas" style="margin-top:10px"></div></div></section>
+<section id="receber" class="hidden"><div class="card"><b>A Receber</b> <span class="badge badge-yellow" id="totalReceberBadge">R$ 0,00</span><div id="listaReceber"></div></div></section>
+<section id="estoque" class="hidden"><div class="card"><b>Estoque</b><div class="grid2" style="margin-top:10px"><input id="eGC" type="number" value="20"><input id="eGV" type="number" value="10"><input id="eAC" type="number" value="30"><input id="eAV" type="number" value="15"></div><button class="btn btn-y" style="margin-top:10px" onclick="salvarEstoque()">Salvar</button></div></section>
+<section id="despesa" class="hidden"><div class="card"><b>Despesas</b><div style="display:flex;gap:8px;margin-top:10px"><input id="dDesc" placeholder="Descricao"><input id="dValor" type="number" placeholder="Valor"><button class="btn btn-y" style="width:auto" onclick="addDespesa()">Add</button></div><div id="listaDespesas"></div></div></section>
+<section id="fech" class="hidden"><div class="card"><b>Fechamento</b><div id="fechamentoBox" style="margin-top:10px"></div><button class="btn btn-y" style="margin-top:12px" onclick="baixarPDFFechamento()">📄 PDF IGUAL PLANILHA</button><button class="btn btn-b" style="margin-top:8px" onclick="baixarRelatorioDiaPDF()">📊 Dia PDF</button></div></section>
+<section id="backup" class="hidden"><div class="card"><b>Backup</b><button class="btn btn-y" style="margin-top:10px" onclick="baixarBackup()">💾 Backup JSON</button><button class="btn btn-g" style="margin-top:10px" onclick="baixarRelatorioDia()">📋 TXT</button><button class="btn btn-b" style="margin-top:10px" onclick="baixarRelatorioDiaPDF()">📄 PDF</button><input type="file" id="fileRestore" accept=".json" style="margin-top:12px"><button class="btn" style="background:#ef4444;color:#fff;margin-top:12px" onclick="apagarTudo()">Apagar tudo</button></div></section>
 <script>
-let db=JSON.parse(localStorage.getItem('rgv3')||'{"c":[],"v":[],"key":""}');
-if(!db.key){db.key=Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,10);localStorage.setItem('rgv3',JSON.stringify(db));}
-document.getElementById('pixKey').innerText=db.key;
-function save(){localStorage.setItem('rgv3',JSON.stringify(db));render();}
-function copiar(){if(typeof AndroidAPI!=='undefined'){AndroidAPI.copyToClipboard(db.key);AndroidAPI.vibrate(100);AndroidAPI.showToast('Copiado!');}else{navigator.clipboard.writeText(db.key);alert('Copiado: '+db.key);}}
-function jaPaguei(){let m='Olá RG! Já paguei PRO. Chave:'+db.key; if(typeof AndroidAPI!=='undefined')AndroidAPI.shareText(m); else window.open('https://wa.me/5582988217147?text='+encodeURIComponent(m));}
-function validar(){let c=document.getElementById('codInput').value;if(c.includes(db.key)||c.includes('MASTER')||c.startsWith('RG-')){localStorage.setItem('proAtivo',Date.now()+2592000000);document.getElementById('lockScreen').classList.remove('show');document.getElementById('badge').innerText='PRO ATIVO';document.getElementById('badge').classList.add('pro');alert('ATIVADO!');if(typeof AndroidAPI!=='undefined')AndroidAPI.showNotification('RG Oliveira','PRO Ativado!');}else alert('Código inválido');}
-function check(){let a=localStorage.getItem('proAtivo');if((!a||Date.now()>+a)&&db.v.length>=5)document.getElementById('lockScreen').classList.add('show');if(a&&Date.now()<+a){document.getElementById('badge').innerText='PRO ATIVO';document.getElementById('badge').classList.add('pro');}}
-function venda(p,v){let cli=prompt('Cliente?')||'Avulso';let tipo=confirm('A PRAZO? OK=Prazo / Cancelar=Vista')?'A PRAZO':'A VISTA';db.v.unshift({p,v,cli,tipo,d:new Date().toLocaleDateString()});save();check();if(typeof AndroidAPI!=='undefined'){AndroidAPI.vibrate(80);AndroidAPI.showToast(p+' vendido!');}}
-function addCli(){let n=document.getElementById('nCli').value,z=document.getElementById('zCli').value;if(!n)return;db.c.push({n,z});document.getElementById('nCli').value='';save();}
-function render(){let b=(document.getElementById('busca').value||'').toLowerCase();let h='';db.c.filter(x=>x.n.toLowerCase().includes(b)).forEach(x=>{h+=`<div style='display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid #222'><span>${x.n}</span><button onclick='window.open("https://wa.me/55${x.z.replace(/\D/g,'')}")' style='background:#00e676;border:none;border-radius:6px;padding:4px'>Zap</button></div>`;});document.getElementById('lCli').innerHTML=h;let tot=db.v.reduce((s,x)=>s+x.v,0);let rec=db.v.filter(x=>x.tipo=='A PRAZO').reduce((s,x)=>s+x.v,0);document.getElementById('kV').innerText='R$'+tot;document.getElementById('kR').innerText='R$'+rec;document.getElementById('kL').innerText='R$'+tot;let hv='';db.v.slice(0,30).forEach(x=>{hv+=`<div style='display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid #222'><small>${x.d} ${x.p} ${x.cli} (${x.tipo})</small><b>R$${x.v}</b></div>`;});document.getElementById('lVen').innerHTML=hv||'Nenhuma venda';}
-function fechar(){let t=db.v.reduce((s,x)=>s+x.v,0);let m=`*FECHAMENTO RG* Vendas: R$${t} - Total: ${db.v.length}`;if(typeof AndroidAPI!=='undefined')AndroidAPI.shareText(m);else window.open('https://wa.me/?text='+encodeURIComponent(m));}
-function backup(){let d='data:text/json,'+encodeURIComponent(JSON.stringify(db));let a=document.createElement('a');a.href=d;a.download='rg.json';a.click();}
-function gerar(){let k=document.getElementById('cPix').value||db.key;let cod='RG-'+btoa(k).slice(0,12).toUpperCase();document.getElementById('cGer').innerText=cod;if(typeof AndroidAPI!=='undefined')AndroidAPI.copyToClipboard(cod);else navigator.clipboard.writeText(cod);}
-render();check();
+const K={cli:'rg_clientes',ven:'rg_vendas',desp:'rg_desp',est:'rg_est'};const $=s=>document.querySelector(s);
+let cli=JSON.parse(localStorage.getItem(K.cli)||'[]');let ven=JSON.parse(localStorage.getItem(K.ven)||'[]');let desp=JSON.parse(localStorage.getItem(K.desp)||'[]');let est=JSON.parse(localStorage.getItem(K.est)||'{"gc":20,"gv":10,"ac":30,"av":15}');
+function save(){localStorage.setItem(K.cli,JSON.stringify(cli));localStorage.setItem(K.ven,JSON.stringify(ven));localStorage.setItem(K.desp,JSON.stringify(desp));localStorage.setItem(K.est,JSON.stringify(est));renderAll();}
+function renderAll(){renderClientes();renderVendas();renderReceber();renderDespesas();renderDash();renderFechamento();}
+function renderDash(){
+const hoje=new Date().toISOString().slice(0,10);
+const vHoje=ven.filter(v=>v.data.startsWith(hoje));
+const tHoje=vHoje.reduce((a,b)=>a+b.total,0);
+const aRec=ven.reduce((a,b)=>a+b.fiado,0);
+const rec=ven.reduce((a,b)=>a+b.din+b.pix+b.cart,0);
+const tDesp=desp.reduce((a,b)=>a+b.valor,0);
+$('#kpiVendasHoje').innerText='R$ '+tHoje.toFixed(2);
+$('#kpiVendasHojeQ').innerText=vHoje.length+' venda(s)';
+$('#kpiAReceber').innerText='R$ '+aRec.toFixed(2);
+$('#kpiAReceberQ').innerText=ven.filter(v=>v.fiado>0).length+' contas';
+$('#kpiLucro').innerText='R$ '+(rec-tDesp).toFixed(2);
+$('#kpiClientes').innerText=cli.length;
+$('#estGC').innerText=est.gc;$('#estGV').innerText=est.gv;$('#estAC').innerText=est.ac;$('#estAV').innerText=est.av;
+const ult=[...ven].reverse().slice(0,8);
+if(ult.length===0){$('#ultimasVendas').innerHTML='<small style="color:#9ca3af">Nenhuma venda</small>';return}
+$('#ultimasVendas').innerHTML=ult.map(v=>{
+const c=cli.find(x=>x.id==v.clienteId);const zap=c?.zap?.replace(/\D/g,'')||'';const temFiado=v.fiado>0.01;
+const badge=temFiado?(v.din+v.pix+v.cart>0?'badge-yellow':'badge-red'):'badge-green';
+return `<div class="item"><div><small><b>${v.cliente} - Gas P13 ${v.qtd}x R$${v.unit.toFixed(0)} = R$ ${v.total.toFixed(2)}</b></small><br><span class="badge ${badge}">${v.status} R$ ${v.fiado.toFixed(2)}</span></div>${temFiado&&zap?`<button class="wa-cobrar" onclick="cobrarZap('${zap}','${v.cliente}',${v.fiado})">Zap</button>`:''}</div>`;
+}).join('');
+}
+function salvarCliente(){const n=$('#cNome').value.trim();if(!n)return alert('Nome obrigatorio');const id=cli.length?Math.max(...cli.map(c=>c.id))+1:1;cli.push({id,nome:n,zap:$('#cZap').value,end:$('#cEnd').value});$('#cNome').value='';$('#cZap').value='';$('#cEnd').value='';save();}
+function renderClientes(){const q=($('#buscaCli')?.value||'').toLowerCase();const sel=$('#vCliente');sel.innerHTML='<option value="">Selecione cliente</option>';cli.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.id+' - '+c.nome;sel.appendChild(o)});$('#listaClientes').innerHTML=cli.filter(c=>c.nome.toLowerCase().includes(q)).map(c=>`<div class="item"><div><b>${c.id} - ${c.nome}</b><br><small>${c.zap}</small></div><a class="wa" href="https://wa.me/55${c.zap.replace(/\D/g,'')}" target="_blank">W</a></div>`).join('');}
+function calcTotal(){const q=Math.max(1,parseFloat($('#vQtd').value||1));const unit=parseFloat($('#vUnit').value||0);let din=parseFloat($('#vDin').value||0);if(isNaN(din))din=0;let pix=parseFloat($('#vPix').value||0);if(isNaN(pix))pix=0;let cart=parseFloat($('#vCart').value||0);if(isNaN(cart))cart=0;const total=q*unit;let pago=din+pix+cart;if(pago>total){const sobra=pago-total;if(cart>=sobra){cart-=sobra;$('#vCart').value=cart>0?cart:'';}else if(pix>=sobra){pix-=sobra;$('#vPix').value=pix>0?pix:'';}else{din=Math.max(0,din-sobra);$('#vDin').value=din>0?din:'';}pago=total;}const fiado=Math.max(0,total-pago);$('#vFormula').innerText=`${q}x R$${unit.toFixed(2)} = R$${total.toFixed(2)}`;$('#vTotalAuto').innerText='R$ '+total.toFixed(2);$('#vPagoAgora').innerText='R$ '+pago.toFixed(2);$('#vFiado').innerText='R$ '+fiado.toFixed(2);return{total,fiado,din,pix,cart,q,unit};}
+document.querySelectorAll('#vQtd,#vUnit,#vDin,#vPix,#vCart').forEach(e=>e.addEventListener('input',calcTotal));
+function registrarVenda(){const idCli=$('#vCliente').value;if(!idCli)return alert('Selecione cliente');const cliObj=cli.find(c=>c.id==idCli);const {total,fiado,din,pix,cart,q,unit}=calcTotal();if(total<=0)return alert('Valor invalido');const prodCod=$('#vProduto').value;ven.push({id:Date.now(),data:new Date().toISOString(),cliente:cliObj.nome,clienteId:idCli,prod:prodCod,produto:`Gas P13 ${q}x R$${unit.toFixed(0)} = R$ ${total.toFixed(2)}`,qtd:q,unit,total,din,pix,cart,fiado,status:fiado>0?(din+pix+cart>0?'MISTO':'FIADO'):'PAGO'});save();alert(`${cliObj.nome} - ${q}x R$${unit} = R$ ${total.toFixed(2)} OK!`);$('#vDin').value='';$('#vPix').value='';$('#vCart').value='';calcTotal();}
+function renderVendas(){$('#listaVendas').innerHTML=[...ven].reverse().slice(0,20).map(v=>`<div class="item"><small>${v.cliente} - Gas P13 ${v.qtd}x R$${v.unit.toFixed(0)} = R$ ${v.total.toFixed(2)}</small><span class="badge ${v.fiado>0?'badge-red':'badge-green'}">${v.status}</span></div>`).join('');}
+function renderReceber(){const dev=ven.filter(v=>v.fiado>0.01);const tot=dev.reduce((a,b)=>a+b.fiado,0);$('#totalReceberBadge').innerText='Total R$ '+tot.toFixed(2);if(dev.length===0){$('#listaReceber').innerHTML='<small>Nenhuma conta</small>';return}$('#listaReceber').innerHTML=dev.map(v=>{const c=cli.find(x=>x.id==v.clienteId);const zap=c?.zap?.replace(/\D/g,'')||'';return `<div class="card" style="margin:5px 0"><b>${v.cliente}</b> - Gas P13 ${v.qtd}x R$${v.unit.toFixed(0)} = <span style="color:#ef4444">R$ ${v.fiado.toFixed(2)}</span><br><small>${new Date(v.data).toLocaleDateString()}</small><br><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1" onclick="receberTotal(${v.id})">RECEBER</button>${zap?`<button class="wa-cobrar" onclick="cobrarZap('${zap}','${v.cliente}',${v.fiado})">Zap</button>`:''}</div></div>`;}).join('');}
+function receberTotal(id){const v=ven.find(x=>x.id==id);v.pix+=v.fiado;v.fiado=0;v.status='PAGO';save();}
+function cobrarZap(zap,nome,valor){const msg=`Ola ${nome}! Ficou R$ ${valor.toFixed(2)} em aberto do gas. Pix 82988217714. GRUPO EL SHADAI GAS agradece!`;window.open(`https://wa.me/55${zap}?text=${encodeURIComponent(msg)}`,'_blank');}
+function salvarEstoque(){est={gc:parseInt($('#eGC').value)||0,gv:parseInt($('#eGV').value)||0,ac:parseInt($('#eAC').value)||0,av:parseInt($('#eAV').value)||0};save();alert('Salvo');}
+function addDespesa(){const d=$('#dDesc').value;const vv=parseFloat($('#dValor').value);if(!d||!vv)return;desp.push({data:new Date().toISOString().slice(0,10),desc:d,valor:vv});$('#dDesc').value='';$('#dValor').value='';save();}
+function renderDespesas(){$('#listaDespesas').innerHTML=desp.map(d=>`<div class="item"><small>${d.data} - ${d.desc}</small><b>R$ ${d.valor.toFixed(2)}</b></div>`).join('');}
+function renderFechamento(){const agora=new Date();const mes=agora.getMonth();const ano=agora.getFullYear();const vMes=ven.filter(v=>{const d=new Date(v.data);return d.getMonth()===mes&&d.getFullYear()===ano});const bruto=vMes.reduce((a,b)=>a+b.total,0);const rec=vMes.reduce((a,b)=>a+b.din+b.pix+b.cart,0);const aRec=vMes.reduce((a,b)=>a+b.fiado,0);const qtdGas=vMes.reduce((a,b)=>a+b.qtd,0);const tDesp=desp.filter(d=>{const dd=new Date(d.data);return dd.getMonth()===mes&&dd.getFullYear()===ano}).reduce((a,b)=>a+b.valor,0);$('#fechamentoBox').innerHTML=`<div>Qtd Gas: <b>${qtdGas}</b> | Bruto: <b>R$ ${bruto.toFixed(2)}</b></div><div>Recebido: <b style="color:#22c55e">R$ ${rec.toFixed(2)}</b></div><div>A receber: <b style="color:#ef4444">R$ ${aRec.toFixed(2)}</b></div><div>Lucro: <b>R$ ${(rec-tDesp).toFixed(2)}</b></div>`;window._fech={bruto,rec,aRec,tDesp,qtdGas,vMes,mes:agora.toLocaleDateString('pt-BR',{month:'long',year:'numeric'}),dataStr:new Date().toLocaleDateString('pt-BR')};}
+function baixarPDFFechamento(){const {jsPDF}=window.jspdf;const doc=new jsPDF('landscape','mm','a4');const d=window._fech;const titulo=`EL SHADAI - MES - GAS: ${d.qtdGas} - TOTAL R$${d.bruto.toFixed(0)} - ${d.dataStr}`;doc.setFontSize(10);doc.text(titulo,14,10);const cols=[{header:'DATA',dataKey:'data'},{header:'Cliente',dataKey:'cliente'},{header:'Prod',dataKey:'prod'},{header:'Qtd',dataKey:'qtd'},{header:'Unit',dataKey:'unit'},{header:'Total',dataKey:'total'},{header:'PIX',dataKey:'pix'},{header:'DH',dataKey:'dh'},{header:'CART',dataKey:'cart'},{header:'FIADO',dataKey:'fiado'}];const rows=d.vMes.map(v=>({data:new Date(v.data).toLocaleDateString('pt-BR'),cliente:v.cliente,prod:v.prod,qtd:v.qtd,unit:`R$${v.unit.toFixed(0)}`,total:`R$${v.total.toFixed(0)}`,pix:`R$${v.pix.toFixed(0)}`,dh:`R$${v.din.toFixed(0)}`,cart:`R$${v.cart.toFixed(0)}`,fiado:`R$${v.fiado.toFixed(0)}`}));doc.autoTable({head:[cols.map(c=>c.header)],body:rows.map(r=>cols.map(c=>r[c.dataKey])),startY:14,styles:{fontSize:8,halign:'center',cellPadding:2},headStyles:{fillColor:[37,99,235],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[240,240,240]},theme:'grid'});doc.save(`${titulo}.pdf`);}
+function gerarRelatorioDia(){const hoje=new Date().toISOString().slice(0,10);const vHoje=ven.filter(v=>v.data.startsWith(hoje));const tot=vHoje.reduce((a,b)=>a+b.total,0);const rec=vHoje.reduce((a,b)=>a+b.din+b.pix+b.cart,0);const fiado=vHoje.reduce((a,b)=>a+b.fiado,0);let txt=`GRUPO EL SHADAI GAS - RELATORIO ${new Date().toLocaleDateString()}\n`;vHoje.forEach(v=>{txt+=`${v.cliente} | ${v.prod} | Qtd ${v.qtd} | Unit R$${v.unit} | Total R$${v.total} | Pix R$${v.pix} | DH R$${v.din} | Fiado R$${v.fiado}\n`;});txt+=`\nBruto R$${tot} Recebido R$${rec} Fiado R$${fiado}\n`;return{txt,hoje,vHoje,tot,rec,fiado};}
+function baixarRelatorioDia(){const {txt,hoje}=gerarRelatorioDia();const blob=new Blob([txt],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`relatorio_${hoje}.txt`;a.click();}
+function baixarRelatorioDiaPDF(){const {jsPDF}=window.jspdf;const doc=new jsPDF('landscape');const {vHoje,hoje}=gerarRelatorioDia();const titulo=`EL SHADAI - DIA - GAS: ${vHoje.reduce((a,b)=>a+b.qtd,0)} - TOTAL R$${vHoje.reduce((a,b)=>a+b.total,0)} - ${new Date().toLocaleDateString('pt-BR')}`;doc.text(titulo,14,10);const cols=['DATA','Cliente','Prod','Qtd','Unit','Total','PIX','DH','CART','FIADO'];const rows=vHoje.map(v=>[new Date(v.data).toLocaleDateString('pt-BR'),v.cliente,v.prod,v.qtd,`R$${v.unit}`,`R$${v.total}`,`R$${v.pix}`,`R$${v.din}`,`R$${v.cart}`,`R$${v.fiado}`]);doc.autoTable({head:[cols],body:rows,startY:14,styles:{fontSize:8,halign:'center'},headStyles:{fillColor:[37,99,235]}});doc.save(`${titulo}.pdf`);}
+function baixarBackup(){const data={clientes:cli,vendas:ven,despesas:desp,estoque:est,relatorio:gerarRelatorioDia().txt,data:new Date().toISOString()};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`backup_el_shadai_${new Date().toISOString().slice(0,10)}.json`;a.click();}
+function apagarTudo(){if(confirm('Apagar tudo?')){localStorage.clear();cli=[];ven=[];desp=[];est={gc:20,gv:10,ac:30,av:15};save();}}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.querySelectorAll('section').forEach(s=>s.classList.add('hidden'));document.getElementById(t.dataset.tab).classList.remove('hidden');}));
+renderAll();calcTotal();
 </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                                                                       </html>
