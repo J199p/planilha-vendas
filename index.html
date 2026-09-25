@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EL SHADAI GÁS E ÁGUA V33</title>
+<title>EL SHADAI V33.1 COM PDF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial;background:#06140c;color:#fff;padding-bottom:20px}
+body{font-family:Arial;background:#06140c;color:#fff;padding-bottom:80px}
 header{background:linear-gradient(135deg,#087f3f,#00ff88);padding:12px;text-align:center;position:sticky;top:0;z-index:100}
 header h1{font-size:12px;font-weight:900}
 nav{display:flex;gap:4px;overflow:auto;background:#0f1f16;padding:6px;position:sticky;top:40px;z-index:99}
@@ -20,6 +21,7 @@ main{padding:8px;max-width:600px;margin:auto}
 .kpi span{font-size:14px;display:block}
 .btn{width:100%;padding:12px;border-radius:10px;border:0;font-weight:900;color:#fff;margin-top:6px}
 .btn-verde{background:#087f3f}.btn-azul{background:#1565c0}.btn-verm{background:#c62828}.btn-laranja{background:#ef6c00}.btn-cinza{background:#37474f}
+.btn-pdf{background:linear-gradient(135deg,#d32f2f,#ff5252);box-shadow:0 6px 15px rgba(255,82,82,.4);font-size:13px}
 .btn-sm{padding:5px 8px;border-radius:6px;border:0;color:#fff;font-weight:800;font-size:9px;margin:2px}
 label{font-size:10px;color:#81c784;margin:5px 0 2px;display:block;font-weight:700}
 input,select{width:100%;padding:10px;border-radius:8px;background:#0a1a0f;border:1px solid #2a4533;color:#fff}
@@ -29,10 +31,16 @@ input,select{width:100%;padding:10px;border-radius:8px;background:#0a1a0f;border
 table{width:100%;font-size:10px;border-collapse:collapse}th,td{padding:5px;border-bottom:1px solid #1f3d2a}
 .total-auto{background:#1a3d26;border:1px solid #00ff88;border-radius:8px;padding:8px;text-align:center;margin-top:6px;font-weight:900;font-size:11px}
 .btn-zerar{width:100%;padding:10px;border-radius:10px;border:2px dashed #ff5252;background:#2a0f0f;color:#ff8a80;font-weight:900;margin-top:6px;font-size:10px}
+/* BOTÃO PDF FLUTUANTE ONDE VOCÊ MARCOU */
+.pdf-float{position:fixed;bottom:20px;right:15px;width:60px;height:60px;background:linear-gradient(135deg,#d32f2f,#ff5252);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 20px rgba(255,82,82,.6);z-index:99;border:2px solid #fff;cursor:pointer;animation:float 2s infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 </style>
 </head>
 <body>
-<header><h1>🔥 EL SHADAI GÁS E ÁGUA V33 - COMPLETO</h1></header>
+<!-- BOTÃO PDF FLUTUANTE NO CANTO QUE VOCÊ MARCOU -->
+<div class="pdf-float" onclick="gerarPDF()" title="Gerar PDF do dia">📄</div>
+
+<header><h1>🔥 EL SHADAI GÁS E ÁGUA V33.1 - COM PDF</h1></header>
 <nav>
 <button class="active" onclick="show('dash',this)">📊 Dash</button>
 <button onclick="show('venda',this)">➕ Venda</button>
@@ -55,63 +63,126 @@ table{width:100%;font-size:10px;border-collapse:collapse}th,td{padding:5px;borde
 <div class="qtd-grid"><div class="qtd-box">🔥 BOTIJÕES<br><span id="qtdGas">0</span></div><div class="qtd-box">💧 GALÕES<br><span id="qtdAgua">0</span></div><div class="qtd-box">TOTAL<br><span id="qtdTotal">0</span></div><div class="qtd-box">TICKET<br><span id="ticketMedio">R$ 0</span></div></div>
 </div>
 <div class="card"><b>📦 Estoque</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;text-align:center;margin-top:6px"><div>🔥 Cheio: <b id="dashCheio">200</b></div><div>♻️ Vazio: <b id="dashVazio">0</b></div><div>💧 Cheia: <b id="dashAguaCheia">50</b></div><div>🚰 Vazia: <b id="dashAguaVazia">0</b></div></div></div>
-<div class="card" style="border:2px dashed #ff5252;background:#1e1212"><button class="btn btn-laranja" onclick="zerarMes()">🗓️ ZERAR MÊS</button><button class="btn-zerar" onclick="zerarTudo()">💣 ZERAR HISTÓRICO</button></div>
 </div>
 
-<div id="venda" style="display:none"><div class="card"><h3>🛒 Nova Venda Gás e Água</h3>
-<label>Produto</label><select id="prodTipo"><option value="gas">🔥 Botijão P13 - Gás</option><option value="agua">💧 Galão 20L - Água</option></select>
+<div id="venda" style="display:none"><div class="card"><h3>🛒 Nova Venda</h3>
+<label>Produto</label><select id="prodTipo"><option value="gas">🔥 Botijão P13</option><option value="agua">💧 Galão 20L</option></select>
 <label>Qtd</label><input id="prodQtd" type="number" value="1" oninput="calc()">
-<label>Valor Unit R$</label><input id="prodValor" type="number" value="110" oninput="calc()">
-<div class="total-auto">💵 TOTAL AUTOMÁTICO: <span id="totalAuto">R$ 110,00</span></div>
+<label>Valor Unit</label><input id="prodValor" type="number" value="110" oninput="calc()">
+<div class="total-auto">TOTAL: <span id="totalAuto">R$ 110,00</span></div>
 <label>Cliente</label><select id="selCliente"><option value="">Avulso</option></select>
-<label>Pagamento</label><select id="prodPg"><option value="recebido">💵 À Vista - Recebido</option><option value="fiado">📝 Fiado - A Prazo</option></select>
-<div id="boxCliente" style="display:none"><label>Nome Fiado</label><input id="cliNome"><label>Zap</label><input id="cliZap" placeholder="83999999999"></div>
-<button class="btn btn-verde" onclick="addVenda()">💾 SALVAR VENDA GÁS/ÁGUA</button>
+<label>Pagamento</label><select id="prodPg"><option value="recebido">💵 À Vista</option><option value="fiado">📝 Fiado</option></select>
+<div id="boxCliente" style="display:none"><label>Nome Fiado</label><input id="cliNome"><label>Zap</label><input id="cliZap"></div>
+<button class="btn btn-verde" onclick="addVenda()">💾 SALVAR VENDA</button>
 </div></div>
 
-<div id="clientes" style="display:none"><div class="card"><h3>👥 Clientes Gás e Água</h3><label>Nome *</label><input id="cNome"><label>Zap *</label><input id="cZap"><label>Endereço</label><input id="cEnd"><button class="btn btn-verde" id="btnSalvarCliente" onclick="addCliente()">💾 SALVAR CLIENTE</button><button class="btn btn-cinza" id="btnCancelEdicao" style="display:none" onclick="cancelarEdicao()">❌ CANCELAR</button></div><div class="card"><input id="buscaCliente" placeholder="Buscar cliente..." oninput="render()"><div id="listaClientes"></div></div></div>
+<div id="clientes" style="display:none"><div class="card"><h3>👥 Clientes</h3><label>Nome *</label><input id="cNome"><label>Zap *</label><input id="cZap"><label>Endereço</label><input id="cEnd"><button class="btn btn-verde" id="btnSalvarCliente" onclick="addCliente()">💾 SALVAR</button><button class="btn btn-cinza" id="btnCancelEdicao" style="display:none" onclick="cancelarEdicao()">❌ CANCELAR</button></div><div class="card"><input id="buscaCliente" placeholder="Buscar..." oninput="render()"><div id="listaClientes"></div></div></div>
 
-<div id="estoque" style="display:none"><div class="card"><h3>📦 Estoque Gás e Água - Editável</h3>
-<div class="est-box">🔥 GÁS CHEIO<span class="est-num" id="estCheioNum">200</span><button class="btn btn-azul" onclick="editEst('cheio')">✏️ EDITAR</button><div style="display:flex;gap:4px;margin-top:5px"><button class="btn btn-verde" style="flex:1" onclick="addEst('cheio',1)">+1</button><button class="btn btn-verde" style="flex:1" onclick="addEst('cheio',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('cheio',-1)">-1</button><button class="btn btn-verm" style="flex:1" onclick="addEst('cheio',-5)">-5</button></div></div>
-<div class="est-box">♻️ GÁS VAZIO<span class="est-num" id="estVazioNum" style="color:#ffab40">0</span><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('vazio',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('vazio',-5)">-5</button></div></div>
-<div class="est-box">💧 ÁGUA CHEIA<span class="est-num" id="estAguaCheiaNum" style="color:#42a5f5">50</span><button class="btn btn-azul" onclick="editEst('aguaCheia')">✏️ EDITAR</button><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('aguaCheia',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('aguaCheia',-5)">-5</button></div></div>
-<div class="est-box">🚰 ÁGUA VAZIA<span class="est-num" id="estAguaVaziaNum" style="color:#ffab40">0</span><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('aguaVazia',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('aguaVazia',-5)">-5</button></div></div>
+<div id="estoque" style="display:none"><div class="card"><h3>📦 Estoque Editável</h3>
+<div class="est-box">🔥 GÁS CHEIO<span class="est-num" id="estCheioNum">200</span><button class="btn btn-azul" onclick="editEst('cheio')">✏️ EDITAR</button><div style="display:flex;gap:4px;margin-top:5px"><button class="btn btn-verde" style="flex:1" onclick="addEst('cheio',1)">+1</button><button class="btn btn-verde" style="flex:1" onclick="addEst('cheio',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('cheio',-1)">-1</button></div></div>
+<div class="est-box">♻️ VAZIO<span class="est-num" id="estVazioNum" style="color:#ffab40">0</span><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('vazio',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('vazio',-5)">-5</button></div></div>
+<div class="est-box">💧 CHEIA<span class="est-num" id="estAguaCheiaNum" style="color:#42a5f5">50</span><button class="btn btn-azul" onclick="editEst('aguaCheia')">✏️ EDITAR</button><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('aguaCheia',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('aguaCheia',-5)">-5</button></div></div>
+<div class="est-box">🚰 VAZIA<span class="est-num" id="estAguaVaziaNum" style="color:#ffab40">0</span><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('aguaVazia',5)">+5</button><button class="btn btn-verm" style="flex:1" onclick="addEst('aguaVazia',-5)">-5</button></div></div>
 </div></div>
 
-<div id="historico" style="display:none"><div class="card"><h3>📜 Histórico Vendas</h3><select id="filtroMesHist" onchange="render()"><option value="todos">Todos</option></select><table><thead><tr><th>Dia</th><th>Cliente</th><th>Qtd</th><th>Total</th></tr></thead><tbody id="tbHist"></tbody></table></div></div>
-<div id="areceber" style="display:none"><div class="card"><h3>💰 Contas a Receber Gás e Água</h3><div id="listaReceber"></div></div></div>
-<div id="desp" style="display:none"><div class="card"><h3>💸 Despesas</h3><label>Descrição</label><input id="dDesc"><label>Valor R$</label><input id="dVal" type="number"><button class="btn btn-verm" onclick="addDesp()">SALVAR DESPESA</button><div id="listDesp"></div><div style="display:flex;justify-content:space-between;font-weight:900;color:#ff5252"><span>Total:</span><span id="totalDespLista">R$ 0</span></div></div></div>
-<div id="backup" style="display:none"><div class="card"><h3>💾 Backup Completo Gás e Água</h3><button class="btn btn-verde" onclick="fazerBackup()">📤 FAZER BACKUP JSON</button><div style="margin-top:8px"><label>♻️ Restaurar</label><input type="file" id="inputBackup" accept=".json"><button class="btn btn-azul" onclick="restaurarBackup()">♻️ RESTAURAR</button></div><button class="btn-zerar" onclick="apagarTudoMesmo()">🗑️ APAGAR TUDO - ZERAR APP</button></div></div>
+<div id="historico" style="display:none"><div class="card"><h3>📜 Histórico Vendas</h3>
+<select id="filtroMesHist" onchange="render()"><option value="todos">Todos</option></select>
+<!-- BOTÃO PDF DENTRO DO HISTÓRICO -->
+<button class="btn btn-pdf" onclick="gerarPDF()">📄 GERAR PDF DO DIA - SALVAR HISTÓRICO</button>
+<button class="btn btn-azul" onclick="gerarPDFMes()">📄 PDF DO MÊS COMPLETO</button>
+<table><thead><tr><th>Dia</th><th>Cliente</th><th>Qtd</th><th>Total</th></tr></thead><tbody id="tbHist"></tbody></table>
+<div style="margin-top:8px;font-size:11px"><b>Total do filtro: <span id="totalHistFiltro">R$ 0</span></b></div>
+</div></div>
+
+<div id="areceber" style="display:none"><div class="card"><h3>💰 A Receber</h3><div id="listaReceber"></div></div></div>
+<div id="desp" style="display:none"><div class="card"><h3>💸 Despesas</h3><label>Descrição</label><input id="dDesc"><label>Valor</label><input id="dVal" type="number"><button class="btn btn-verm" onclick="addDesp()">SALVAR</button><div id="listDesp"></div><div style="display:flex;justify-content:space-between;font-weight:900;color:#ff5252"><span>Total:</span><span id="totalDespLista">R$ 0</span></div></div></div>
+<div id="backup" style="display:none"><div class="card"><h3>💾 Backup</h3><button class="btn btn-verde" onclick="fazerBackup()">📤 BACKUP JSON</button><div style="margin-top:8px"><input type="file" id="inputBackup" accept=".json"><button class="btn btn-azul" onclick="restaurarBackup()">♻️ RESTAURAR</button></div></div></div>
 </main>
 <script>
 var vendas=JSON.parse(localStorage.getItem('v33')||'[]');
 var despesas=JSON.parse(localStorage.getItem('d33')||'[]');
 var estoque=JSON.parse(localStorage.getItem('e33')||'{"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0}');
 var clientes=JSON.parse(localStorage.getItem('c33')||'[]');
-var filtroAtual='tudo';
+var filtroAtual='hoje';
 var editandoClienteId=null;
 function getMesAno(){var d=new Date();var m=d.getMonth()+1;return (m<10?'0'+m:m)+'/'+d.getFullYear();}
 function show(id,btn){document.querySelectorAll('main > div').forEach(function(d){d.style.display='none'});document.getElementById(id).style.display='block';document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');render();}
 function setF(f,btn){filtroAtual=f;document.querySelectorAll('.filtro button').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');render();}
 function salvar(){localStorage.setItem('v33',JSON.stringify(vendas));localStorage.setItem('e33',JSON.stringify(estoque));localStorage.setItem('c33',JSON.stringify(clientes));localStorage.setItem('d33',JSON.stringify(despesas));render();}
 function calc(){var q=parseFloat(document.getElementById('prodQtd').value)||0;var v=parseFloat(document.getElementById('prodValor').value)||0;document.getElementById('totalAuto').innerText='R$ '+(q*v).toFixed(2);}
-function editEst(c){var a=estoque[c];var n=prompt('Nova qtd '+c.toUpperCase()+' Atual:'+a,a);if(n!==null){var v=parseInt(n);if(!isNaN(v)&&v>=0){estoque[c]=v;salvar();}}}
+function editEst(c){var n=prompt('Nova qtd '+c+' Atual:'+estoque[c],estoque[c]);if(n!==null){var v=parseInt(n);if(!isNaN(v)&&v>=0){estoque[c]=v;salvar();}}}
 function addEst(c,v){estoque[c]+=v;if(estoque[c]<0)estoque[c]=0;salvar();}
-function zerarMes(){var m=getMesAno();if(confirm('ZERAR MÊS '+m+'?')){vendas=vendas.filter(function(v){return v.mesAno!=m});despesas=despesas.filter(function(d){return d.mesAno!=m});salvar();}}
-function zerarTudo(){if(confirm('ZERAR HISTÓRICO?')){if(confirm('Confirma?')){vendas=[];despesas=[];salvar();}}}
-function addCliente(){var n=document.getElementById('cNome').value.trim();var z=document.getElementById('cZap').value.trim().replace(/\D/g,'');var e=document.getElementById('cEnd').value.trim();if(!n||!z){alert('Nome e Zap');return;}if(z.length<10){alert('Zap inválido');return;}if(editandoClienteId){var cli=clientes.find(function(c){return c.id==editandoClienteId});if(cli){cli.nome=n;cli.zap=z;cli.end=e;}editandoClienteId=null;document.getElementById('btnSalvarCliente').innerText='💾 SALVAR CLIENTE';document.getElementById('btnCancelEdicao').style.display='none';}else{clientes.unshift({id:Date.now(),nome:n,zap:z,end:e});}document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';salvar();}
+function addCliente(){var n=document.getElementById('cNome').value.trim();var z=document.getElementById('cZap').value.trim().replace(/\D/g,'');var e=document.getElementById('cEnd').value.trim();if(!n||!z){alert('Nome e Zap');return;}if(editandoClienteId){var cli=clientes.find(function(c){return c.id==editandoClienteId});if(cli){cli.nome=n;cli.zap=z;cli.end=e;}editandoClienteId=null;document.getElementById('btnSalvarCliente').innerText='💾 SALVAR';document.getElementById('btnCancelEdicao').style.display='none';}else{clientes.unshift({id:Date.now(),nome:n,zap:z,end:e});}document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';salvar();}
 function editarCliente(id){var cli=clientes.find(function(c){return c.id==id});if(!cli)return;document.getElementById('cNome').value=cli.nome;document.getElementById('cZap').value=cli.zap;document.getElementById('cEnd').value=cli.end||'';editandoClienteId=id;document.getElementById('btnSalvarCliente').innerText='✏️ ATUALIZAR';document.getElementById('btnCancelEdicao').style.display='block';show('clientes',document.querySelectorAll('nav button')[2]);}
 function excluirCliente(id){if(confirm('Excluir?')){clientes=clientes.filter(function(c){return c.id!=id});salvar();}}
-function cancelarEdicao(){editandoClienteId=null;document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';document.getElementById('btnSalvarCliente').innerText='💾 SALVAR CLIENTE';document.getElementById('btnCancelEdicao').style.display='none';}
-function addVenda(){var tipo=document.getElementById('prodTipo').value;var qtd=parseInt(document.getElementById('prodQtd').value)||0;var val=parseFloat(document.getElementById('prodValor').value)||0;var pg=document.getElementById('prodPg').value;var sel=document.getElementById('selCliente').value;var nome='',zap='';if(sel){var cli=clientes.find(function(c){return c.id==sel});if(cli){nome=cli.nome;zap=cli.zap;}}else{nome=document.getElementById('cliNome').value.trim();zap=document.getElementById('cliZap').value.trim().replace(/\D/g,'');}if(qtd<=0){alert('Qtd inválida');return;}if(tipo=='gas'&&qtd>estoque.cheio){alert('Sem estoque gás cheio! Tem '+estoque.cheio);return;}if(tipo=='agua'&&qtd>estoque.aguaCheia){alert('Sem estoque água cheia! Tem '+estoque.aguaCheia);return;}if(pg=='fiado'&&!nome){alert('Digite nome fiado');return;}var total=qtd*val;if(tipo=='gas'){estoque.cheio-=qtd;estoque.vazio+=qtd;}else{estoque.aguaCheia-=qtd;estoque.aguaVazia+=qtd;}vendas.unshift({id:Date.now(),tipo:tipo,qtd:qtd,total:total,restante:pg=='fiado'?total:0,nome:nome,zap:zap,pgTipo:pg,dia:new Date().toLocaleDateString(),mesAno:getMesAno()});salvar();alert('✅ Venda gás/água salva!');}
+function cancelarEdicao(){editandoClienteId=null;document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';document.getElementById('btnSalvarCliente').innerText='💾 SALVAR';document.getElementById('btnCancelEdicao').style.display='none';}
+function addVenda(){var tipo=document.getElementById('prodTipo').value;var qtd=parseInt(document.getElementById('prodQtd').value)||0;var val=parseFloat(document.getElementById('prodValor').value)||0;var pg=document.getElementById('prodPg').value;var sel=document.getElementById('selCliente').value;var nome='',zap='';if(sel){var cli=clientes.find(function(c){return c.id==sel});if(cli){nome=cli.nome;zap=cli.zap;}}else{nome=document.getElementById('cliNome').value.trim();zap=document.getElementById('cliZap').value.trim().replace(/\D/g,'');}if(qtd<=0){alert('Qtd inválida');return;}if(tipo=='gas'&&qtd>estoque.cheio){alert('Sem estoque cheio!');return;}if(tipo=='agua'&&qtd>estoque.aguaCheia){alert('Sem estoque cheia!');return;}var total=qtd*val;if(tipo=='gas'){estoque.cheio-=qtd;estoque.vazio+=qtd;}else{estoque.aguaCheia-=qtd;estoque.aguaVazia+=qtd;}vendas.unshift({id:Date.now(),tipo:tipo,qtd:qtd,total:total,restante:pg=='fiado'?total:0,nome:nome,zap:zap,pgTipo:pg,dia:new Date().toLocaleDateString(),mesAno:getMesAno()});salvar();alert('Venda salva!');}
 function addDesp(){var d=document.getElementById('dDesc').value.trim();var v=parseFloat(document.getElementById('dVal').value)||0;if(!d||v<=0){alert('Descrição e valor');return;}despesas.unshift({id:Date.now(),d:d,v:v,dia:new Date().toLocaleDateString(),mesAno:getMesAno()});document.getElementById('dDesc').value='';document.getElementById('dVal').value='';salvar();}
 function delDesp(id){if(confirm('Apagar?')){despesas=despesas.filter(function(x){return x.id!=id});salvar();}}
 function filtrar(l){var hoje=new Date().toLocaleDateString();var mes=getMesAno();if(filtroAtual=='hoje')return l.filter(function(x){return x.dia==hoje});if(filtroAtual=='mes')return l.filter(function(x){return x.mesAno==mes});return l;}
 function receberTotal(id){var v=vendas.find(function(x){return x.id==id});if(v){v.pgTipo='recebido';v.restante=0;salvar();}}
-function receberParcial(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;var devendo=v.restante||v.total;var valorStr=prompt('Parcial - '+v.nome+'\nDevendo: R$ '+devendo+'\nQuanto recebeu?','');if(valorStr===null)return;var valor=parseFloat(valorStr);if(isNaN(valor)||valor<=0){alert('Inválido');return;}if(valor>=devendo){if(confirm('Dar baixa total?')){v.pgTipo='recebido';v.restante=0;salvar();}}else{v.restante=devendo-valor;alert('Recebido R$ '+valor+' Falta R$ '+v.restante.toFixed(2));salvar();}}
-function fazerBackup(){var dados={vendas:vendas,despesas:despesas,estoque:estoque,clientes:clientes,dataBackup:new Date().toISOString(),versao:'V33'};var blob=new Blob([JSON.stringify(dados)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='backup_gas_agua_'+getMesAno().replace('/','-')+'.json';a.click();URL.revokeObjectURL(url);alert('Backup baixado!');}
-function restaurarBackup(){var input=document.getElementById('inputBackup');if(!input.files[0]){alert('Escolha arquivo');return;}var reader=new FileReader();reader.onload=function(e){try{var dados=JSON.parse(e.target.result);if(confirm('Restaurar backup? Vendas:'+(dados.vendas?dados.vendas.length:0)+' Clientes:'+(dados.clientes?dados.clientes.length:0))){vendas=dados.vendas||[];despesas=dados.despesas||[];estoque=dados.estoque||{"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0};clientes=dados.clientes||[];salvar();alert('Restaurado!');}}catch(err){alert('Arquivo inválido');}};reader.readAsText(input.files[0]);}
-function apagarTudoMesmo(){if(confirm('APAGAR TUDO MESMO?')){if(confirm('Última confirmação?')){vendas=[];despesas=[];clientes=[];estoque={"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0};salvar();}}}
+function receberParcial(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;var devendo=v.restante||v.total;var valorStr=prompt('Parcial - '+v.nome+' Devendo R$ '+devendo,'');if(valorStr===null)return;var valor=parseFloat(valorStr);if(isNaN(valor)||valor<=0)return;if(valor>=devendo){v.pgTipo='recebido';v.restante=0;salvar();}else{v.restante=devendo-valor;salvar();}}
+
+// FUNÇÃO GERAR PDF DO DIA
+function gerarPDF(){
+var hoje=new Date().toLocaleDateString();
+var vendasDia=vendas.filter(function(v){return v.dia==hoje});
+if(vendasDia.length==0){alert('Nenhuma venda hoje '+hoje);return;}
+var {jsPDF}=window.jspdf;
+var doc=new jsPDF();
+doc.setFontSize(16);
+doc.text('EL SHADAI GAS E AGUA - HISTORICO DO DIA',10,15);
+doc.setFontSize(11);
+doc.text('Data: '+hoje+' | Gerado: '+new Date().toLocaleString(),10,22);
+doc.text('-----------------------------------------------------------',10,27);
+var y=35;
+var totalDia=0;var qtdGas=0;var qtdAgua=0;
+doc.setFontSize(10);
+doc.text('DIA CLIENTE QTD TIPO TOTAL',10,y);y+=6;
+doc.text('-----------------------------------------------------------',10,y);y+=6;
+vendasDia.forEach(function(v){
+var linha=(v.dia+' '+(v.nome||'Avulso').substring(0,15).padEnd(15)+' '+v.qtd+' '+(v.tipo=='gas'?'GAS':'AGUA')+' R$ '+v.total.toFixed(2));
+doc.text(linha,10,y);
+y+=6;
+totalDia+=v.total;
+if(v.tipo=='gas')qtdGas+=v.qtd;else qtdAgua+=v.qtd;
+if(y>270){doc.addPage();y=15;}
+});
+y+=4;
+doc.text('-----------------------------------------------------------',10,y);y+=8;
+doc.setFontSize(12);
+doc.text('RESUMO DO DIA '+hoje,10,y);y+=8;
+doc.setFontSize(11);
+doc.text('Botijoes: '+qtdGas+' | Galoes: '+qtdAgua+' | Total Itens: '+(qtdGas+qtdAgua),10,y);y+=7;
+doc.text('TOTAL VENDIDO NO DIA: R$ '+totalDia.toFixed(2),10,y);y+=10;
+doc.text('EL SHADAI GAS - Sistema V33.1',10,y);
+doc.save('historico_vendas_'+hoje.replace(/\//g,'-')+'.pdf');
+}
+
+function gerarPDFMes(){
+var mes=getMesAno();
+var vendasMes=vendas.filter(function(v){return v.mesAno==mes});
+if(vendasMes.length==0){alert('Nenhuma venda no mes '+mes);return;}
+var {jsPDF}=window.jspdf;
+var doc=new jsPDF();
+doc.setFontSize(14);
+doc.text('EL SHADAI - HISTORICO MES '+mes,10,15);
+var y=25;
+var total=0;
+vendasMes.forEach(function(v){
+doc.setFontSize(9);
+doc.text(v.dia+' - '+(v.nome||'Avulso')+' - '+v.qtd+'x '+(v.tipo=='gas'?'GAS':'AGUA')+' - R$ '+v.total,10,y);
+y+=5;total+=v.total;
+if(y>280){doc.addPage();y=10;}
+});
+y+=5;
+doc.setFontSize(12);
+doc.text('TOTAL MES '+mes+': R$ '+total.toFixed(2),10,y);
+doc.save('historico_mes_'+mes.replace('/','-')+'.pdf');
+}
+
+function fazerBackup(){var dados={vendas:vendas,despesas:despesas,estoque:estoque,clientes:clientes};var blob=new Blob([JSON.stringify(dados)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='backup_'+getMesAno().replace('/','-')+'.json';a.click();}
+function restaurarBackup(){var input=document.getElementById('inputBackup');if(!input.files[0]){alert('Escolha arquivo');return;}var reader=new FileReader();reader.onload=function(e){try{var dados=JSON.parse(e.target.result);vendas=dados.vendas||[];despesas=dados.despesas||[];estoque=dados.estoque||{"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0};clientes=dados.clientes||[];salvar();}catch(err){alert('Arquivo inválido');}};reader.readAsText(input.files[0]);}
 function render(){
 var vendasF=filtrar(vendas);var despesasF=filtrar(despesas);
 var totalV=vendasF.reduce(function(a,b){return a+b.total},0);
@@ -122,22 +193,4 @@ var lucro=totalR-totalD;
 var qtdGas=vendasF.filter(function(v){return v.tipo=='gas'}).reduce(function(a,b){return a+b.qtd},0);
 var qtdAgua=vendasF.filter(function(v){return v.tipo=='agua'}).reduce(function(a,b){return a+b.qtd},0);
 var diasUnicos=[];vendasF.forEach(function(v){if(diasUnicos.indexOf(v.dia)==-1)diasUnicos.push(v.dia)});
-document.getElementById('labelResumo').innerText=filtroAtual=='hoje'?'HOJE':filtroAtual=='mes'?'MÊS':'TUDO';
-document.getElementById('acumuladoDias').innerText=diasUnicos.length+' dias';
-document.getElementById('kpiDesp').innerText='R$ '+totalD;
-document.getElementById('kpiLucro').innerText='R$ '+lucro;
-document.getElementById('kpiVendas').innerText='R$ '+totalV;
-document.getElementById('kpiReceber').innerText='R$ '+totalA;
-document.getElementById('rVendas').innerText='R$ '+totalV;
-document.getElementById('rRecebido').innerText='R$ '+totalR;
-document.getElementById('rDespesas').innerText='R$ '+totalD;
-document.getElementById('rLucro').innerText='R$ '+lucro;
-document.getElementById('qtdGas').innerText=qtdGas;
-document.getElementById('qtdAgua').innerText=qtdAgua;
-document.getElementById('qtdTotal').innerText=qtdGas+qtdAgua;
-document.getElementById('ticketMedio').innerText='R$ '+(qtdGas+qtdAgua>0?(totalV/(qtdGas+qtdAgua)).toFixed(2):0);
-document.getElementById('estCheioNum').innerText=estoque.cheio;document.getElementById('estVazioNum').innerText=estoque.vazio;
-document.getElementById('estAguaCheiaNum').innerText=estoque.aguaCheia;document.getElementById('estAguaVaziaNum').innerText=estoque.aguaVazia;
-document.getElementById('dashCheio').innerText=estoque.cheio;document.getElementById('dashVazio').innerText=estoque.vazio;
-document.getElementById('dashAguaCheia').innerText=estoque.aguaCheia;document.getElementById('dashAguaVazia').innerText=estoque.aguaVazia;
-document.getElementById('selCliente').innerHTML='<option value="">Avulso</option>'+clientes.map(function(c){return '<option value="'+c.id+'">'+c.nom
+document.getElementById('labelResumo').innerText=filtroAtual=='hoje'?'H
