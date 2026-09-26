@@ -1,15 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EL SHADAI V36 - UNIT NO PDF</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<title>(R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA - V40 FINAL</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial;background:#06140c;color:#fff;padding-bottom:80px}
-header{background:linear-gradient(135deg,#087f3f,#00ff88);padding:12px;text-align:center;position:sticky;top:0;z-index:100}header h1{font-size:11px}
-nav{display:flex;gap:4px;overflow:auto;background:#0f1f16;padding:6px;position:sticky;top:40px;z-index:99}
+header{background:linear-gradient(135deg,#087f3f,#00ff88);padding:12px;text-align:center;position:sticky;top:0;z-index:100}
+header h1{font-size:11px;line-height:1.2}
+header h1 small{display:block;font-size:9px;color:#c8e6c9;margin-top:2px}
+nav{display:flex;gap:4px;overflow:auto;background:#0f1f16;padding:6px;position:sticky;top:56px;z-index:99}
 nav button{background:#1a3d26;color:#fff;padding:8px 10px;border-radius:10px;border:1px solid #2a4533;font-size:9px;font-weight:900;white-space:nowrap}
 nav button.active{background:#087f3f}
 main{padding:8px;max-width:600px;margin:auto}
@@ -18,24 +43,60 @@ main{padding:8px;max-width:600px;margin:auto}
 .kpi{border-radius:12px;padding:10px;text-align:center;color:#fff;font-weight:900;font-size:10px}
 .kpi.red{background:#c62828}.kpi.orange{background:#ef6c00}.kpi.green{background:#087f3f}.kpi.blue{background:#0d47a1}.kpi.pix{background:#1565c0}.kpi.din{background:#2e7d32}
 .kpi span{font-size:13px;display:block}
-.btn{width:100%;padding:12px;border-radius:10px;border:0;font-weight:900;color:#fff;margin-top:6px}
-.btn-verde{background:#087f3f}.btn-azul{background:#1565c0}.btn-verm{background:#c62828}.btn-zerar{background:linear-gradient(135deg,#ff9800,#f57c00);border:2px dashed #fff}.btn-zerar-mes{background:linear-gradient(135deg,#c62828,#ff5252);border:2px dashed #fff}.btn-cinza{background:#37474f}
-.btn-salvar-dia{background:linear-gradient(135deg,#c62828,#e53935);border:2px solid #fff;font-size:12px;padding:14px}.btn-salvar-mes{background:linear-gradient(135deg,#1565c0,#1e88e5);border:2px solid #fff;font-size:12px;padding:14px}
-.btn-sm{padding:5px 8px;border-radius:6px;border:0;color:#fff;font-size:9px;margin:2px}
+.btn{width:100%;padding:12px;border-radius:10px;border:0;font-weight:900;color:#fff;margin-top:6px;cursor:pointer}
+.btn-verde{background:#087f3f}.btn-azul{background:#1565c0}.btn-verm{background:#c62828}.btn-cinza{background:#37474f}.btn-whats{background:#25D366}
 label{font-size:10px;color:#81c784;margin:5px 0 2px;display:block;font-weight:700}input,select{width:100%;padding:10px;border-radius:8px;background:#0a1a0f;border:1px solid #2a4533;color:#fff}
-.filtro{display:flex;gap:5px;margin-bottom:8px}.filtro button{flex:1;padding:8px;border-radius:8px;background:#1a3d26;color:#fff;border:1px solid #2a4533;font-size:10px}.filtro button.active{background:#087f3f}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.total-auto{background:#1a3d26;border:1px solid #00ff88;border-radius:8px;padding:8px;text-align:center;margin-top:6px;font-weight:900;font-size:11px}
-.total-dividido{background:#0f1f16;border:1px dashed #81c784;border-radius:10px;padding:8px;margin-top:6px;font-size:11px}
+.login-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#06140c;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#14281b;border:2px solid #00ff88;border-radius:16px;padding:20px;width:100%;max-width:380px;text-align:center}
+.login-box h2{font-size:14px;line-height:1.3}
+.status-assinatura{padding:8px;border-radius:10px;font-size:10px;font-weight:900;text-align:center;margin-bottom:8px}
+.ass-ativa{background:#087f3f}.ass-vencida{background:#c62828}.ass-teste{background:#ef6c00}
+.paywall{position:fixed;top:0;left:0;width:100%;height:100%;background:#06140c;z-index:8000;display:none;overflow:auto;padding:15px}
+.pix-box{background:#fff;color:#000;border-radius:14px;padding:15px;margin:10px 0;text-align:center}
+.pix-key{background:#f0f0f0;padding:10px;border-radius:8px;font-size:11px;word-break:break-all;margin:8px 0;border:1px dashed #087f3f}
 table{width:100%;font-size:9px;border-collapse:collapse}th,td{padding:4px;border-bottom:1px solid #1f3d2a}
-.pdf-float{position:fixed;bottom:20px;right:15px;width:60px;height:60px;background:#d32f2f;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 20px rgba(255,82,82,.6);z-index:99;border:2px solid #fff;cursor:pointer}
-.est-box{background:#0f1f16;border:1px solid #2a4533;border-radius:12px;padding:10px;text-align:center;margin-bottom:6px}
-.est-num{font-size:26px;font-weight:900;color:#00ff88;display:block}
+.brand-login{font-size:16px;font-weight:900;color:#00ff88;line-height:1.2}
+.brand-sub{font-size:9px;color:#81c784;margin:5px 0}
 </style>
 </head>
 <body>
-<div class="pdf-float" onclick="gerarPDF()">💾</div>
-<header><h1>🔥 EL SHADAI V36 - VALOR UNIT NO PDF PADRÃO</h1></header>
+<div id="loginScreen" class="login-screen">
+<div class="login-box">
+<div class="brand-login">🔥 (R)(B)(D) OLIVEIRA</div>
+<div style="font-size:11px;font-weight:900;color:#fff;margin:4px 0">PLANILHA GESTÃO DE VENDAS<br>GÁS E ÁGUA</div>
+<div class="brand-sub">Sistema  de Vendas de gás e água<br></div>
+<label style="text-align:left">Email</label><input id="loginEmail" placeholder="cliente@email.com">
+<label style="text-align:left">Senha</label><input id="loginSenha" type="password" placeholder="******">
+<button class="btn btn-verde" onclick="fazerLogin()">ENTRAR NO SISTEMA</button>
+<button class="btn btn-azul" onclick="fazerCadastro()" style="margin-top:8px">📝 CRIAR CONTA COM QUALQUER GMAIL</button>
+<p style="font-size:9px;color:#81c784;margin-top:8px">✅ Pode usar qualquer Gmail<br>pô 30 dias grátis pra testar</p>
+<p id="loginErro" style="font-size:10px;color:#ff5252;margin-top:8px;text-align:center"></p>
+<p style="font-size:8px;text-align:center;color:#81c784;margin-top:10px">suporte<br>whatsapp (82) 98821-7147 <br></p>
+</div>
+</div>
+
+<div id="paywall" class="paywall">
+<div style="max-width:380px;margin:20px auto">
+<div style="text-align:center;margin-bottom:15px"><h1 style="color:#00ff88;font-size:14px">🔥 (R)(B)(D) OLIVEIRA</h1><div style="font-size:10px;color:#fff">PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA</div><h3 id="payTitle" style="margin-top:10px">ASSINATURA VENCIDA</h3><p id="paySub" style="font-size:12px;color:#81c784;margin-top:5px">Renove pra continuar usando</p></div>
+<div class="card" style="border:2px solid #ef6c00">
+<h3 style="color:#ffab40;text-align:center">💳 RENOVAR - R$ 29,90 / MÊS</h3>
+<div class="pix-box">
+<div style="font-weight:900;color:#087f3f;font-size:12px">(R)(B)(D) OLIVEIRA<br>PIX BANCO SANTANDER</div>
+<div id="qrcode" style="display:flex;justify-content:center;margin:10px 0"></div>
+<div class="pix-key" id="pixCopiaECola">1218ba50-719e-4178-a3d6-b13ddf0229ae</div>
+<button class="btn btn-verde" onclick="copiarPix()">📋 COPIAR CHAVE PIX ALEATÓRIA</button>
+<div style="font-size:10px;margin-top:8px;color:#333">Banco: Santander<br>Titular: <b>Rogério Barbosa de Oliveira</b><br>Sistema: <b>(R)(B)(D) OLIVEIRA</b><br>Valor: <b>R$ 29,90</b></div>
+</div>
+<button class="btn btn-whats" onclick="avisarWhatsApp()">💬 JÁ PAGUEI - ENVIAR COMPROVANTE (82) 98821-7147</button>
+<button class="btn btn-cinza" onclick="tentarEntrarMesmoAssim()">🔓 Já paguei, tentar entrar</button>
+</div>
+</div>
+</div>
+
+<header>
+<h1>🔥 (R)(B)(D) OLIVEIRA <small>PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA</small></h1>
+<div id="statusAss" class="status-assinatura ass-teste">Carregando...</div>
+</header>
 <nav>
 <button class="active" onclick="show('dash',this)">📊 Dash</button>
 <button onclick="show('venda',this)">➕ Venda</button>
@@ -44,10 +105,11 @@ table{width:100%;font-size:9px;border-collapse:collapse}th,td{padding:4px;border
 <button onclick="show('estoque',this)">📦 Estoq</button>
 <button onclick="show('areceber',this)">💰 Receber</button>
 <button onclick="show('desp',this)">💸 Desp</button>
+<button onclick="show('pagar',this)" style="background:#ef6c00">💳 Pagar</button>
+<button onclick="logout()" style="background:#c62828">Sair</button>
 </nav>
 <main>
 <div id="dash">
-<div class="filtro"><button class="active" onclick="setF('hoje',this)">HOJE</button><button onclick="setF('mes',this)">MÊS</button><button onclick="setF('tudo',this)">TUDO</button></div>
 <div class="kpi-grid">
 <div class="kpi din">💵 DH<span id="kpiDH">R$ 0</span></div>
 <div class="kpi pix">💳 PIX<span id="kpiPIX">R$ 0</span></div>
@@ -57,198 +119,110 @@ table{width:100%;font-size:9px;border-collapse:collapse}th,td{padding:4px;border
 <div class="kpi orange">LUCRO<span id="kpiLucro">R$ 0</span></div>
 </div>
 <div class="card" id="resumoCard"></div>
-<div class="card"><b>📦 Estoque (não trava)</b><div id="estoqueDash" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;text-align:center;margin-top:6px"></div></div>
+<div class="card" style="text-align:center;font-size:8px;color:#81c784">(R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA<br>Rogério Barbosa de Oliveira - (82) 98821-7147</div>
 </div>
-<div id="venda" style="display:none"><div class="card"><h3>🛒 Venda - SEM TRAVA</h3>
+<div id="venda" style="display:none"><div class="card"><h3>🛒 Nova Venda - (R)(B)(D) OLIVEIRA</h3>
 <label>Produto</label><select id="prodTipo"><option value="gas">🔥 Botijão P13</option><option value="agua">💧 Galão 20L</option></select>
-<div class="grid2"><div><label>Qtd</label><input id="prodQtd" type="number" value="1" oninput="calc()"></div><div><label>Unit R$</label><input id="prodValor" type="number" value="86" oninput="calc()"></div></div>
-<div class="total-auto">TOTAL: <span id="totalAuto">R$ 86,00</span></div>
-<div style="background:#1a2e1a;border-radius:10px;padding:8px;margin-top:8px;border:1px solid #2a5a3a">
-<b style="font-size:11px">💰 COMO PAGOU? 🫵</b>
-<div class="grid2" style="margin-top:6px">
-<div><label>💵 DH R$</label><input id="pagoDH" type="number" value="0" oninput="calcDiv()"></div>
-<div><label>💳 PIX R$</label><input id="pagoPIX" type="number" value="0" oninput="calcDiv()"></div>
-</div>
-<div class="total-dividido"> Falta: <b id="faltaCalc" style="color:#ffab40">R$ 86,00</b></div>
-</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><label>Qtd</label><input id="prodQtd" type="number" value="1"></div><div><label>Unit R$</label><input id="prodValor" type="number" value="86"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px"><div><label>💵 DH R$</label><input id="pagoDH" type="number" value="0"></div><div><label>💳 PIX R$</label><input id="pagoPIX" type="number" value="0"></div></div>
 <label>👥 Cliente</label><select id="selCliente"><option value="">Avulso</option></select>
 <div id="boxCliente"><label>Nome se fiado </label><input id="cliNome"><label>Zap</label><input id="cliZap"><button class="btn btn-azul" style="padding:8px" onclick="salvarClienteRapido()">💾 CADASTRAR RÁPIDO</button></div>
 <button class="btn btn-verde" onclick="addVenda()">💾 SALVAR VENDA</button>
 </div></div>
-<div id="clientes" style="display:none"><div class="card"><h3>👥 Clientes</h3><label>Nome *</label><input id="cNome"><label>Zap *</label><input id="cZap"><label>End</label><input id="cEnd"><button class="btn btn-verde" id="btnSalvarCliente" onclick="addCliente()">💾 SALVAR CLIENTE</button><button class="btn btn-cinza" id="btnCancelEdicao" style="display:none" onclick="cancelarEdicao()">❌ CANCELAR</button></div><div class="card"><input id="buscaCliente" placeholder="🔍 Buscar..." oninput="render()"><div id="listaClientes"></div></div></div>
-<div id="historico" style="display:none"><div class="card"><h3>📜 Histórico</h3><select id="filtroMesHist" onchange="render()"><option value="todos">Todos</option></select>
-<button class="btn btn-salvar-dia" onclick="gerarPDF()">💾 SALVAR DIA - DH + PIX + FALTA + DESPESA</button>
-<button class="btn btn-salvar-mes" onclick="gerarPDFMes()">💾 SALVAR MÊS - RELATÓRIO COMPLETO</button>
-<div style="overflow:auto;margin-top:8px"><table><thead><tr><th>Dia</th><th>Qtd</th><th>Unit</th><th>Cliente</th><th>Total</th><th>DH</th><th>PIX</th><th>Falta</th></tr></thead><tbody id="tbHist"></tbody></table></div>
-<div style="margin-top:8px;font-size:10px">DH: <b id="totalHistDH">R$ 0</b> | PIX: <b id="totalHistPIX">R$ 0</b> |  Receber: <b id="totalHistRec">R$ 0</b> | Total: <b id="totalHistFiltro">R$ 0</b><br>GÁS: <b id="totalHistGas">0</b> | ÁGUA: <b id="totalHistAgua">0</b></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px"><button class="btn btn-zerar" onclick="zerarDia()">🗓️ ZERAR DIA</button><button class="btn btn-zerar-mes" onclick="zerarMes()">🗓️ ZERAR MÊS</button></div>
+<div id="clientes" style="display:none"><div class="card"><h3>👥 Clientes</h3><label>Nome *</label><input id="cNome"><label>Zap *</label><input id="cZap"><label>End</label><input id="cEnd"><button class="btn btn-verde" onclick="addCliente()">💾 SALVAR CLIENTE</button></div><div class="card"><input id="buscaCliente" placeholder="🔍 Buscar..." oninput="render()"><div id="listaClientes"></div></div></div>
+<div id="historico" style="display:none"><div class="card"><h3>📜 Histórico</h3><div style="overflow:auto"><table><thead><tr><th>Dia</th><th>Qtd</th><th>Cliente</th><th>Total</th><th>Resto</th></tr></thead><tbody id="tbHist"></tbody></table></div></div></div>
+<div id="estoque" style="display:none"><div class="card"><h3>📦 Estoque</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:center"><div>🔥 GÁS CHEIO<br><b id="estCheioNum" style="font-size:20px;color:#00ff88">0</b><br><button class="btn btn-verde" onclick="addEst('cheio',1)">+1</button></div><div>♻️ VAZIO<br><b id="estVazioNum" style="font-size:20px">0</b><br><button class="btn btn-verm" onclick="addEst('cheio',-1)">-1</button></div><div>💧 ÁGUA CHEIA<br><b id="estAguaCheiaNum" style="font-size:20px;color:#42a5f5">0</b><br><button class="btn btn-verde" onclick="addEst('aguaCheia',1)">+1</button></div><div>💧 VAZIA<br><b id="estAguaVaziaNum" style="font-size:20px">0</b><br><button class="btn btn-verm" onclick="addEst('aguaCheia',-1)">-1</button></div></div>
 </div></div>
-<div id="estoque" style="display:none"><div class="card"><h3>📦 Estoque 4 tipos</h3>
-<div class="est-box">🔥 GÁS CHEIO<span class="est-num" id="estCheioNum">200</span><button class="btn btn-azul" onclick="editEst('cheio')">✏️ EDITAR</button><div style="display:flex;gap:4px;margin-top:5px"><button class="btn btn-verde" style="flex:1" onclick="addEst('cheio',1)">+1</button><button class="btn btn-verde" style="flex:1" onclick="addEst('cheio',10)">+10</button><button class="btn btn-verm" style="flex:1" onclick="addEst('cheio',-1)">-1</button><button class="btn btn-verm" style="flex:1" onclick="addEst('cheio',-10)">-10</button></div></div>
-<div class="est-box">♻️ GÁS VAZIO<span class="est-num" id="estVazioNum" style="color:#ffab40">0</span><button class="btn btn-azul" onclick="editEst('vazio')">✏️ EDITAR</button><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('vazio',10)">+10</button><button class="btn btn-verm" style="flex:1" onclick="addEst('vazio',-10)">-10</button></div></div>
-<div class="est-box">💧 ÁGUA CHEIA<span class="est-num" id="estAguaCheiaNum" style="color:#42a5f5">50</span><button class="btn btn-azul" onclick="editEst('aguaCheia')">✏️ EDITAR</button><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('aguaCheia',1)">+1</button><button class="btn btn-verde" style="flex:1" onclick="addEst('aguaCheia',10)">+10</button><button class="btn btn-verm" style="flex:1" onclick="addEst('aguaCheia',-1)">-1</button><button class="btn btn-verm" style="flex:1" onclick="addEst('aguaCheia',-10)">-10</button></div></div>
-<div class="est-box">💧ÁGUA VAZIA<span class="est-num" id="estAguaVaziaNum" style="color:#ffab40">0</span><button class="btn btn-azul" onclick="editEst('aguaVazia')">✏️ EDITAR</button><div style="display:flex;gap:4px"><button class="btn btn-verde" style="flex:1" onclick="addEst('aguaVazia',10)">+10</button><button class="btn btn-verm" style="flex:1" onclick="addEst('aguaVazia',-10)">-10</button></div></div>
-</div></div>
-<div id="areceber" style="display:none"><div class="card"><h3>💰 Quem falta pagar </h3><div id="listaReceber"></div></div></div>
-<div id="desp" style="display:none"><div class="card"><h3>💸 Despesas</h3><label>Desc</label><input id="dDesc"><label>Valor</label><input id="dVal" type="number"><button class="btn btn-verm" onclick="addDesp()">SALVAR</button><div id="listDesp"></div><b id="totalDespLista">R$ 0</b></div></div>
+<div id="areceber" style="display:none"><div class="card"><h3>💰 A Receber</h3><div id="listaReceber"></div></div></div>
+<div id="desp" style="display:none"><div class="card"><h3>💸 Despesas</h3><label>Desc</label><input id="dDesc"><label>Valor</label><input id="dVal" type="number"><button class="btn btn-verm" onclick="addDesp()">SALVAR</button><div id="listDesp"></div></div></div>
+<div id="pagar" style="display:none">
+<div class="card" style="border:2px solid #25D366">
+<h3 style="text-align:center;color:#25D366;font-size:12px">💳 (R)(B)(D) OLIVEIRA<br>RENOVAR ASSINATURA</h3>
+<div id="infoAssinatura" style="margin:10px 0"></div>
+<div class="pix-box">
+<div style="font-weight:900;color:#087f3f">PIX SANTANDER - R$ 29,90/mês</div>
+<div id="qrcode2" style="display:flex;justify-content:center;margin:10px 0"></div>
+<div class="pix-key" id="pixCopiaECola2">1218ba50-719e-4178-a3d6-b13ddf0229ae</div>
+<div style="font-size:10px;color:#333">Titular: <b>Rogério Barbosa de Oliveira</b><br>Banco Santander<br>Sistema (R)(B)(D) OLIVEIRA</div>
+<button class="btn btn-verde" onclick="copiarPix()">📋 COPIAR PIX</button>
+</div>
+<button class="btn btn-whats" onclick="avisarWhatsApp()">💬 ENVIAR COMPROVANTE (82) 98821-7147</button>
+</div>
+</div>
 </main>
 <script>
-var vendas=JSON.parse(localStorage.getItem('v33')||'[]');
-var despesas=JSON.parse(localStorage.getItem('d33')||'[]');
-var estoque=JSON.parse(localStorage.getItem('e33')||'{"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0}');
-var clientes=JSON.parse(localStorage.getItem('c33')||'[]');
-var filtroAtual='hoje';var editandoClienteId=null;
-function getMesAno(){var d=new Date();var m=d.getMonth()+1;return (m<10?'0'+m:m)+'/'+d.getFullYear();}
-function getDiaHoje(){return new Date().toLocaleDateString('pt-BR');}
-function show(id,btn){document.querySelectorAll('main > div').forEach(function(d){d.style.display='none'});document.getElementById(id).style.display='block';document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');render();}
-function setF(f,btn){filtroAtual=f;document.querySelectorAll('.filtro button').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');render();}
-function salvar(){localStorage.setItem('v33',JSON.stringify(vendas));localStorage.setItem('e33',JSON.stringify(estoque));localStorage.setItem('c33',JSON.stringify(clientes));localStorage.setItem('d33',JSON.stringify(despesas));render();}
-function calc(){var q=parseFloat(document.getElementById('prodQtd').value)||0;var v=parseFloat(document.getElementById('prodValor').value)||0;document.getElementById('totalAuto').innerText='R$ '+(q*v).toFixed(2);calcDiv();}
-function calcDiv(){var q=parseFloat(document.getElementById('prodQtd').value)||0;var v=parseFloat(document.getElementById('prodValor').value)||0;var total=q*v;var dh=parseFloat(document.getElementById('pagoDH').value)||0;var pix=parseFloat(document.getElementById('pagoPIX').value)||0;var falta=total-dh-pix;if(falta<0)falta=0;document.getElementById('faltaCalc').innerText='R$ '+falta.toFixed(2);}
-function editEst(c){var n=prompt('Nova qtd '+c+' Atual:'+estoque[c],estoque[c]);if(n!==null){var v=parseInt(n);if(!isNaN(v)){estoque[c]=v;salvar();}}}
-function addEst(c,v){estoque[c]+=v;if(estoque[c]<0)estoque[c]=0;salvar();}
-function zerarDia(){var hoje=getDiaHoje();var qtd=vendas.filter(function(v){return v.dia==hoje}).length;if(confirm('ZERAR O DIA '+hoje+'? '+qtd+' vendas')){vendas=vendas.filter(function(v){return v.dia!=hoje});despesas=despesas.filter(function(d){return d.dia!=hoje});salvar();}}
-function zerarMes(){var mes=getMesAno();if(confirm('ZERAR MÊS '+mes+'?')){if(confirm('Confirma?')){vendas=vendas.filter(function(v){return v.mesAno!=mes});despesas=despesas.filter(function(d){return d.mesAno!=mes});salvar();}}}
-function zerarTudo(){if(confirm('ZERAR TUDO?')){if(confirm('Última?')){vendas=[];despesas=[];estoque={"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0};salvar();}}}
-function addCliente(){var n=document.getElementById('cNome').value.trim();var z=document.getElementById('cZap').value.trim().replace(/\D/g,'');var e=document.getElementById('cEnd').value.trim();if(!n||!z){alert('Nome e Zap');return;}if(editandoClienteId){var cli=clientes.find(function(c){return c.id==editandoClienteId});if(cli){cli.nome=n;cli.zap=z;cli.end=e;}editandoClienteId=null;document.getElementById('btnSalvarCliente').innerText='💾 SALVAR CLIENTE';document.getElementById('btnCancelEdicao').style.display='none';}else{clientes.unshift({id:Date.now(),nome:n,zap:z,end:e});}document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';salvar();}
-function salvarClienteRapido(){var n=document.getElementById('cliNome').value.trim();var z=document.getElementById('cliZap').value.trim().replace(/\D/g,'');if(!n||!z){alert('Nome e Zap');return;}clientes.unshift({id:Date.now(),nome:n,zap:z,end:''});salvar();alert('Cliente salvo!');}
-function editarCliente(id){var cli=clientes.find(function(c){return c.id==id});if(!cli)return;document.getElementById('cNome').value=cli.nome;document.getElementById('cZap').value=cli.zap;document.getElementById('cEnd').value=cli.end||'';editandoClienteId=id;document.getElementById('btnSalvarCliente').innerText='✏️ ATUALIZAR';document.getElementById('btnCancelEdicao').style.display='block';show('clientes',document.querySelectorAll('nav button')[2]);}
-function excluirCliente(id){if(confirm('Excluir?')){clientes=clientes.filter(function(c){return c.id!=id});salvar();}}
-function cancelarEdicao(){editandoClienteId=null;document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';document.getElementById('btnSalvarCliente').innerText='💾 SALVAR CLIENTE';document.getElementById('btnCancelEdicao').style.display='none';}
-function addVenda(){var tipo=document.getElementById('prodTipo').value;var qtd=parseInt(document.getElementById('prodQtd').value)||0;var val=parseFloat(document.getElementById('prodValor').value)||0;var dh=parseFloat(document.getElementById('pagoDH').value)||0;var pix=parseFloat(document.getElementById('pagoPIX').value)||0;var sel=document.getElementById('selCliente').value;var nome='',zap='';if(sel){var cli=clientes.find(function(c){return c.id==sel});if(cli){nome=cli.nome;zap=cli.zap;}}else{nome=document.getElementById('cliNome').value.trim();zap=document.getElementById('cliZap').value.trim().replace(/\D/g,'');}if(qtd<=0){alert('Qtd inválida');return;}var total=qtd*val;if(dh+pix>total){alert('DH+PIX maior!');return;}var falta=total-dh-pix;if(falta>0&&!nome){alert('Digite nome');return;}if(tipo=='gas'){estoque.cheio-=qtd;estoque.vazio+=qtd;}else{estoque.aguaCheia-=qtd;estoque.aguaVazia+=qtd;}var pgTipo=falta==0?(dh>=pix?'dinheiro':'pix'):'fiado';vendas.unshift({id:Date.now(),tipo:tipo,qtd:qtd,unit:val,total:total,pagoDH:dh,pagoPIX:pix,restante:falta,nome:nome,zap:zap,pgTipo:pgTipo,dia:getDiaHoje(),mesAno:getMesAno()});document.getElementById('pagoDH').value=0;document.getElementById('pagoPIX').value=0;salvar();alert('Venda salva!');}
-function filtrar(l){var hoje=getDiaHoje();var mes=getMesAno();if(filtroAtual=='hoje')return l.filter(function(x){return x.dia==hoje});if(filtroAtual=='mes')return l.filter(function(x){return x.mesAno==mes});return l;}
-function addDesp(){var d=document.getElementById('dDesc').value.trim();var v=parseFloat(document.getElementById('dVal').value)||0;if(!d||v<=0){alert('Desc e valor');return;}despesas.unshift({id:Date.now(),d:d,v:v,dia:getDiaHoje(),mesAno:getMesAno()});document.getElementById('dDesc').value='';document.getElementById('dVal').value='';salvar();}
-function delDesp(id){if(confirm('Apagar?')){despesas=despesas.filter(function(x){return x.id!=id});salvar();}}
-function receberTotal(id){var v=vendas.find(function(x){return x.id==id});if(v){v.pagoPIX+=v.restante;v.restante=0;v.pgTipo='pix';salvar();}}
-function receberParcial(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;var forma=prompt('DH ou PIX?','PIX');if(!forma)return;var valorStr=prompt('Quanto recebeu de '+forma.toUpperCase()+'? Devendo: R$ '+v.restante,'');if(valorStr===null)return;var valor=parseFloat(valorStr);if(isNaN(valor)||valor<=0)return;if(forma.toLowerCase().includes('pix'))v.pagoPIX+=valor;else v.pagoDH+=valor;v.restante-=valor;if(v.restante<=0){v.restante=0;v.pgTipo='pix';}salvar();}
-
-function gerarPDF(){
-try{
-var hoje=getDiaHoje();
-var vendasDia=vendas.filter(function(v){return v.dia==hoje});
-var despesasDia=despesas.filter(function(d){return d.dia==hoje});
-if(vendasDia.length==0&&despesasDia.length==0){alert('Nada hoje '+hoje);return;}
-var {jsPDF}=window.jspdf;var doc=new jsPDF('l','mm','a4');
-var y=15;
-doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text('EL SHADAI - SALVAR DIA - '+hoje,10,y);y+=8;
-doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('Gerado: '+new Date().toLocaleString('pt-BR'),10,y);y+=6;
-doc.line(10,y,280,y);y+=6;
-
-doc.setFont('helvetica','bold');doc.setFontSize(9);
-var xQTD=10, xUNIT=30, xCLI=50, xTOT=85, xDH=115, xPIX=140, xFAL=165;
-doc.text('QTD',xQTD,y);doc.text('UNIT',xUNIT,y);doc.text('CLIENTE',xCLI,y);doc.text('TOTAL',xTOT,y);doc.text('DH',xDH,y);doc.text('PIX',xPIX,y);doc.text('FALTA',xFAL,y);
-y+=4;doc.line(10,y,280,y);y+=6;
-
-doc.setFont('helvetica','normal');doc.setFontSize(9);
-var totalDH=0,totalPIX=0,totalFalta=0,totalVendas=0,totalGas=0,totalAgua=0;
-
-vendasDia.forEach(function(v){
-if(y>190){doc.addPage('l');y=15;}
-var prod = v.tipo=='gas'?'GAS':'AGUA';
-var unit = v.unit||(v.total/v.qtd);
-var qtdTxt = v.qtd+'x '+prod;
-var cli = (v.nome||'Avulso').substring(0,14);
-doc.text(qtdTxt,xQTD,y);
-doc.text('R$'+unit.toFixed(0),xUNIT,y);
-doc.text(cli,xCLI,y);
-doc.text('R$'+v.total.toFixed(0),xTOT,y);
-doc.text('R$'+(v.pagoDH||0).toFixed(0),xDH,y);
-doc.text('R$'+(v.pagoPIX||0).toFixed(0),xPIX,y);
-doc.text('R$'+(v.restante||0).toFixed(0),xFAL,y);
-y+=6;
-totalDH+=(v.pagoDH||0);totalPIX+=(v.pagoPIX||0);totalFalta+=(v.restante||0);totalVendas+=v.total;
-if(v.tipo=='gas') totalGas+=v.qtd; else totalAgua+=v.qtd;
+const CHAVE_PIX = "1218ba50-719e-4178-a3d6-b13ddf0229ae";
+const WHATSAPP_SUPORTE = "5582988217147";
+const NOME_SISTEMA = "(R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA";
+const firebaseConfig = {
+  apiKey: "AIzaSyBnZbTt-qX8DxnwcpUrr-_RyKWqMw86uJ0",
+  authDomain: "planilha-digital-gas-e-agua.firebaseapp.com",
+  projectId: "planilha-digital-gas-e-agua",
+  storageBucket: "planilha-digital-gas-e-agua.firebasestorage.app",
+  messagingSenderId: "146383290088",
+  appId: "1:146383290088:web:6cf58f492ebbb92ee5d35d"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+var vendas=[], despesas=[], estoque={"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0}, clientes=[];
+var currentUser=null, currentLojaId=null;
+function gerarQRCode(){
+ const el1 = document.getElementById('qrcode'); const el2 = document.getElementById('qrcode2');
+ if(el1){el1.innerHTML=''; new QRCode(el1, {text: CHAVE_PIX, width:160, height:160});}
+ if(el2){el2.innerHTML=''; new QRCode(el2, {text: CHAVE_PIX, width:160, height:160});}
+}
+function copiarPix(){navigator.clipboard.writeText(CHAVE_PIX).then(()=>alert('✅ PIX copiado!\n\n'+NOME_SISTEMA+'\nChave: '+CHAVE_PIX+'\nTitular: Rogério Barbosa de Oliveira\nBanco: Santander\nValor: R$ 29,90')); }
+function avisarWhatsApp(){
+ const msg = encodeURIComponent(`Olá Rogério! 🔥\n\nPaguei a mensalidade ${NOME_SISTEMA} R$ 29,90\n\nBanco: Santander\nPIX: ${CHAVE_PIX}\nTitular: Rogério Barbosa de Oliveira\nMeu Email: ${currentUser ? currentUser.email : ''}\n\nSegue comprovante! Aguardo liberação.`);
+ window.open(`https://wa.me/${WHATSAPP_SUPORTE}?text=${msg}`, '_blank');
+}
+function tentarEntrarMesmoAssim(){document.getElementById('paywall').style.display='none'; verificarAssinatura();}
+auth.onAuthStateChanged(async (user)=>{
+ if(user){currentUser=user; currentLojaId=user.uid; document.getElementById('loginScreen').style.display='none'; document.getElementById('nomeClienteTopo').innerText=user.email.split('@')[0].toUpperCase(); gerarQRCode(); await verificarAssinatura(); await carregarDados(); }else{document.getElementById('loginScreen').style.display='flex';}
 });
-
-y+=4;doc.line(10,y,280,y);y+=8;
-doc.setFont('helvetica','bold');doc.setFontSize(11);
-doc.text('TOTAL VENDIDO: R$ '+totalVendas.toFixed(2)+' | QTD GAS: '+totalGas+' | QTD AGUA: '+totalAgua,10,y);y+=7;
-doc.text('TOTAL DH: R$ '+totalDH.toFixed(2)+' | PIX: R$ '+totalPIX.toFixed(2)+' | FALTA: R$ '+totalFalta.toFixed(2),10,y);y+=10;
-
-doc.setFontSize(11);doc.text('QUEM FALTA PAGAR:',10,y);y+=6;doc.setFont('helvetica','normal');doc.setFontSize(10);
-var fiados=vendasDia.filter(function(v){return v.restante>0});
-if(fiados.length==0){doc.text('Nenhum devendo - Tudo recebido!',10,y);y+=6;}else{fiados.forEach(function(v){var prod=(v.tipo=='gas'?'GAS':'AGUA');var unit=v.unit||(v.total/v.qtd);doc.text('- '+v.nome+' - '+v.qtd+'x '+prod+' UNIT R$'+unit.toFixed(0)+' Falta R$'+(v.restante).toFixed(2),10,y);y+=6;});}
-y+=4;doc.setFont('helvetica','bold');doc.text('DESPESAS:',10,y);y+=6;doc.setFont('helvetica','normal');
-var totalDesp=0;despesasDia.forEach(function(d){doc.text('- '+d.d+' R$ '+d.v.toFixed(2),10,y);y+=6;totalDesp+=d.v;});
-y+=6;doc.setFont('helvetica','bold');doc.setFontSize(12);doc.text('TOTAL DESPESAS: R$ '+totalDesp.toFixed(2)+' | LUCRO: R$ '+((totalDH+totalPIX)-totalDesp).toFixed(2),10,y);
-doc.save('SALVAR_DIA_'+hoje.replace(/\//g,'-')+'.pdf');
-alert('✅ PDF COM UNIT ALINHADO!');
-}catch(e){alert('Erro PDF: '+e.message);}
+async function verificarAssinatura(){
+ try{
+  const doc = await db.collection('assinaturas').doc(currentLojaId).get();
+  if(!doc.exists){document.getElementById('statusAss').className='status-assinatura ass-teste'; document.getElementById('statusAss').innerText='🟠 TESTE GRÁTIS - 30 dias'; document.getElementById('infoAssinatura').innerHTML='<p style="color:#ffab40">Teste grátis 30 dias</p><p style="font-size:10px">Depois R$ 29,90/mês</p>'; return;}
+  const dados = doc.data(); const hoje = new Date(); const venc = dados.vencimento.toDate(); const dias = Math.ceil((venc - hoje)/(1000*60*60*24));
+  const info = document.getElementById('infoAssinatura');
+  if(dias < 0){document.getElementById('statusAss').className='status-assinatura ass-vencida'; document.getElementById('statusAss').innerText='🔴 VENCIDA'; document.getElementById('paywall').style.display='block';}
+  else if(dias <=3){document.getElementById('statusAss').className='status-assinatura ass-teste'; document.getElementById('statusAss').innerText=`🟠 Vence em ${dias} dias`; if(dias <=1) document.getElementById('paywall').style.display='block';}
+  else{document.getElementById('statusAss').className='status-assinatura ass-ativa'; document.getElementById('statusAss').innerText=`🟢 ATIVA até ${venc.toLocaleDateString('pt-BR')} (${dias} dias)`;}
+ }catch(e){console.log(e);}
 }
-
-function gerarPDFMes(){
-try{
-var mes=getMesAno();
-var vendasMes=vendas.filter(function(v){return v.mesAno==mes});
-if(vendasMes.length==0){alert('Sem vendas mes '+mes);return;}
-var {jsPDF}=window.jspdf;var doc=new jsPDF('l','mm','a4');
-var y=15;
-doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text('EL SHADAI - SALVAR MES - '+mes,10,y);y+=10;
-var xQTD=10,xUNIT=30,xCLI=50,xTOT=85,xDH=115,xPIX=140,xFAL=165;
-doc.setFontSize(9);doc.setFont('helvetica','bold');doc.text('QTD',xQTD,y);doc.text('UNIT',xUNIT,y);doc.text('CLIENTE',xCLI,y);doc.text('TOTAL',xTOT,y);doc.text('DH',xDH,y);doc.text('PIX',xPIX,y);doc.text('FALTA',xFAL,y);y+=6;doc.line(10,y,280,y);y+=6;
-doc.setFont('helvetica','normal');
-var totalDH=0,totalPIX=0,totalFalta=0,total=0,totalGas=0,totalAgua=0;
-vendasMes.forEach(function(v){
-if(y>190){doc.addPage('l');y=15;}
-var prod=(v.tipo=='gas'?'GAS':'AGUA');
-var unit=v.unit||(v.total/v.qtd);
-doc.text(v.qtd+'x '+prod,xQTD,y);
-doc.text('R$'+unit.toFixed(0),xUNIT,y);
-doc.text((v.nome||'Avulso').substring(0,12),xCLI,y);
-doc.text('R$'+v.total.toFixed(0),xTOT,y);
-doc.text('R$'+(v.pagoDH||0).toFixed(0),xDH,y);
-doc.text('R$'+(v.pagoPIX||0).toFixed(0),xPIX,y);
-doc.text('R$'+(v.restante||0).toFixed(0),xFAL,y);
-y+=6;
-total+=v.total;totalDH+=(v.pagoDH||0);totalPIX+=(v.pagoPIX||0);totalFalta+=(v.restante||0);
-if(v.tipo=='gas') totalGas+=v.qtd; else totalAgua+=v.qtd;
-});
-y+=8;doc.setFont('helvetica','bold');doc.setFontSize(11);
-doc.text('TOTAL MES: GAS:'+totalGas+' AGUA:'+totalAgua+' DH:R$'+totalDH.toFixed(2)+' PIX:R$'+totalPIX.toFixed(2)+' RECEBER:R$'+totalFalta.toFixed(2)+' VENDAS:R$'+total.toFixed(2),10,y);
-doc.save('SALVAR_MES_'+mes.replace('/','-')+'.pdf');
-alert('✅ MES COM UNIT!');
-}catch(e){alert('Erro MES: '+e.message);}
+async function fazerLogin(){const email=document.getElementById('loginEmail').value.trim(); const senha=document.getElementById('loginSenha').value.trim(); if(!email||!senha){document.getElementById('loginErro').innerText='Preencha email e senha';return;} try{await auth.signInWithEmailAndPassword(email,senha);}catch(e){document.getElementById('loginErro').innerText='Erro: '+e.message;}}
+async function fazerCadastro(){
+ const email=document.getElementById('loginEmail').value.trim(); 
+ const senha=document.getElementById('loginSenha').value.trim(); 
+ if(!email||!senha){document.getElementById('loginErro').innerText='Preencha email e senha pra criar conta';return;}
+ if(senha.length<6){document.getElementById('loginErro').innerText='Senha mínimo 6 caracteres';return;}
+ try{
+  const cred = await auth.createUserWithEmailAndPassword(email,senha);
+  const uid = cred.user.uid;
+  const venc = new Date(); venc.setDate(venc.getDate()+30);
+  await db.collection('assinaturas').doc(uid).set({
+    email: email,
+    criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
+    vencimento: venc,
+    status: 'teste',
+    plano: '30 dias gratis'
+  });
+  document.getElementById('loginErro').style.color='#00ff88';
+  document.getElementById('loginErro').innerText='✅ Conta criada! 30 dias grátis liberado!';
+ }catch(e){
+  if(e.code=='auth/email-already-in-use'){document.getElementById('loginErro').innerText='Esse Gmail já tem conta. Clique em ENTRAR.';}
+  else{document.getElementById('loginErro').innerText='Erro: '+e.message;}
+ }
 }
-
-function render(){
-var vendasF=filtrar(vendas);var despesasF=filtrar(despesas);
-var totalV=vendasF.reduce(function(a,b){return a+b.total},0);
-var totalDH=vendasF.reduce(function(a,b){return a+(b.pagoDH||0)},0);
-var totalPIX=vendasF.reduce(function(a,b){return a+(b.pagoPIX||0)},0);
-var totalA=vendasF.reduce(function(a,b){return a+(b.restante||0)},0);
-var totalD=despesasF.reduce(function(a,b){return a+b.v},0);
-var lucro=(totalDH+totalPIX)-totalD;
-document.getElementById('kpiDH').innerText='R$ '+totalDH.toFixed(2);
-document.getElementById('kpiPIX').innerText='R$ '+totalPIX.toFixed(2);
-document.getElementById('kpiReceber').innerText='R$ '+totalA.toFixed(2);
-document.getElementById('kpiVendas').innerText='R$ '+totalV.toFixed(2);
-document.getElementById('kpiDesp').innerText='R$ '+totalD.toFixed(2);
-document.getElementById('kpiLucro').innerText='R$ '+lucro.toFixed(2);
-document.getElementById('resumoCard').innerHTML='<b>📊 Resumo '+(filtroAtual=='hoje'?'HOJE':filtroAtual=='mes'?'MÊS':'TUDO')+'</b><br>💵 DH: <b>R$ '+totalDH.toFixed(2)+'</b><br>💳 PIX: <b>R$ '+totalPIX.toFixed(2)+'</b><br> Receber: <b>R$ '+totalA.toFixed(2)+'</b><br>Vendas: R$ '+totalV.toFixed(2)+'<br>Despesas: R$ '+totalD.toFixed(2)+'<br><b style="color:#00ff88">Lucro: R$ '+lucro.toFixed(2)+'</b>';
-document.getElementById('estoqueDash').innerHTML='<div>🔥 Cheio: <b>'+estoque.cheio+'</b></div><div>♻️ Vazio: <b>'+estoque.vazio+'</b></div><div>💧 Cheia: <b>'+estoque.aguaCheia+'</b></div><div>🚰 Vazia: <b>'+estoque.aguaVazia+'</b></div>';
-document.getElementById('estCheioNum').innerText=estoque.cheio;document.getElementById('estVazioNum').innerText=estoque.vazio;
-document.getElementById('estAguaCheiaNum').innerText=estoque.aguaCheia;document.getElementById('estAguaVaziaNum').innerText=estoque.aguaVazia;
-document.getElementById('selCliente').innerHTML='<option value="">Avulso</option>'+clientes.map(function(c){return '<option value="'+c.id+'">'+c.nome+'</option>'}).join('');
-var meses=[];vendas.forEach(function(v){if(meses.indexOf(v.mesAno)==-1)meses.push(v.mesAno)});
-var selM=document.getElementById('filtroMesHist');var atual=selM.value;selM.innerHTML='<option value="todos">Todos</option>'+meses.map(function(m){return '<option value="'+m+'">'+m+'</option>'}).join('');selM.value=atual;
-var vendasHist=atual&&atual!='todos'?vendas.filter(function(v){return v.mesAno==atual}):vendas;
-document.getElementById('tbHist').innerHTML=vendasHist.map(function(v){var prod=v.tipo=='gas'?'🔥':'💧';var unit=v.unit||(v.total/v.qtd);return '<tr><td>'+v.dia+'</td><td>'+prod+' '+v.qtd+'</td><td>R$ '+unit.toFixed(0)+'</td><td>'+(v.nome||'Avulso').substring(0,8)+'</td><td>R$ '+v.total+'</td><td>R$ '+(v.pagoDH||0)+'</td><td>R$ '+(v.pagoPIX||0)+'</td><td>R$ '+(v.restante||0)+'</td></tr>'}).join('');
-document.getElementById('totalHistDH').innerText='R$ '+vendasHist.reduce(function(a,b){return a+(b.pagoDH||0)},0).toFixed(2);
-document.getElementById('totalHistPIX').innerText='R$ '+vendasHist.reduce(function(a,b){return a+(b.pagoPIX||0)},0).toFixed(2);
-document.getElementById('totalHistRec').innerText='R$ '+vendasHist.reduce(function(a,b){return a+(b.restante||0)},0).toFixed(2);
-document.getElementById('totalHistFiltro').innerText='R$ '+vendasHist.reduce(function(a,b){return a+b.total},0).toFixed(2);
-document.getElementById('totalHistGas').innerText=vendasHist.filter(function(v){return v.tipo=='gas'}).reduce(function(a,b){return a+b.qtd},0);
-document.getElementById('totalHistAgua').innerText=vendasHist.filter(function(v){return v.tipo=='agua'}).reduce(function(a,b){return a+b.qtd},0);
-var fiados=vendas.filter(function(v){return v.restante>0});
-document.getElementById('listaReceber').innerHTML=fiados.length==0?'<p style="text-align:center">Nenhum devendo</p>':fiados.map(function(v){var prod=v.tipo=='gas'?'🔥 GAS':'💧 AGUA';var unit=v.unit||(v.total/v.qtd);return '<div style="background:#0f1f16;border:1px solid #c62828;border-radius:10px;padding:8px;margin-bottom:6px"><b> '+v.nome+'</b> '+v.dia+' - '+v.qtd+'x '+prod+' R$'+unit.toFixed(0)+'<br>DH: R$ '+(v.pagoDH||0)+' | PIX: R$ '+(v.pagoPIX||0)+'<br><b style="color:#ffab40">Falta: R$ '+(v.restante).toFixed(2)+'</b><div style="display:flex;gap:4px"><button class="btn-sm" style="background:#00c853;flex:1" onclick="receberTotal('+v.id+')">✅ QUITAR</button><button class="btn-sm" style="background:#ef6c00;flex:1" onclick="receberParcial('+v.id+')">🟠 PARCIAL</button></div></div>'}).join('');
-document.getElementById('listDesp').innerHTML=despesasF.map(function(d){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1f3d2a;font-size:11px"><div><b>'+d.d+'</b><br><small>'+d.dia+'</small></div><div><b style="color:#ff5252">R$ '+d.v+'</b> <button class="btn-sm" style="background:#c62828" onclick="delDesp('+d.id+')">🗑️</button></div></div>'}).join('');
-document.getElementById('totalDespLista').innerText='R$ '+totalD.toFixed(2);
-var busca=(document.getElementById('buscaCliente')?.value||'').toLowerCase();
-var filtrados=clientes.filter(function(c){return c.nome.toLowerCase().includes(busca)||c.zap.includes(busca)});
-if(document.getElementById('listaClientes')){document.getElementById('listaClientes').innerHTML=filtrados.map(function(c){return '<div style="background:#0f1f16;border:1px solid #2a4533;border-radius:10px;padding:8px;margin:4px 0;display:flex;justify-content:space-between"><div><b>'+c.nome+'</b><br><small>'+c.zap+'</small></div><div><button class="btn-sm" style="background:#1565c0" onclick="editarCliente('+c.id+')">✏️</button><button class="btn-sm" style="background:#c62828" onclick="excluirCliente('+c.id+')">🗑️</button></div></div>'}).join('');}
-}
-document.getElementById('prodTipo').addEventListener('change',function(){document.getElementById('prodValor').value=this.value=='gas'?86:9;calc();});
-calc();render();
-</script>
-</body>
-</html>
+function logout(){auth.signOut();location.reload();}
+async function carregarDados(){try{const ref = db.collection('lojas').doc(currentLojaId).collection('dados'); const v = await ref.doc('vendas').get(); if(v.exists) vendas=v.data().lista||[]; const c = await ref.doc('clientes').get(); if(c.exists) clientes=c.data().lista||[]; const d = await ref.doc('despesas').get(); if(d.exists) despesas=d.data().lista||[]; const e = await ref.doc('estoque').get(); if(e.exists) estoque=e.data()||estoque; render();}catch(e){render();}}
+async function salvarNuvem(){if(!currentLojaId) return; const ref = db.collection('lojas').doc(currentLojaId).collection('dados'); await ref.doc('vendas').set({lista:vendas}); await ref.doc('clientes').set({lista:clientes}); await ref.doc('despesas').set({lista:despesas}); await ref.doc('estoque').set(estoque);}
+function show(id,btn){document.querySelectorAll('main > div').forEach(d=>d.style.display='none');document.getElementById(id).style.display='block';document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');render();}
+function render(){var sel=document.getElementById('selCliente'); if(sel){sel.innerHTML='<option value="">Avulso</option>'; clientes.forEach(c=>{sel.innerHTML+=`<option value="${c.id}">${c.nome}</option>`});} var totV=vendas.reduce((a,b)=>a+b.total,0); var totD=despesas.reduce((a,b)=>a+b.v,0); const elV=document.getElementById('kpiVendas'); if(elV) elV.innerText='R$ '+totV.toFixed(0); const elD=document.getElementById('kpiDesp'); if(elD) elD.innerText='R$ '+totD.toFixed(0); const elL=document.getElementById('kpiLucro'); if(elL) elL.innerText='R$ '+(totV-totD).toFixed(0); const elDH=document.getElementById('kpiDH'); if(elDH) elDH.innerText='R$ '+vendas.reduce((a,b)=>a+(b.pagoDH||0),0).toFixed(0); const elPIX=document.getElementById('kpiPIX'); if(elPIX) elPIX.innerText='R$ '+vendas.reduce((a,b)=>a+(b.pagoPIX||0),0).toFixed(0); const elRec=document.getElementById('kpiReceber'); if(elRec) elRec.innerText='R$ '+vendas.reduce((a,b)=>a+(b.restante||0),0).toFixed(0);}
+function addEst(c,v){estoque[c]+=v; if(estoque[c]<0) estoque[c]=0; salvarNuvem(); render();}
+function addCliente(){var n=document.getElementById('cNome').value.trim();var z=document.getElementById('cZap').value.trim();if(!n||!z){alert('Nome e Zap');return;}clientes.unshift({id:Date.now(),nome:n,zap:z});salvarNuvem();render();document.getElementById('cNome').value='';document.getElementById('cZap').value='';}
+function salvarClienteRapido(){var n=document.getElementById('cliNome').value.trim();var z=document.getElementById('cliZap').value.trim();if(!n||!z){alert('Nome e Zap');return;}clientes.unshift({id:Date.now(),nome:n,zap:z});salvarNuvem();render();alert('Cliente salvo!');}
+function addVenda(){var tipo=document.getElementById('prodTipo').value; var qtd=parseInt(document.getElementById('prodQtd').value)||0; var val=parseFloat(document.getElementById('prodValor').value)||0; var dh=parseFloat(document.getElementById('pagoDH').value)||0; var pix=parseFloat(document.getElementById('pagoPIX').value)||0; var sel=document.getElementById('selCliente').value; var nome=
