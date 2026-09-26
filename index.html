@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head><style>
@@ -24,137 +25,74 @@
 </style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>(R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA - V40 FINAL</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<title>(R)(B)(D) OLIVEIRA - ADM - PLANILHA GESTÃO GÁS E ÁGUA</title>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial;background:#06140c;color:#fff;padding-bottom:80px}
-header{background:linear-gradient(135deg,#087f3f,#00ff88);padding:12px;text-align:center;position:sticky;top:0;z-index:100}
-header h1{font-size:11px;line-height:1.2}
-header h1 small{display:block;font-size:9px;color:#c8e6c9;margin-top:2px}
-nav{display:flex;gap:4px;overflow:auto;background:#0f1f16;padding:6px;position:sticky;top:56px;z-index:99}
-nav button{background:#1a3d26;color:#fff;padding:8px 10px;border-radius:10px;border:1px solid #2a4533;font-size:9px;font-weight:900;white-space:nowrap}
-nav button.active{background:#087f3f}
-main{padding:8px;max-width:600px;margin:auto}
-.card{background:#14281b;border:1px solid #2a4533;border-radius:14px;padding:10px;margin-bottom:8px}
-.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.kpi{border-radius:12px;padding:10px;text-align:center;color:#fff;font-weight:900;font-size:10px}
-.kpi.red{background:#c62828}.kpi.orange{background:#ef6c00}.kpi.green{background:#087f3f}.kpi.blue{background:#0d47a1}.kpi.pix{background:#1565c0}.kpi.din{background:#2e7d32}
-.kpi span{font-size:13px;display:block}
-.btn{width:100%;padding:12px;border-radius:10px;border:0;font-weight:900;color:#fff;margin-top:6px;cursor:pointer}
-.btn-verde{background:#087f3f}.btn-azul{background:#1565c0}.btn-verm{background:#c62828}.btn-cinza{background:#37474f}.btn-whats{background:#25D366}
-label{font-size:10px;color:#81c784;margin:5px 0 2px;display:block;font-weight:700}input,select{width:100%;padding:10px;border-radius:8px;background:#0a1a0f;border:1px solid #2a4533;color:#fff}
-.login-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#06140c;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-box{background:#14281b;border:2px solid #00ff88;border-radius:16px;padding:20px;width:100%;max-width:380px;text-align:center}
-.login-box h2{font-size:14px;line-height:1.3}
-.status-assinatura{padding:8px;border-radius:10px;font-size:10px;font-weight:900;text-align:center;margin-bottom:8px}
-.ass-ativa{background:#087f3f}.ass-vencida{background:#c62828}.ass-teste{background:#ef6c00}
-.paywall{position:fixed;top:0;left:0;width:100%;height:100%;background:#06140c;z-index:8000;display:none;overflow:auto;padding:15px}
-.pix-box{background:#fff;color:#000;border-radius:14px;padding:15px;margin:10px 0;text-align:center}
-.pix-key{background:#f0f0f0;padding:10px;border-radius:8px;font-size:11px;word-break:break-all;margin:8px 0;border:1px dashed #087f3f}
-table{width:100%;font-size:9px;border-collapse:collapse}th,td{padding:4px;border-bottom:1px solid #1f3d2a}
-.brand-login{font-size:16px;font-weight:900;color:#00ff88;line-height:1.2}
-.brand-sub{font-size:9px;color:#81c784;margin:5px 0}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial;background:#0f172a;color:#fff;padding:10px}
+header{background:linear-gradient(135deg,#087f3f,#00ff88);padding:15px;border-radius:12px;text-align:center;margin-bottom:10px}
+header h1{font-size:13px} header h1 small{display:block;font-size:10px;color:#e0ffe0}
+.card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:12px;margin-bottom:10px}
+.btn{padding:10px 14px;border-radius:8px;border:0;font-weight:900;color:#fff;margin:4px;cursor:pointer}
+.btn-verde{background:#087f3f}.btn-azul{background:#2563eb}.btn-verm{background:#dc2626}.btn-laranja{background:#ea580c}.btn-whats{background:#25D366}
+input,select{width:100%;padding:10px;border-radius:8px;background:#0f172a;border:1px solid #334155;color:#fff;margin:4px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.kpi{background:#0f172a;border-radius:10px;padding:10px;text-align:center;border:1px solid #334155}
+.kpi b{display:block;font-size:20px;color:#00ff88}
+table{width:100%;font-size:11px;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid #334155;text-align:left}
+.badge{padding:3px 8px;border-radius:10px;font-size:9px;font-weight:900}
+.badge-ativa{background:#087f3f}.badge-vencida{background:#dc2626}.badge-teste{background:#ea580c}
 </style>
 </head>
 <body>
-<div id="loginScreen" class="login-screen">
-<div class="login-box">
-<div class="brand-login">🔥 (R)(B)(D) OLIVEIRA</div>
-<div style="font-size:11px;font-weight:900;color:#fff;margin:4px 0">PLANILHA GESTÃO DE VENDAS<br>GÁS E ÁGUA</div>
-<div class="brand-sub">Sistema  de Vendas de gás e água<br></div>
-<label style="text-align:left">Email</label><input id="loginEmail" placeholder="cliente@email.com">
-<label style="text-align:left">Senha</label><input id="loginSenha" type="password" placeholder="******">
-<button class="btn btn-verde" onclick="fazerLogin()">ENTRAR NO SISTEMA</button>
-<button class="btn btn-azul" onclick="fazerCadastro()" style="margin-top:8px">📝 CRIAR CONTA COM QUALQUER GMAIL</button>
-<p style="font-size:9px;color:#81c784;margin-top:8px">✅ Pode usar qualquer Gmail<br>pô 30 dias grátis pra testar</p>
-<p id="loginErro" style="font-size:10px;color:#ff5252;margin-top:8px;text-align:center"></p>
-<p style="font-size:8px;text-align:center;color:#81c784;margin-top:10px">suporte<br>whatsapp (82) 98821-7147 <br></p>
-</div>
-</div>
-
-<div id="paywall" class="paywall">
-<div style="max-width:380px;margin:20px auto">
-<div style="text-align:center;margin-bottom:15px"><h1 style="color:#00ff88;font-size:14px">🔥 (R)(B)(D) OLIVEIRA</h1><div style="font-size:10px;color:#fff">PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA</div><h3 id="payTitle" style="margin-top:10px">ASSINATURA VENCIDA</h3><p id="paySub" style="font-size:12px;color:#81c784;margin-top:5px">Renove pra continuar usando</p></div>
-<div class="card" style="border:2px solid #ef6c00">
-<h3 style="color:#ffab40;text-align:center">💳 RENOVAR - R$ 29,90 / MÊS</h3>
-<div class="pix-box">
-<div style="font-weight:900;color:#087f3f;font-size:12px">(R)(B)(D) OLIVEIRA<br>PIX BANCO SANTANDER</div>
-<div id="qrcode" style="display:flex;justify-content:center;margin:10px 0"></div>
-<div class="pix-key" id="pixCopiaECola">1218ba50-719e-4178-a3d6-b13ddf0229ae</div>
-<button class="btn btn-verde" onclick="copiarPix()">📋 COPIAR CHAVE PIX ALEATÓRIA</button>
-<div style="font-size:10px;margin-top:8px;color:#333">Banco: Santander<br>Titular: <b>Rogério Barbosa de Oliveira</b><br>Sistema: <b>(R)(B)(D) OLIVEIRA</b><br>Valor: <b>R$ 29,90</b></div>
-</div>
-<button class="btn btn-whats" onclick="avisarWhatsApp()">💬 JÁ PAGUEI - ENVIAR COMPROVANTE (82) 98821-7147</button>
-<button class="btn btn-cinza" onclick="tentarEntrarMesmoAssim()">🔓 Já paguei, tentar entrar</button>
-</div>
-</div>
-</div>
-
 <header>
-<h1>🔥 (R)(B)(D) OLIVEIRA <small>PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA</small></h1>
-<div id="statusAss" class="status-assinatura ass-teste">Carregando...</div>
+<h1>🔥 (R)(B)(D) OLIVEIRA <small>PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA - PAINEL ADM</small></h1>
+<p style="font-size:10px">PIX Santander: 1218ba50-719e-4178-a3d6-b13ddf0229ae - Rogério - (82) 98821-7147</p>
+<p style="font-size:11px">R$ 29,90/mês por cliente</p>
+<div id="adminEmail" style="font-size:11px"></div>
 </header>
-<nav>
-<button class="active" onclick="show('dash',this)">📊 Dash</button>
-<button onclick="show('venda',this)">➕ Venda</button>
-<button onclick="show('clientes',this)">👥 Clientes</button>
-<button onclick="show('historico',this)">📜 Hist</button>
-<button onclick="show('estoque',this)">📦 Estoq</button>
-<button onclick="show('areceber',this)">💰 Receber</button>
-<button onclick="show('desp',this)">💸 Desp</button>
-<button onclick="show('pagar',this)" style="background:#ef6c00">💳 Pagar</button>
-<button onclick="logout()" style="background:#c62828">Sair</button>
-</nav>
-<main>
-<div id="dash">
-<div class="kpi-grid">
-<div class="kpi din">💵 DH<span id="kpiDH">R$ 0</span></div>
-<div class="kpi pix">💳 PIX<span id="kpiPIX">R$ 0</span></div>
-<div class="kpi blue">🫵 A RECEBER<span id="kpiReceber">R$ 0</span></div>
-<div class="kpi green">VENDAS<span id="kpiVendas">R$ 0</span></div>
-<div class="kpi red">DESPESAS<span id="kpiDesp">R$ 0</span></div>
-<div class="kpi orange">LUCRO<span id="kpiLucro">R$ 0</span></div>
-</div>
-<div class="card" id="resumoCard"></div>
-<div class="card" style="text-align:center;font-size:8px;color:#81c784">(R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA<br>Rogério Barbosa de Oliveira - (82) 98821-7147</div>
-</div>
-<div id="venda" style="display:none"><div class="card"><h3>🛒 Nova Venda - (R)(B)(D) OLIVEIRA</h3>
-<label>Produto</label><select id="prodTipo"><option value="gas">🔥 Botijão P13</option><option value="agua">💧 Galão 20L</option></select>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div><label>Qtd</label><input id="prodQtd" type="number" value="1"></div><div><label>Unit R$</label><input id="prodValor" type="number" value="86"></div></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px"><div><label>💵 DH R$</label><input id="pagoDH" type="number" value="0"></div><div><label>💳 PIX R$</label><input id="pagoPIX" type="number" value="0"></div></div>
-<label>👥 Cliente</label><select id="selCliente"><option value="">Avulso</option></select>
-<div id="boxCliente"><label>Nome se fiado </label><input id="cliNome"><label>Zap</label><input id="cliZap"><button class="btn btn-azul" style="padding:8px" onclick="salvarClienteRapido()">💾 CADASTRAR RÁPIDO</button></div>
-<button class="btn btn-verde" onclick="addVenda()">💾 SALVAR VENDA</button>
-</div></div>
-<div id="clientes" style="display:none"><div class="card"><h3>👥 Clientes</h3><label>Nome *</label><input id="cNome"><label>Zap *</label><input id="cZap"><label>End</label><input id="cEnd"><button class="btn btn-verde" onclick="addCliente()">💾 SALVAR CLIENTE</button></div><div class="card"><input id="buscaCliente" placeholder="🔍 Buscar..." oninput="render()"><div id="listaClientes"></div></div></div>
-<div id="historico" style="display:none"><div class="card"><h3>📜 Histórico</h3><div style="overflow:auto"><table><thead><tr><th>Dia</th><th>Qtd</th><th>Cliente</th><th>Total</th><th>Resto</th></tr></thead><tbody id="tbHist"></tbody></table></div></div></div>
-<div id="estoque" style="display:none"><div class="card"><h3>📦 Estoque</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:center"><div>🔥 GÁS CHEIO<br><b id="estCheioNum" style="font-size:20px;color:#00ff88">0</b><br><button class="btn btn-verde" onclick="addEst('cheio',1)">+1</button></div><div>♻️ VAZIO<br><b id="estVazioNum" style="font-size:20px">0</b><br><button class="btn btn-verm" onclick="addEst('cheio',-1)">-1</button></div><div>💧 ÁGUA CHEIA<br><b id="estAguaCheiaNum" style="font-size:20px;color:#42a5f5">0</b><br><button class="btn btn-verde" onclick="addEst('aguaCheia',1)">+1</button></div><div>💧 VAZIA<br><b id="estAguaVaziaNum" style="font-size:20px">0</b><br><button class="btn btn-verm" onclick="addEst('aguaCheia',-1)">-1</button></div></div>
-</div></div>
-<div id="areceber" style="display:none"><div class="card"><h3>💰 A Receber</h3><div id="listaReceber"></div></div></div>
-<div id="desp" style="display:none"><div class="card"><h3>💸 Despesas</h3><label>Desc</label><input id="dDesc"><label>Valor</label><input id="dVal" type="number"><button class="btn btn-verm" onclick="addDesp()">SALVAR</button><div id="listDesp"></div></div></div>
-<div id="pagar" style="display:none">
-<div class="card" style="border:2px solid #25D366">
-<h3 style="text-align:center;color:#25D366;font-size:12px">💳 (R)(B)(D) OLIVEIRA<br>RENOVAR ASSINATURA</h3>
-<div id="infoAssinatura" style="margin:10px 0"></div>
-<div class="pix-box">
-<div style="font-weight:900;color:#087f3f">PIX SANTANDER - R$ 29,90/mês</div>
-<div id="qrcode2" style="display:flex;justify-content:center;margin:10px 0"></div>
-<div class="pix-key" id="pixCopiaECola2">1218ba50-719e-4178-a3d6-b13ddf0229ae</div>
-<div style="font-size:10px;color:#333">Titular: <b>Rogério Barbosa de Oliveira</b><br>Banco Santander<br>Sistema (R)(B)(D) OLIVEIRA</div>
-<button class="btn btn-verde" onclick="copiarPix()">📋 COPIAR PIX</button>
-</div>
-<button class="btn btn-whats" onclick="avisarWhatsApp()">💬 ENVIAR COMPROVANTE (82) 98821-7147</button>
+
+<div id="loginADM" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0f172a;z-index:999;display:flex;align-items:center;justify-content:center">
+<div class="card" style="width:350px;text-align:center"><h3>🔥 (R)(B)(D) OLIVEIRA<br><small>Login DONO</small></h3>
+<p style="font-size:9px;color:#94a3b8;margin-bottom:8px">Primeiro acesso? Crie seu login abaixo</p>
+<input id="admEmail" placeholder="seu email" value="javaoliveira384@gmail.com">
+<input id="admSenha" type="password" placeholder="senha (min 6 caracteres)" value="123456">
+<button class="btn btn-verde" style="width:100%" onclick="loginADM()">ENTRAR NO ADM</button>
+<button class="btn btn-azul" style="width:100%;margin-top:6px" onclick="criarAcessoDono()">🆕 CRIAR MEU ACESSO DE DONO</button>
+<p id="msgLogin" style="font-size:10px;color:#f87171;margin-top:8px"></p>
+<p style="font-size:8px;color:#64748b;margin-top:8px">Se der erro de senha, clica em CRIAR MEU ACESSO</p>
 </div>
 </div>
-</main>
+
+<div class="grid">
+<div class="kpi">Clientes<b id="kpiTotalClientes">0</b></div>
+<div class="kpi">Ativos<b id="kpiAtivos">0</b></div>
+<div class="kpi">Vencidos<b id="kpiVencidos">0</b></div>
+<div class="kpi">Faturamento<b id="kpiMensal">R$ 0</b></div>
+</div>
+
+<div class="card">
+<h3>➕ Criar Cliente - (R)(B)(D) OLIVEIRA - R$ 29,90</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div><label>Email do cliente</label><input id="novoEmail" placeholder="cliente@email.com"></div>
+<div><label>Senha inicial</label><input id="novoSenha" placeholder="123456"></div>
+<div><label>Nome da Distribuidora</label><input id="novoNome" placeholder="Gás do João"></div>
+<div><label>Plano</label><select id="novoPlano"><option value="30">30 dias grátis - NOVO</option><option value="60">60 dias - R$ 49,90</option><option value="90">90 dias - R$ 79,90</option><option value="30">30 dias - R$ 29,90 (renovação)</option></select></div>
+</div>
+<button class="btn btn-verde" style="width:100%;margin-top:8px" onclick="criarCliente()">✅ CRIAR CLIENTE</button>
+<p id="msgCriar" style="font-size:11px;margin-top:6px"></p>
+</div>
+
+<div class="card">
+<h3>👥 Clientes (R)(B)(D) OLIVEIRA</h3>
+<input id="busca" placeholder="🔍 Buscar..." oninput="carregarClientes()">
+<div style="overflow:auto"><table><thead><tr><th>Distribuidora</th><th>Email</th><th>Venc</th><th>Status</th><th>Ações</th></tr></thead><tbody id="tbClientes"></tbody></table></div>
+</div>
+
 <script>
 const CHAVE_PIX = "1218ba50-719e-4178-a3d6-b13ddf0229ae";
-const WHATSAPP_SUPORTE = "5582988217147";
-const NOME_SISTEMA = "(R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA";
+const VALOR = 29.90;
 const firebaseConfig = {
   apiKey: "AIzaSyBnZbTt-qX8DxnwcpUrr-_RyKWqMw86uJ0",
   authDomain: "planilha-digital-gas-e-agua.firebaseapp.com",
@@ -166,63 +104,84 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-var vendas=[], despesas=[], estoque={"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0}, clientes=[];
-var currentUser=null, currentLojaId=null;
-function gerarQRCode(){
- const el1 = document.getElementById('qrcode'); const el2 = document.getElementById('qrcode2');
- if(el1){el1.innerHTML=''; new QRCode(el1, {text: CHAVE_PIX, width:160, height:160});}
- if(el2){el2.innerHTML=''; new QRCode(el2, {text: CHAVE_PIX, width:160, height:160});}
+auth.onAuthStateChanged(user=>{ if(user){document.getElementById('loginADM').style.display='none'; document.getElementById('adminEmail').innerText=user.email; carregarClientes();} else{document.getElementById('loginADM').style.display='flex';}});
+function loginADM(){
+ const e=document.getElementById('admEmail').value.trim(); 
+ const s=document.getElementById('admSenha').value.trim();
+ document.getElementById('msgLogin').innerText='Entrando...';
+ auth.signInWithEmailAndPassword(e,s).catch(err=>{
+   document.getElementById('msgLogin').innerText='❌ '+err.message+' - Clique em CRIAR MEU ACESSO DE DONO';
+ });
 }
-function copiarPix(){navigator.clipboard.writeText(CHAVE_PIX).then(()=>alert('✅ PIX copiado!\n\n'+NOME_SISTEMA+'\nChave: '+CHAVE_PIX+'\nTitular: Rogério Barbosa de Oliveira\nBanco: Santander\nValor: R$ 29,90')); }
-function avisarWhatsApp(){
- const msg = encodeURIComponent(`Olá Rogério! 🔥\n\nPaguei a mensalidade ${NOME_SISTEMA} R$ 29,90\n\nBanco: Santander\nPIX: ${CHAVE_PIX}\nTitular: Rogério Barbosa de Oliveira\nMeu Email: ${currentUser ? currentUser.email : ''}\n\nSegue comprovante! Aguardo liberação.`);
- window.open(`https://wa.me/${WHATSAPP_SUPORTE}?text=${msg}`, '_blank');
-}
-function tentarEntrarMesmoAssim(){document.getElementById('paywall').style.display='none'; verificarAssinatura();}
-auth.onAuthStateChanged(async (user)=>{
- if(user){currentUser=user; currentLojaId=user.uid; document.getElementById('loginScreen').style.display='none'; document.getElementById('nomeClienteTopo').innerText=user.email.split('@')[0].toUpperCase(); gerarQRCode(); await verificarAssinatura(); await carregarDados(); }else{document.getElementById('loginScreen').style.display='flex';}
-});
-async function verificarAssinatura(){
+async function criarAcessoDono(){
+ const e=document.getElementById('admEmail').value.trim(); 
+ const s=document.getElementById('admSenha').value.trim();
+ if(!e||!s){document.getElementById('msgLogin').innerText='Preencha email e senha';return;}
+ if(s.length<6){document.getElementById('msgLogin').innerText='Senha mínimo 6 caracteres';return;}
+ document.getElementById('msgLogin').innerText='Criando seu acesso...';
  try{
-  const doc = await db.collection('assinaturas').doc(currentLojaId).get();
-  if(!doc.exists){document.getElementById('statusAss').className='status-assinatura ass-teste'; document.getElementById('statusAss').innerText='🟠 TESTE GRÁTIS - 30 dias'; document.getElementById('infoAssinatura').innerHTML='<p style="color:#ffab40">Teste grátis 30 dias</p><p style="font-size:10px">Depois R$ 29,90/mês</p>'; return;}
-  const dados = doc.data(); const hoje = new Date(); const venc = dados.vencimento.toDate(); const dias = Math.ceil((venc - hoje)/(1000*60*60*24));
-  const info = document.getElementById('infoAssinatura');
-  if(dias < 0){document.getElementById('statusAss').className='status-assinatura ass-vencida'; document.getElementById('statusAss').innerText='🔴 VENCIDA'; document.getElementById('paywall').style.display='block';}
-  else if(dias <=3){document.getElementById('statusAss').className='status-assinatura ass-teste'; document.getElementById('statusAss').innerText=`🟠 Vence em ${dias} dias`; if(dias <=1) document.getElementById('paywall').style.display='block';}
-  else{document.getElementById('statusAss').className='status-assinatura ass-ativa'; document.getElementById('statusAss').innerText=`🟢 ATIVA até ${venc.toLocaleDateString('pt-BR')} (${dias} dias)`;}
- }catch(e){console.log(e);}
-}
-async function fazerLogin(){const email=document.getElementById('loginEmail').value.trim(); const senha=document.getElementById('loginSenha').value.trim(); if(!email||!senha){document.getElementById('loginErro').innerText='Preencha email e senha';return;} try{await auth.signInWithEmailAndPassword(email,senha);}catch(e){document.getElementById('loginErro').innerText='Erro: '+e.message;}}
-async function fazerCadastro(){
- const email=document.getElementById('loginEmail').value.trim(); 
- const senha=document.getElementById('loginSenha').value.trim(); 
- if(!email||!senha){document.getElementById('loginErro').innerText='Preencha email e senha pra criar conta';return;}
- if(senha.length<6){document.getElementById('loginErro').innerText='Senha mínimo 6 caracteres';return;}
- try{
-  const cred = await auth.createUserWithEmailAndPassword(email,senha);
-  const uid = cred.user.uid;
-  const venc = new Date(); venc.setDate(venc.getDate()+30);
-  await db.collection('assinaturas').doc(uid).set({
-    email: email,
-    criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
-    vencimento: venc,
-    status: 'teste',
-    plano: '30 dias gratis'
-  });
-  document.getElementById('loginErro').style.color='#00ff88';
-  document.getElementById('loginErro').innerText='✅ Conta criada! 30 dias grátis liberado!';
- }catch(e){
-  if(e.code=='auth/email-already-in-use'){document.getElementById('loginErro').innerText='Esse Gmail já tem conta. Clique em ENTRAR.';}
-  else{document.getElementById('loginErro').innerText='Erro: '+e.message;}
+  await auth.createUserWithEmailAndPassword(e,s);
+  document.getElementById('msgLogin').style.color='#4ade80';
+  document.getElementById('msgLogin').innerText='✅ Acesso criado! Entrando no ADM...';
+ }catch(err){
+  if(err.code=='auth/email-already-in-use'){
+    document.getElementById('msgLogin').innerText='Esse email já existe. Clique em ENTRAR NO ADM. Se esqueceu a senha, use 123456 ou outra.';
+  } else {
+    document.getElementById('msgLogin').innerText='❌ Erro: '+err.message;
+  }
  }
 }
-function logout(){auth.signOut();location.reload();}
-async function carregarDados(){try{const ref = db.collection('lojas').doc(currentLojaId).collection('dados'); const v = await ref.doc('vendas').get(); if(v.exists) vendas=v.data().lista||[]; const c = await ref.doc('clientes').get(); if(c.exists) clientes=c.data().lista||[]; const d = await ref.doc('despesas').get(); if(d.exists) despesas=d.data().lista||[]; const e = await ref.doc('estoque').get(); if(e.exists) estoque=e.data()||estoque; render();}catch(e){render();}}
-async function salvarNuvem(){if(!currentLojaId) return; const ref = db.collection('lojas').doc(currentLojaId).collection('dados'); await ref.doc('vendas').set({lista:vendas}); await ref.doc('clientes').set({lista:clientes}); await ref.doc('despesas').set({lista:despesas}); await ref.doc('estoque').set(estoque);}
-function show(id,btn){document.querySelectorAll('main > div').forEach(d=>d.style.display='none');document.getElementById(id).style.display='block';document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');render();}
-function render(){var sel=document.getElementById('selCliente'); if(sel){sel.innerHTML='<option value="">Avulso</option>'; clientes.forEach(c=>{sel.innerHTML+=`<option value="${c.id}">${c.nome}</option>`});} var totV=vendas.reduce((a,b)=>a+b.total,0); var totD=despesas.reduce((a,b)=>a+b.v,0); const elV=document.getElementById('kpiVendas'); if(elV) elV.innerText='R$ '+totV.toFixed(0); const elD=document.getElementById('kpiDesp'); if(elD) elD.innerText='R$ '+totD.toFixed(0); const elL=document.getElementById('kpiLucro'); if(elL) elL.innerText='R$ '+(totV-totD).toFixed(0); const elDH=document.getElementById('kpiDH'); if(elDH) elDH.innerText='R$ '+vendas.reduce((a,b)=>a+(b.pagoDH||0),0).toFixed(0); const elPIX=document.getElementById('kpiPIX'); if(elPIX) elPIX.innerText='R$ '+vendas.reduce((a,b)=>a+(b.pagoPIX||0),0).toFixed(0); const elRec=document.getElementById('kpiReceber'); if(elRec) elRec.innerText='R$ '+vendas.reduce((a,b)=>a+(b.restante||0),0).toFixed(0);}
-function addEst(c,v){estoque[c]+=v; if(estoque[c]<0) estoque[c]=0; salvarNuvem(); render();}
-function addCliente(){var n=document.getElementById('cNome').value.trim();var z=document.getElementById('cZap').value.trim();if(!n||!z){alert('Nome e Zap');return;}clientes.unshift({id:Date.now(),nome:n,zap:z});salvarNuvem();render();document.getElementById('cNome').value='';document.getElementById('cZap').value='';}
-function salvarClienteRapido(){var n=document.getElementById('cliNome').value.trim();var z=document.getElementById('cliZap').value.trim();if(!n||!z){alert('Nome e Zap');return;}clientes.unshift({id:Date.now(),nome:n,zap:z});salvarNuvem();render();alert('Cliente salvo!');}
-function addVenda(){var tipo=document.getElementById('prodTipo').value; var qtd=parseInt(document.getElementById('prodQtd').value)||0; var val=parseFloat(document.getElementById('prodValor').value)||0; var dh=parseFloat(document.getElementById('pagoDH').value)||0; var pix=parseFloat(document.getElementById('pagoPIX').value)||0; var sel=document.getElementById('selCliente').value; var nome=
+async function criarCliente(){
+ const email=document.getElementById('novoEmail').value.trim();
+ const senha=document.getElementById('novoSenha').value.trim();
+ const nome=document.getElementById('novoNome').value.trim();
+ const dias=parseInt(document.getElementById('novoPlano').value);
+ if(!email||!senha){alert('Email e senha');return;}
+ document.getElementById('msgCriar').innerText='Criando...';
+ try{
+  const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+  const secondaryAuth = secondaryApp.auth();
+  const cred = await secondaryAuth.createUserWithEmailAndPassword(email,senha);
+  const uid = cred.user.uid;
+  await secondaryAuth.signOut();
+  await secondaryApp.delete();
+  const venc = new Date(); venc.setDate(venc.getDate()+dias);
+  await db.collection('assinaturas').doc(uid).set({email: email, nome: nome, planoDias: dias, vencimento: venc, criadoEm: new Date(), criadoPor: auth.currentUser.email, status: 'ativa', valor: VALOR, sistema: '(R)(B)(D) OLIVEIRA'});
+  await db.collection('lojas').doc(uid).set({email: email, nome: nome, sistema: '(R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA', criadoEm: new Date()});
+  document.getElementById('msgCriar').innerText='✅ Criado! '+email+' vence '+venc.toLocaleDateString('pt-BR');
+  carregarClientes();
+ }catch(e){document.getElementById('msgCriar').innerText='❌ Erro: '+e.message;}
+}
+async function carregarClientes(){
+ const busca=(document.getElementById('busca').value||'').toLowerCase();
+ const snap = await db.collection('assinaturas').get();
+ let total=0, ativos=0, vencidos=0; let html='';
+ snap.forEach(doc=>{
+  const d=doc.data(); if(busca && !d.email.toLowerCase().includes(busca) && !(d.nome||'').toLowerCase().includes(busca)) return;
+  total++; const venc = d.vencimento.toDate(); const hoje=new Date(); const dias=Math.ceil((venc-hoje)/(1000*60*60*24));
+  let badge='badge-ativa'; if(dias<0){vencidos++; badge='badge-vencida';} else {ativos++;}
+  html+=`<tr><td><b>${d.nome||'Sem nome'}</b></td><td>${d.email}</td><td>${venc.toLocaleDateString('pt-BR')} (${dias}d)</td><td><span class="badge ${badge}">${dias<0?'VENCIDA':'ATIVA'}</span></td><td><button class="btn btn-verde" style="padding:4px 8px;font-size:9px" onclick="renovar('${doc.id}',30)">+30d</button><button class="btn btn-whats" style="padding:4px 8px;font-size:9px" onclick="cobrar('${doc.id}')">Cobrar Zap</button></td></tr>`;
+ });
+ document.getElementById('tbClientes').innerHTML=html;
+ document.getElementById('kpiTotalClientes').innerText=total;
+ document.getElementById('kpiAtivos').innerText=ativos;
+ document.getElementById('kpiVencidos').innerText=vencidos;
+ document.getElementById('kpiMensal').innerText='R$ '+(ativos*VALOR).toFixed(2);
+}
+function cobrar(uid){
+ db.collection('assinaturas').doc(uid).get().then(doc=>{
+  const d=doc.data(); const venc=d.vencimento.toDate().toLocaleDateString('pt-BR');
+  const msg=encodeURIComponent(`Olá ${d.nome}! 🔥 (R)(B)(D) OLIVEIRA - PLANILHA GESTÃO DE VENDAS GÁS E ÁGUA\n\nSua assinatura vence/venceu em ${venc}\nRenovação: R$ 29,90/mês\nPIX Santander: ${CHAVE_PIX}\nTitular: Rogério Barbosa de Oliveira\n\nPague e envie comprovante! Zap (82) 98821-7147`);
+  window.open(`https://wa.me/?text=${msg}`,'_blank');
+ });
+}
+async function renovar(uid, diasAdd){
+ if(!confirm(`Confirmar pagamento R$ 29,90 e liberar +${diasAdd} dias?`)) return;
+ const doc = await db.collection('assinaturas').doc(uid).get();
+ let venc = doc.data().vencimento.toDate(); if(venc < new Date()) venc = new Date(); venc.setDate(venc.getDate()+diasAdd);
+ await db.collection('assinaturas').doc(uid).update({vencimento: venc, status:'ativa', ultimoPagamento: new Date(), valorPago: VALOR});
+ alert(`Liberado até ${venc.toLocaleDateString('pt-BR')}`); carregarClientes();
+}
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
