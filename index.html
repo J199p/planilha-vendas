@@ -1,250 +1,240 @@
 
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.15"><title>EL SHADAI V48 LAPIS EDITAR</title><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial;background:#06140c;color:#fff;padding-bottom:95px}
-header{background:linear-gradient(135deg,#1a3d26,#1a3d26);padding:14px;text-align:center;position:sticky;top:0;z-index:100}header h1{font-size:14px}
-nav{display:flex;gap:6px;overflow-x:auto;background:#0f1f16;padding:8px;position:sticky;top:46px;z-index:99;scrollbar-width:none}
+
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.15"><title>EL SHADAI V68 MESMA CONFIG + PDF RB</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial;color:#e2e8f0;padding-bottom:90px;background:#000;min-height:100vh;position:relative;overflow-x:hidden}
+.video-agua-verdade{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;object-fit:cover;filter:brightness(1.1) contrast(1.1) saturate(1.2)}
+.overlay-agua{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.65) 100%);pointer-events:none}
+header{background:rgba(0,0,0,0.7);backdrop-filter:blur(20px);padding:16px;text-align:center;position:sticky;top:0;z-index:100;border-bottom:2px solid #0ea5e9}
+header h1{font-size:13px;font-weight:900;color:#fff;text-shadow:0 2px 10px #000}
+nav{display:flex;gap:8px;overflow-x:auto;background:rgba(0,0,0,0.7);padding:10px 8px;position:sticky;top:53px;z-index:99}
 nav::-webkit-scrollbar{display:none}
-nav button{background:#1a3d26;color:#fff;padding:11px 16px;border-radius:12px;border:1px solid #2a4533;font-size:12px;font-weight:900;white-space:nowrap;flex-shrink:0}
-nav button.active{background:#087f3f;transform:scale(1.05)}
-main{padding:8px;max-width:1000px;margin:auto}
-.card{background:#14281b;border:1px solid #2a4533;border-radius:16px;padding:14px;margin-bottom:10px}
-.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.kpi{border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:900;font-size:12px}
-.kpi.red{background:#c62828}.kpi.orange{background:#ef6c00}.kpi.green{background:#087f3f}.kpi.blue{background:#0d47a1}.kpi.pix{background:#1565c0}.kpi.din{background:#2e7d32}
-.kpi span{font-size:16px;display:block;margin-top:4px}
-.btn{width:100%;padding:12px;border-radius:10px;border:0;font-weight:900;color:#fff;margin-top:6px;font-size:12px}
-.btn-verde{background:#087f3f}.btn-azul{background:#1565c0}.btn-verm{background:#c62828}
-.btn-lapis{background:linear-gradient(135deg,#ffb300,#ff6f00);color:#000}
-.btn-excluir{background:#b71c1c}
-.btn-zerar{background:linear-gradient(135deg,#ff9800,#f57c00);border:2px dashed #fff}
-.btn-zerar-mes{background:linear-gradient(135deg,#c62828,#ff5252);border:2px dashed #fff}
-.btn-cinza{background:#37474f}.btn-salvar-dia{background:linear-gradient(135deg,#c62828,#e53935);border:2px solid #fff;padding:14px}.btn-salvar-mes{background:linear-gradient(135deg,#1565c0,#1e88e5);border:2px solid #fff;padding:14px}
-label{font-size:12px;color:#81c784;margin:6px 0 3px;display:block;font-weight:700}
-input,select{width:100%;padding:12px;border-radius:10px;background:#0a1a0f;border:1px solid #2a4533;color:#fff;font-size:14px}
-.filtro{display:flex;gap:6px;margin-bottom:10px}.filtro button{flex:1;padding:10px;border-radius:10px;background:#1a3d26;color:#fff;border:1px solid #2a4533;font-size:11px}.filtro button.active{background:#087f3f}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.total-auto{background:#1a3d26;border:1px solid #00ff88;border-radius:10px;padding:10px;text-align:center;margin-top:8px;font-weight:900;font-size:13px}
-.total-dividido{background:#0f1f16;border:1px dashed #81c784;border-radius:12px;padding:10px;margin-top:8px;font-size:13px}
-table{width:100%;font-size:11px;border-collapse:collapse}th,td{padding:6px 4px;border-bottom:1px solid #1f3d2a}
-.pdf-float{position:fixed;bottom:90px;right:16px;width:62px;height:62px;background:#d32f2f;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 8px 20px rgba(255,82,82,.6);z-index:99;border:2px solid #fff;cursor:pointer}
-.est-box{background:#0f1f16;border:1px solid #2a4533;border-radius:14px;padding:14px;text-align:center;margin-bottom:8px}
-.est-num{font-size:30px;font-weight:900;color:#00ff88;display:block}
-.cli-item{background:#0f1f16;border:1px solid #2a4533;border-radius:12px;padding:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-@media(min-width:768px){nav{justify-content:center;gap:10px}main{max-width:1000px}.kpi-grid{grid-template-columns:repeat(3,1fr)}}
+nav button{background:rgba(30,41,59,0.85);color:#94a3b8;padding:12px 18px;border-radius:12px;border:1px solid rgba(148,163,184,0.15);font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0}
+nav button.active{background:#0ea5e9;color:#fff}
+main{padding:10px;max-width:1000px;margin:auto;position:relative;z-index:10}
+.card{background:rgba(15,23,42,0.88);backdrop-filter:blur(18px);border:1px solid rgba(56,189,248,0.18);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kpi{border-radius:16px;padding:18px;text-align:center;color:#fff;font-weight:800;font-size:11px;background:rgba(15,23,42,0.9);border:1px solid rgba(148,163,184,0.08)}
+.kpi span{font-size:18px;display:block;margin-top:6px}
+.btn{width:100%;padding:13px;border-radius:12px;border:0;font-weight:800;color:#fff;margin-top:8px;font-size:12px}
+.btn-verde{background:#0ea5e9}.btn-azul{background:#3b82f6}.btn-verm{background:#ef4444}.btn-lapis{background:#fbbf24;color:#000}
+.btn-excluir{background:#7f1d1d}.btn-zerar{background:#78350f;border:1px dashed #fbbf24}.btn-zerar-mes{background:#7f1d1d;border:1px dashed #f87171}.btn-cinza{background:#1e293b}
+.btn-pdf{background:linear-gradient(145deg,#10b981,#059669);border:2px solid #34d399;box-shadow:0 0 20px rgba(16,185,129,0.5);padding:15px;font-size:13px;font-weight:900;margin-top:12px}
+.btn-pdf-mes{background:linear-gradient(145deg,#3b82f6,#1d4ed8);border:2px solid #60a5fa;box-shadow:0 0 20px rgba(59,130,246,0.5);padding:15px;font-size:13px;font-weight:900;margin-top:10px}
+label{font-size:10px;color:#94a3b8;margin:8px 0 4px;display:block;font-weight:700;text-transform:uppercase}
+input,select{width:100%;padding:13px;border-radius:12px;background:rgba(2,6,23,0.85);border:1px solid rgba(148,163,184,0.15);color:#fff;font-size:14px}
+.filtro{display:flex;gap:8px;margin-bottom:12px}.filtro button{flex:1;padding:11px;border-radius:12px;background:rgba(30,41,59,0.6);color:#94a3b8;border:1px solid rgba(148,163,184,0.1);font-size:11px;font-weight:700}.filtro button.active{background:#0ea5e9;color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.total-auto{background:rgba(14,165,233,0.18);border:1px solid rgba(56,189,248,0.25);border-radius:12px;padding:12px;text-align:center;margin-top:10px;font-weight:900;color:#7dd3fc}
+.total-dividido{background:rgba(2,6,23,0.6);border:1px dashed rgba(148,163,184,0.15);border-radius:12px;padding:12px;margin-top:10px;font-size:13px;color:#94a3b8}
+table{width:100%;font-size:11px;border-collapse:collapse}th{color:#7dd3fc;padding:8px 4px;border-bottom:1px solid rgba(56,189,248,0.2)}td{padding:8px 4px;border-bottom:1px solid rgba(148,163,184,0.08);color:#cbd5e1}
+.est-box{background:rgba(30,41,59,0.8);border-radius:16px;padding:16px;text-align:center;margin-bottom:10px}
+.est-num{font-size:32px;font-weight:900;color:#38bdf8;display:block}
+.cli-item{background:rgba(30,41,59,0.7);border-left:2px solid #0ea5e9;border-radius:14px;padding:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.badge{position:fixed;bottom:10px;left:10px;z-index:20;background:rgba(0,0,0,0.9);padding:10px 16px;border-radius:20px;font-size:11px;color:#38bdf8;border:1px solid #0ea5e9;display:flex;align-items:center;gap:8px;box-shadow:0 0 25px rgba(14,165,233,0.5)}
+.dot{width:10px;height:10px;background:#22d3ee;border-radius:50%;animation:p 1s infinite;box-shadow:0 0 12px #22d3ee}
+@keyframes p{0%,100%{transform:scale(1)}50%{transform:scale(1.5)}}
+@media(min-width:768px){.kpi-grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:1100px){.kpi-grid{grid-template-columns:repeat(6,1fr)}}
-</style></head><body><div class="pdf-float" onclick="gerarPDF()">📱</div><header><h1>🔥 EL SHADAI GÁS💧(APP)📱clientes</h1></header><nav><button class="active" onclick="show('dash',this)">📊 Dash</button><button onclick="show('venda',this)">➕ Venda</button><button onclick="show('clientes',this)">👥 Clientes</button><button onclick="show('historico',this)">📜 Hist</button><button onclick="show('estoque',this)">📦 Estoq</button><button onclick="show('areceber',this)">💰 Receber</button><button onclick="show('desp',this)">💸 Desp</button></nav><main>
-<div id="dash"><div class="filtro"><button class="active" onclick="setF('hoje',this)">HOJE</button><button onclick="setF('mes',this)">MÊS</button><button onclick="setF('tudo',this)">TUDO</button></div><div class="kpi-grid"><div class="kpi din">💵 DH<span id="kpiDH">R$ 0</span></div><div class="kpi pix">💳 PIX<span id="kpiPIX">R$ 0</span></div><div class="kpi blue">🫵 A RECEBER<span id="kpiReceber">R$ 0</span></div><div class="kpi green">VENDAS<span id="kpiVendas">R$ 0</span></div><div class="kpi red">DESPESAS<span id="kpiDesp">R$ 0</span></div><div class="kpi orange">LUCRO<span id="kpiLucro">R$ 0</span></div></div><div class="card" id="resumoCard"></div><div class="card"><b>📦 Estoque</b><div id="estoqueDash" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;text-align:center;margin-top:8px"></div></div><div class="card" style="border:2px dashed #ff9800;background:#2a1f0f"><b>⚠️ ZERAR SISTEMA</b><button class="btn btn-zerar" onclick="zerarDia()">🗓️ ZERAR DIA</button><button class="btn btn-zerar-mes" onclick="zerarMes()">📅 ZERAR MÊS</button><button class="btn btn-cinza" onclick="zerarTudo()" style="background:#000;border:2px dashed red;margin-top:10px">💣 ZERAR TUDO</button><button class="btn btn-lapis" onclick="limparDuplicados()" style="margin-top:10px">✏️ LIMPAR CLIENTES DUPLICADOS </button></div></div>
-<div id="venda" style="display:none"><div class="card"><h3>🛒 Venda</h3><label>Produto</label><select id="prodTipo"><option value="gas">🔥 Botijão P13</option><option value="agua">💧 Galão 20L</option></select><div class="grid2"><div><label>Qtd</label><input id="prodQtd" type="number" value="0" oninput="calc()"></div><div><label>Unit R$</label><input id="prodValor" type="number" value="0" oninput="calc()"></div></div><div class="total-auto">TOTAL: <span id="totalAuto">R$86,00 </span></div><div style="background:#1a2e1a;border-radius:10px;padding:10px;margin-top:10px;border:1px solid #2a5a3a"><b>💰 COMO PAGOU?</b><div class="grid2"><div><label>💵 DH R$</label><input id="pagoDH" type="number" value="0" oninput="calcDiv()"></div><div><label>💳 PIX R$</label><input id="pagoPIX" type="number" value="0" oninput="calcDiv()"></div></div><div class="total-dividido">Falta: <b id="faltaCalc" style="color:#ffab40">R$ 86,00</b></div></div><label>👥 Cliente</label><select id="selCliente"><option value="">Avulso</option></select><div id="boxCliente"><label>Nome se fiado</label><input id="cliNome"><label>Zap</label><input id="cliZap"><button class="btn btn-azul" onclick="salvarClienteRapido()">💾 CADASTRAR RÁPIDO</button></div><button class="btn btn-verde" onclick="addVenda()">💾 SALVAR VENDA</button></div></div>
-<div id="clientes" style="display:none"><div class="card"><h3>👥 Clientes cadastrado✏️ </h3><label>Nome *</label><input id="cNome"><label>Zap *</label><input id="cZap"><label>End</label><input id="cEnd"><button class="btn btn-verde" onclick="addCliente()">💾 SALVAR CLIENTE</button><button class="btn btn-lapis" id="btnCancelEdit" style="display:none" onclick="cancelarEdicaoCli()">❌ CANCELAR EDIÇÃO</button></div><div class="card"><input id="buscaCliente" placeholder="🔍 Buscar cliente..." oninput="render()"><div id="listaClientes"></div></div></div>
-<div id="historico" style="display:none"><div class="card"><h3>📜 Histórico </h3><select id="filtroMesHist" onchange="render()"><option value="todos">Todos</option></select><button class="btn btn-salvar-dia" onclick="gerarPDF()">💾 SALVAR DIA - COM DESPESA</button><button class="btn btn-salvar-mes" onclick="gerarPDFMes()">💾 SALVAR MÊS - COM DESPESA</button><div style="overflow:auto;margin-top:8px"><table><thead><tr><th>Dia</th><th>Qtd</th><th>Unit</th><th>Cliente</th><th>Total</th><th>DH</th><th>PIX</th><th>Falta</th><th>✏️</th></tr></thead><tbody id="tbHist"></tbody></table></div></div></div>
+</style></head><body>
+<video class="video-agua-verdade" autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1439405326854-014607f694d7?w=1280&q=90">
+  <source src="https://videos.pexels.com/video-files/1409899/1409899-hd_1280_720_30fps.mp4" type="video/mp4">
+  <source src="https://videos.pexels.com/video-files/3191576/3191576-hd_1280_720_30fps.mp4" type="video/mp4">
+  <source src="https://videos.pexels.com/video-files/1570919/1570919-hd_1280_720_30fps.mp4" type="video/mp4">
+</video>
+<div class="overlay-agua"></div>
+<div class="badge"><div class="dot"></div>(RG) - SISTEMA DIGITAL</div>
+<header><h1>(RB)PLANILHA GESTÃO DE GÁS🔥E ÁGUA💧</h1></header><nav><button class="active" onclick="show('dash',this)">📊 Dash</button><button onclick="show('venda',this)">➕ Venda</button><button onclick="show('clientes',this)">👥 Clientes</button><button onclick="show('historico',this)">📜 Hist</button><button onclick="show('estoque',this)">📦 Estoq</button><button onclick="show('areceber',this)">💰 Receber</button><button onclick="show('desp',this)">💸 Desp</button></nav><main>
+<div id="dash"><div class="filtro"><button class="active" onclick="setF('hoje',this)">HOJE</button><button onclick="setF('mes',this)">MÊS</button><button onclick="setF('tudo',this)">TUDO</button></div><div class="kpi-grid"><div class="kpi">💵 DINHEIRO<span id="kpiDH">R$ 0</span></div><div class="kpi">💳 PIX<span id="kpiPIX">R$ 0</span></div><div class="kpi">🫵 A RECEBER<span id="kpiReceber">R$ 0</span></div><div class="kpi">VENDAS<span id="kpiVendas">R$ 0</span></div><div class="kpi">DESPESAS<span id="kpiDesp">R$ 0</span></div><div class="kpi">LUCRO<span id="kpiLucro">R$ 0</span></div></div><div class="card" id="resumoCard"></div><div class="card"><b>📦 Estoque - Água Verdade</b><div id="estoqueDash" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;margin-top:10px"></div></div><div class="card"><button class="btn btn-zerar" onclick="zerarDia()">🗓️ ZERAR DIA</button><button class="btn btn-zerar-mes" onclick="zerarMes()">📅 ZERAR MÊS</button><button class="btn btn-cinza" onclick="zerarTudo()" style="margin-top:10px">💣 ZERAR TUDO</button><button class="btn btn-lapis" onclick="limparDuplicados()" style="margin-top:10px">✏️ LIMPAR DUPLICADOS</button></div></div>
+<div id="venda" style="display:none"><div class="card"><h3>🛒 Nova Venda</h3><label>Produto</label><select id="prodTipo"><option value="gas">🔥 Botijão P13</option><option value="agua">💧 Galão 20L</option></select><div class="grid2"><div><label>Qtd</label><input id="prodQtd" type="number" value="1" oninput="calc()"></div><div><label>Unit R$</label><input id="prodValor" type="number" value="86" oninput="calc()"></div></div><div class="total-auto">TOTAL: <span id="totalAuto">R$ 86,00</span></div><div style="background:rgba(2,6,23,0.6);border-radius:12px;padding:12px;margin-top:12px"><b>💰 Pagamento</b><div class="grid2"><div><label>💵 DH R$</label><input id="pagoDH" type="number" value="0" oninput="calcDiv()"></div><div><label>💳 PIX R$</label><input id="pagoPIX" type="number" value="0" oninput="calcDiv()"></div></div><div class="total-dividido">Falta: <b id="faltaCalc" style="color:#f87171">R$ 0,00</b></div></div><label>Cliente</label><select id="selCliente"><option value="">Avulso</option></select><div><label>Nome se fiado</label><input id="cliNome" placeholder="Ex: Jáva"><label>Zap</label><input id="cliZap" placeholder="829..."><button class="btn btn-azul" onclick="salvarClienteRapido()">💾 CADASTRAR RÁPIDO</button></div><button class="btn btn-verde" onclick="addVenda()">🔥 REGISTRAR VENDA</button></div></div>
+<div id="clientes" style="display:none"><div class="card"><h3>👥 Clientes</h3><label>Nome *</label><input id="cNome"><label>Zap *</label><input id="cZap"><label>End</label><input id="cEnd"><button class="btn btn-verde" onclick="addCliente()">💾 SALVAR</button><button class="btn btn-lapis" id="btnCancelEdit" style="display:none" onclick="cancelarEdicaoCli()">❌ CANCELAR</button></div><div class="card"><input id="buscaCliente" placeholder="🔍 Buscar..." oninput="render()"><div id="listaClientes"></div></div></div>
+<div id="historico" style="display:none"><div class="card"><h3>📜 Histórico</h3><select id="filtroMesHist" onchange="render()"><option value="todos">Todos</option></select>
+<button class="btn btn-pdf" onclick="gerarPDFRB()">💾SALVAR DIA EM PDF - (RB) SISTEMA</button>
+<button class="btn btn-pdf-mes" onclick="gerarPDFRBMes()">💾 SALVAR MÊS EM PDF-(RB) SISTEMA </button>
+<div style="overflow:auto;margin-top:12px"><table><thead><tr><th>Dia</th><th>Qtd</th><th>Unit</th><th>Cliente</th><th>Total</th><th>DH</th><th>PIX</th><th>Falta</th><th>✏️</th></tr></thead><tbody id="tbHist"></tbody></table></div></div></div>
 <div id="estoque" style="display:none"><div class="card"><h3>📦 Estoque</h3><div class="est-box">🔥 CHEIO<span class="est-num" id="estCheioNum">200</span><button class="btn btn-azul" onclick="editEst('cheio')">EDITAR</button></div><div class="est-box">♻️ VAZIO<span class="est-num" id="estVazioNum">0</span><button class="btn btn-azul" onclick="editEst('vazio')">EDITAR</button></div><div class="est-box">💧 CHEIA<span class="est-num" id="estAguaCheiaNum">50</span><button class="btn btn-azul" onclick="editEst('aguaCheia')">EDITAR</button></div><div class="est-box">🚰 VAZIA<span class="est-num" id="estAguaVaziaNum">0</span><button class="btn btn-azul" onclick="editEst('aguaVazia')">EDITAR</button></div></div></div>
-<div id="areceber" style="display:none"><div class="card"><h3>💰 Quem falta pagar</h3><div id="listaReceber"></div></div></div>
-<div id="desp" style="display:none"><div class="card"><h3>💸 Despesas ✏️</h3><label>Desc</label><input id="dDesc"><label>Valor</label><input id="dVal" type="number"><button class="btn btn-verm" id="btnDesp" onclick="addDesp()">SALVAR DESPESA</button><button class="btn btn-lapis" id="btnCancelDesp" style="display:none" onclick="cancelarEdicaoDesp()">❌ CANCELAR</button><div id="listDesp"></div></div></div>
+<div id="areceber" style="display:none"><div class="card"><h3>💰 A Receber</h3><div id="listaReceber"></div></div></div>
+<div id="desp" style="display:none"><div class="card"><h3>💸 Despesas</h3><label>Desc</label><input id="dDesc"><label>Valor</label><input id="dVal" type="number"><button class="btn btn-verm" id="btnDesp" onclick="addDesp()">SALVAR</button><button class="btn btn-lapis" id="btnCancelDesp" style="display:none" onclick="cancelarEdicaoDesp()">❌ CANCELAR</button><div id="listDesp"></div></div></div>
 </main><script>
 var vendas=JSON.parse(localStorage.getItem('v33')||'[]');var despesas=JSON.parse(localStorage.getItem('d33')||'[]');var estoque=JSON.parse(localStorage.getItem('e33')||'{"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0}');var clientes=JSON.parse(localStorage.getItem('c33')||'[]');var filtroAtual='hoje';
 var editandoCliId=null;var editandoVendaId=null;var editandoDespId=null;
 function getMesAno(){var d=new Date();var m=d.getMonth()+1;return (m<10?'0'+m:m)+'/'+d.getFullYear();}
 function getDiaHoje(){return new Date().toLocaleDateString('pt-BR');}
-function show(id,btn){document.querySelectorAll('main > div').forEach(function(d){d.style.display='none'});document.getElementById(id).style.display='block';document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active')});if(btn){btn.classList.add('active');btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}render();}
+function show(id,btn){document.querySelectorAll('main > div').forEach(function(d){d.style.display='none'});document.getElementById(id).style.display='block';document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');render();}
 function setF(f,btn){filtroAtual=f;document.querySelectorAll('.filtro button').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');render();}
 function salvar(){localStorage.setItem('v33',JSON.stringify(vendas));localStorage.setItem('e33',JSON.stringify(estoque));localStorage.setItem('c33',JSON.stringify(clientes));localStorage.setItem('d33',JSON.stringify(despesas));render();}
 function calc(){var q=parseFloat(document.getElementById('prodQtd').value)||0;var v=parseFloat(document.getElementById('prodValor').value)||0;document.getElementById('totalAuto').innerText='R$ '+(q*v).toFixed(2);calcDiv();}
 function calcDiv(){var q=parseFloat(document.getElementById('prodQtd').value)||0;var v=parseFloat(document.getElementById('prodValor').value)||0;var total=q*v;var dh=parseFloat(document.getElementById('pagoDH').value)||0;var pix=parseFloat(document.getElementById('pagoPIX').value)||0;var falta=total-dh-pix;if(falta<0)falta=0;document.getElementById('faltaCalc').innerText='R$ '+falta.toFixed(2);}
-function editEst(c){var n=prompt('Nova qtd '+c,estoque[c]);if(n!==null){estoque[c]=parseInt(n)||0;salvar();}}
+function editEst(c){var n=prompt('Nova qtd '+c,estoque[c]);if(n!==null){var val=parseInt(n)||0;if(val<0){alert('Não pode negativo!');return;}estoque[c]=val;salvar();}}
 function zerarDia(){if(confirm('ZERAR DIA '+getDiaHoje()+'?')){vendas=vendas.filter(function(v){return v.dia!=getDiaHoje()});despesas=despesas.filter(function(d){return d.dia!=getDiaHoje()});salvar();}}
 function zerarMes(){if(confirm('ZERAR MES '+getMesAno()+'?')){vendas=vendas.filter(function(v){return v.mesAno!=getMesAno()});despesas=despesas.filter(function(d){return d.mesAno!=getMesAno()});salvar();}}
 function zerarTudo(){if(confirm('ZERAR TUDO?')){if(prompt('Digite ZERAR')=='ZERAR'){vendas=[];despesas=[];clientes=[];estoque={"cheio":200,"vazio":0,"aguaCheia":50,"aguaVazia":0};salvar();}}}
-function limparDuplicados(){
-if(!confirm('Limpar clientes duplicados tipo Paduca? Vai manter só 1 de cada nome.')) return;
-var unicos={}; var novos=[];
-clientes.forEach(function(c){var nome=c.nome.trim().toLowerCase(); if(!unicos[nome]){unicos[nome]=true; novos.push(c);}});
-var removidos=clientes.length-novos.length;
-clientes=novos; salvar(); alert('Removidos '+removidos+' duplicados! ✅');
-}
-function addCliente(){
-var n=document.getElementById('cNome').value.trim();var z=document.getElementById('cZap').value.trim();var e=document.getElementById('cEnd').value.trim();
-if(!n||!z){alert('Nome e Zap');return;}
-if(editandoCliId){
-var cli=clientes.find(function(c){return c.id==editandoCliId});
-if(cli){cli.nome=n; cli.zap=z; cli.end=e;}
-editandoCliId=null; document.getElementById('btnCancelEdit').style.display='none';
-}else{
-clientes.unshift({id:Date.now(),nome:n,zap:z,end:e});
-}
-document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';
-salvar();
-}
-function editarCliente(id){
-var cli=clientes.find(function(c){return c.id==id}); if(!cli) return;
-document.getElementById('cNome').value=cli.nome; document.getElementById('cZap').value=cli.zap; document.getElementById('cEnd').value=cli.end||'';
-editandoCliId=id; document.getElementById('btnCancelEdit').style.display='block';
-show('clientes', document.querySelector('nav button:nth-child(3)'));
-window.scrollTo(0,0);
-}
-function cancelarEdicaoCli(){editandoCliId=null; document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value=''; document.getElementById('btnCancelEdit').style.display='none';}
-function excluirCliente(id){if(confirm('Excluir cliente?')){clientes=clientes.filter(function(c){return c.id!=id}); salvar();}}
+function limparDuplicados(){if(!confirm('Limpar duplicados?'))return;var unicos={};var novos=[];clientes.forEach(function(c){var k=c.nome.trim().toLowerCase();if(!unicos[k]){unicos[k]=true;novos.push(c);}});clientes=novos;salvar();alert('Duplicados removidos! ✅');}
+function addCliente(){var n=document.getElementById('cNome').value.trim();var z=document.getElementById('cZap').value.trim();var e=document.getElementById('cEnd').value.trim();if(!n||!z){alert('Nome e Zap');return;}if(editandoCliId){var cli=clientes.find(function(c){return c.id==editandoCliId});if(cli){cli.nome=n;cli.zap=z;cli.end=e;}editandoCliId=null;document.getElementById('btnCancelEdit').style.display='none';}else{clientes.unshift({id:Date.now(),nome:n,zap:z,end:e});}document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';salvar();}
+function editarCliente(id){var cli=clientes.find(function(c){return c.id==id});if(!cli)return;document.getElementById('cNome').value=cli.nome;document.getElementById('cZap').value=cli.zap;document.getElementById('cEnd').value=cli.end||'';editandoCliId=id;document.getElementById('btnCancelEdit').style.display='block';show('clientes',document.querySelectorAll('nav button')[2]);}
+function cancelarEdicaoCli(){editandoCliId=null;document.getElementById('cNome').value='';document.getElementById('cZap').value='';document.getElementById('cEnd').value='';document.getElementById('btnCancelEdit').style.display='none';}
+function excluirCliente(id){if(confirm('Excluir cliente?')){clientes=clientes.filter(function(c){return c.id!=id});salvar();}}
 function salvarClienteRapido(){var n=document.getElementById('cliNome').value.trim();var z=document.getElementById('cliZap').value.trim();if(!n||!z){alert('Nome e Zap');return;}clientes.unshift({id:Date.now(),nome:n,zap:z,end:''});salvar();alert('Salvo!');}
 function addVenda(){
-var tipo=document.getElementById('prodTipo').value;var qtd=parseInt(document.getElementById('prodQtd').value)||0;var val=parseFloat(document.getElementById('prodValor').value)||0;var dh=parseFloat(document.getElementById('pagoDH').value)||0;var pix=parseFloat(document.getElementById('pagoPIX').value)||0;var sel=document.getElementById('selCliente').value;var nome='',zap='';
-if(sel){var cli=clientes.find(function(c){return c.id==sel});if(cli){nome=cli.nome;zap=cli.zap;}}else{nome=document.getElementById('cliNome').value.trim();zap=document.getElementById('cliZap').value.trim();}
-if(qtd<=0){alert('Qtd inválida');return;}var total=qtd*val;if(dh+pix>total){alert('DH+PIX maior!');return;}var falta=total-dh-pix;if(falta>0&&!nome){alert('Digite nome');return;}
-if(editandoVendaId){
-var v=vendas.find(function(x){return x.id==editandoVendaId}); if(v){v.tipo=tipo; v.qtd=qtd; v.unit=val; v.total=total; v.pagoDH=dh; v.pagoPIX=pix; v.restante=falta; v.nome=nome; v.zap=zap; v.pgTipo=falta==0?'VISTA':'CREDITO';}
-editandoVendaId=null;
-}else{
-if(tipo=='gas'){estoque.cheio-=qtd;estoque.vazio+=qtd;}else{estoque.aguaCheia-=qtd;estoque.aguaVazia+=qtd;}
-vendas.unshift({id:Date.now(),tipo:tipo,qtd:qtd,unit:val,total:total,pagoDH:dh,pagoPIX:pix,restante:falta,nome:nome,zap:zap,pgTipo:falta==0?'VISTA':'CREDITO',dia:getDiaHoje(),mesAno:getMesAno()});
+  var tipo=document.getElementById('prodTipo').value;var qtd=parseInt(document.getElementById('prodQtd').value)||0;var val=parseFloat(document.getElementById('prodValor').value)||0;
+  var dh=parseFloat(document.getElementById('pagoDH').value)||0;var pix=parseFloat(document.getElementById('pagoPIX').value)||0;
+  var sel=document.getElementById('selCliente').value;var nome='',zap='';
+  if(sel){var cli=clientes.find(function(c){return c.id==sel});if(cli){nome=cli.nome;zap=cli.zap;}}else{nome=document.getElementById('cliNome').value.trim();zap=document.getElementById('cliZap').value.trim();}
+  if(qtd<=0){alert('Qtd inválida');return;}
+  if(!editandoVendaId){
+    if(tipo=='gas' && estoque.cheio < qtd){alert('Só tem '+estoque.cheio+' cheio!');return;}
+    if(tipo=='agua' && estoque.aguaCheia < qtd){alert('Só tem '+estoque.aguaCheia+' cheia!');return;}
+  }
+  var total=qtd*val;if(dh+pix>total){alert('DH+PIX maior que total!');return;}var falta=total-dh-pix;if(falta>0&&!nome){alert('Digite nome se for fiado');return;}
+  if(editandoVendaId){var v=vendas.find(function(x){return x.id==editandoVendaId});if(v){v.tipo=tipo;v.qtd=qtd;v.unit=val;v.total=total;v.pagoDH=dh;v.pagoPIX=pix;v.restante=falta;v.nome=nome;v.zap=zap;}editandoVendaId=null;}else{if(tipo=='gas'){estoque.cheio-=qtd;estoque.vazio+=qtd;}else{estoque.aguaCheia-=qtd;estoque.aguaVazia+=qtd;}vendas.unshift({id:Date.now(),tipo:tipo,qtd:qtd,unit:val,total:total,pagoDH:dh,pagoPIX:pix,restante:falta,nome:nome||'Avulso',zap:zap,pgTipo:falta==0?'VISTA':'CREDITO',dia:getDiaHoje(),mesAno:getMesAno()});}
+  document.getElementById('pagoDH').value=0;document.getElementById('pagoPIX').value=0;salvar();
 }
-document.getElementById('pagoDH').value=0;document.getElementById('pagoPIX').value=0;salvar();alert(editandoVendaId?'Venda editada!':'Venda salva!');
-}
-function editarVenda(id){
-var v=vendas.find(function(x){return x.id==id}); if(!v) return;
-document.getElementById('prodTipo').value=v.tipo;
-document.getElementById('prodQtd').value=v.qtd;
-document.getElementById('prodValor').value=v.unit||v.total/v.qtd;
-document.getElementById('pagoDH').value=v.pagoDH||0;
-document.getElementById('pagoPIX').value=v.pagoPIX||0;
-document.getElementById('cliNome').value=v.nome||'';
-document.getElementById('cliZap').value=v.zap||'';
-editandoVendaId=id; calc();
-show('venda', document.querySelector('nav button:nth-child(2)'));
-}
-function excluirVenda(id){if(confirm('Excluir venda?')){vendas=vendas.filter(function(v){return v.id!=id}); salvar();}}
+function editarVenda(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;document.getElementById('prodTipo').value=v.tipo;document.getElementById('prodQtd').value=v.qtd;document.getElementById('prodValor').value=v.unit||v.total/v.qtd;document.getElementById('pagoDH').value=v.pagoDH||0;document.getElementById('pagoPIX').value=v.pagoPIX||0;document.getElementById('cliNome').value=v.nome||'';document.getElementById('cliZap').value=v.zap||'';editandoVendaId=id;calc();show('venda',document.querySelectorAll('nav button')[1]);}
 function filtrar(l){var hoje=getDiaHoje();var mes=getMesAno();if(filtroAtual=='hoje')return l.filter(function(x){return x.dia==hoje});if(filtroAtual=='mes')return l.filter(function(x){return x.mesAno==mes});return l;}
-function addDesp(){
-var d=document.getElementById('dDesc').value.trim();var v=parseFloat(document.getElementById('dVal').value)||0;
-if(!d||v<=0){alert('Desc e valor');return;}
-if(editandoDespId){
-var desp=despesas.find(function(x){return x.id==editandoDespId}); if(desp){desp.d=d; desp.v=v;}
-editandoDespId=null; document.getElementById('btnDesp').innerText='SALVAR DESPESA'; document.getElementById('btnCancelDesp').style.display='none';
-}else{
-despesas.unshift({id:Date.now(),d:d,v:v,dia:getDiaHoje(),mesAno:getMesAno()});
-}
-document.getElementById('dDesc').value='';document.getElementById('dVal').value='';salvar();
-}
-function editarDesp(id){var d=despesas.find(function(x){return x.id==id}); if(!d) return; document.getElementById('dDesc').value=d.d; document.getElementById('dVal').value=d.v; editandoDespId=id; document.getElementById('btnDesp').innerText='✏️ SALVAR EDIÇÃO'; document.getElementById('btnCancelDesp').style.display='block'; show('desp',document.querySelector('nav button:nth-child(7)')); }
-function cancelarEdicaoDesp(){editandoDespId=null; document.getElementById('dDesc').value='';document.getElementById('dVal').value=''; document.getElementById('btnDesp').innerText='SALVAR DESPESA'; document.getElementById('btnCancelDesp').style.display='none';}
-function excluirDesp(id){if(confirm('Excluir despesa?')){despesas=despesas.filter(function(x){return x.id!=id}); salvar();}}
+function addDesp(){var d=document.getElementById('dDesc').value.trim();var v=parseFloat(document.getElementById('dVal').value)||0;if(!d||v<=0){alert('Desc e valor');return;}if(editandoDespId){var desp=despesas.find(function(x){return x.id==editandoDespId});if(desp){desp.d=d;desp.v=v;}editandoDespId=null;document.getElementById('btnDesp').innerText='SALVAR DESPESA';document.getElementById('btnCancelDesp').style.display='none';}else{despesas.unshift({id:Date.now(),d:d,v:v,dia:getDiaHoje(),mesAno:getMesAno()});}document.getElementById('dDesc').value='';document.getElementById('dVal').value='';salvar();}
+function editarDesp(id){var d=despesas.find(function(x){return x.id==id});if(!d)return;document.getElementById('dDesc').value=d.d;document.getElementById('dVal').value=d.v;editandoDespId=id;document.getElementById('btnDesp').innerText='✏️ SALVAR EDIÇÃO';document.getElementById('btnCancelDesp').style.display='block';show('desp',document.querySelectorAll('nav button')[6]);}
+function cancelarEdicaoDesp(){editandoDespId=null;document.getElementById('dDesc').value='';document.getElementById('dVal').value='';document.getElementById('btnDesp').innerText='SALVAR DESPESA';document.getElementById('btnCancelDesp').style.display='none';}
+function excluirDesp(id){if(confirm('Excluir despesa?')){despesas=despesas.filter(function(x){return x.id!=id});salvar();}}
 function getSaudacao(){var h=new Date().getHours();if(h<12)return 'Bom dia';if(h<18)return 'Boa tarde';return 'Boa noite';}
-function receberDH(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;var valor=parseFloat(prompt('Quanto recebeu em DINHEIRO de '+v.nome+'? Devendo: R$ '+v.restante.toFixed(2),''+v.restante));if(isNaN(valor)||valor<=0)return;if(valor>v.restante)valor=v.restante;v.pagoDH=(v.pagoDH||0)+valor;v.restante-=valor;if(v.restante<=0.01){v.restante=0;v.pgTipo='VISTA';}salvar();}
-function receberPIX(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;var valor=parseFloat(prompt('Quanto recebeu em PIX de '+v.nome+'? Devendo: R$ '+v.restante.toFixed(2),''+v.restante));if(isNaN(valor)||valor<=0)return;if(valor>v.restante)valor=v.restante;v.pagoPIX=(v.pagoPIX||0)+valor;v.restante-=valor;if(v.restante<=0.01){v.restante=0;v.pgTipo='VISTA';}salvar();}
-function receberTotal(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;if(confirm('Confirmar que '+v.nome+' pagou TUDO R$ '+v.restante.toFixed(2)+'?')){v.pagoPIX=(v.pagoPIX||0)+v.restante;v.restante=0;v.pgTipo='VISTA';salvar();alert('✅ '+v.nome+' pago!');}}
-function receberParcial(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;var forma=prompt('DH ou PIX?','PIX');var valor=parseFloat(prompt('Quanto recebeu? Devendo: R$ '+v.restante));if(isNaN(valor))return;if(forma.toLowerCase().includes('pix'))v.pagoPIX+=valor;else v.pagoDH+=valor;v.restante-=valor;if(v.restante<=0){v.restante=0;v.pgTipo='VISTA';}salvar();}
-function cobrarZap(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;if(!v.zap){alert('Sem zap');return;}var saudacao=getSaudacao();var valor=v.restante.toLocaleString('pt-BR',{minimumFractionDigits:2});var qtdTexto=v.qtd+' '+(v.tipo=='gas'?'gás':'galão');if(v.qtd>1) qtdTexto=v.qtd+' '+(v.tipo=='gas'?'gás':'galões');var primeiroNome=v.nome.split(' ')[0];var msg=saudacao+' '+primeiroNome+'! 😊 Aqui é da EL SHADAI GÁS 🔥\nFicou pendente R$ '+valor+' referente a '+qtdTexto+'.\n\n💠 Pix: 82999962043\n\nQuando fizer, me avise. Obrigado! 🙏';var zapLimpo=v.zap.replace(/\D/g,'');if(zapLimpo.length<=9) zapLimpo='82'+zapLimpo;if(!zapLimpo.startsWith('55')) zapLimpo='55'+zapLimpo;var url='https://wa.me/'+zapLimpo+'?text='+encodeURIComponent(msg);window.open(url,'_blank');}
-function formatBR(n){return n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function gerarPDF(){try{
-var hoje=getDiaHoje();var vendasDia=vendas.filter(function(v){return v.dia==hoje});var despesasDia=despesas.filter(function(d){return d.dia==hoje});
-if(vendasDia.length==0&&despesasDia.length==0){alert('Nada hoje');return;}
-var jsPDF=window.jspdf.jsPDF;var doc=new jsPDF('p','mm','a4');var W=210;
-doc.setFillColor(255,255,255);doc.rect(0,0,W,297,'F');
-doc.setTextColor(30,58,95);doc.setFont('helvetica','bold');doc.setFontSize(24);doc.text('EL SHADAI',W/2,22,{align:'center'});
-doc.setFontSize(11);doc.setFont('helvetica','normal');doc.setTextColor(60,60,60);doc.text('SALVAR DIA - '+hoje,W/2,29,{align:'center'});
-var emissao=new Date().toLocaleString('pt-BR');doc.setFontSize(8);doc.setTextColor(120,120,120);doc.text('Relatorio Dia - '+emissao,W/2,35,{align:'center'});
-doc.setDrawColor(220,220,220);doc.line(15,38,W-15,38);
-doc.setTextColor(80,80,80);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text('DETALHAMENTO DE VENDAS',15,46);
-var startY=50;var colW=[22,16,32,26,26,26,26,20];var colX=[15];for(var i=1;i<colW.length;i++){colX[i]=colX[i-1]+colW[i-1];}var tableW=colW.reduce(function(a,b){return a+b;},0);
-var headers=['QTD','UNIT','CLIENTE','TOTAL','DH','PIX','FALTA','TIPO'];
-doc.setFillColor(230,230,230);doc.setDrawColor(150,150,150);doc.roundedRect(15,startY,tableW,8,1,1,'FD');
-doc.setTextColor(0,0,0);doc.setFontSize(7.5);doc.setFont('helvetica','bold');for(var i=0;i<headers.length;i++){doc.text(headers[i],colX[i]+colW[i]/2,startY+5,{align:'center'});if(i>0) doc.line(colX[i],startY,colX[i],startY+8);}
-var y=startY+8;var totalDH=0,totalPIX=0,totalFalta=0,totalVendas=0,totalGas=0,totalAgua=0;
-doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(20,20,20);
-for(var i=0;i<vendasDia.length;i++){var v=vendasDia[i];if(y>260){doc.addPage();y=15;}var unit=v.unit||(v.qtd>0?v.total/v.qtd:0);var tipoQtd=v.qtd+'x '+(v.tipo=='gas'?'GAS':'AGUA');var row=[tipoQtd,'R$ '+unit.toFixed(0),(v.nome||'Avulso').substring(0,15),'R$ '+formatBR(v.total),'R$ '+formatBR(v.pagoDH||0),'R$ '+formatBR(v.pagoPIX||0),'R$ '+formatBR(v.restante||0),v.pgTipo||'VISTA'];doc.setDrawColor(200,200,200);doc.rect(15,y,tableW,8);for(var c=1;c<colX.length;c++){doc.line(colX[c],y,colX[c],y+8);}for(var c=0;c<row.length;c++){var align=c==2?'left':'center';var x=align=='left'?colX[c]+2:colX[c]+colW[c]/2;doc.text(row[c],x,y+5,{align:align});}y+=8;totalDH+=(v.pagoDH||0);totalPIX+=(v.pagoPIX||0);totalFalta+=(v.restante||0);totalVendas+=v.total;if(v.tipo=='gas') totalGas+=v.qtd;else totalAgua+=v.qtd;}
-y+=6;
-if(despesasDia.length>0){
-if(y>210){doc.addPage();y=15;}
-doc.setTextColor(198,40,40);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text('DESPESAS DO DIA - '+hoje,15,y);y+=6;
-var dColW=[100,60];var dColX=[15,115];var dW=160;
-doc.setFillColor(255,235,238);doc.setDrawColor(198,40,40);doc.roundedRect(15,y,dW,8,1,1,'FD');
-doc.setTextColor(0,0,0);doc.setFontSize(8);doc.setFont('helvetica','bold');doc.text('DESCRICAO',dColX[0]+dColW[0]/2,y+5,{align:'center'});doc.text('VALOR',dColX[1]+dColW[1]/2,y+5,{align:'center'});y+=8;
-doc.setFont('helvetica','normal');
-for(var j=0;j<despesasDia.length;j++){if(y>270){doc.addPage();y=15;}var d=despesasDia[j];doc.setDrawColor(200,200,200);doc.rect(15,y,dW,8);doc.text((d.d||'').substring(0,35),17,y+5);doc.text('R$ '+formatBR(d.v),dColX[1]+dColW[1]/2,y+5,{align:'center'});y+=8;}
-y+=4;
+function receberTotal(id){var v=vendas.find(function(x){return x.id==id});if(!v)return;if(confirm('Recebeu R$ '+v.restante.toFixed(2)+' de '+v.nome+'?')){v.restante=0;v.pgTipo='VISTA';salvar();}}
+function cobrarZap(id){
+  var v=vendas.find(function(x){return x.id==id});if(!v||!v.zap){alert('Sem zap');return;}
+  var saudacao=getSaudacao();var valor=v.restante.toFixed(2).replace('.',',');
+  var prod = v.tipo=='gas'? v.qtd+'× Botijão P13' : v.qtd+'× Galão de água 20L';
+  var primeiroNome=v.nome.split(' ')[0];
+  var msg='Central\n EL SHADAY GAS 🔥\n'+saudacao+' '+primeiroNome+'\n\nTudo bem! Passando para lembrar do pagamento referente a '+prod+' do dia '+v.dia+'.\n\n💰 Valor: R$ '+valor+'\n📲 Pix: 82999962043\nAssim 👆que puder\n me envie o comprovante. 🙏🔥\n\nObrigado! Agradecemos Pela sua preferência 😉';
+  var zapLimpo=v.zap.replace(/\D/g,'');if(zapLimpo.length<=9)zapLimpo='82'+zapLimpo;if(!zapLimpo.startsWith('55'))zapLimpo='55'+zapLimpo;
+  location.href='https://wa.me/'+zapLimpo+'?text='+encodeURIComponent(msg);
 }
-var totalDesp=despesasDia.reduce(function(a,b){return a+b.v},0);
-if(y>210){doc.addPage();y=15;}
-doc.setDrawColor(180,180,180);doc.rect(15,y,72,52);
-doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(80,80,80);doc.text('RESUMO DO DIA',17,y+5);
-doc.setFontSize(8);doc.setTextColor(0,0,0);doc.setFont('helvetica','bold');
-doc.text('QTD GAS: '+totalGas,17,y+11);doc.text('QTD AGUA: '+totalAgua,17,y+17);doc.text('VENDAS: '+vendasDia.length,17,y+23);
-doc.text('DESPESAS: R$ '+formatBR(totalDesp),17,y+29);
-doc.setTextColor(198,40,40);doc.text('LUCRO: R$ '+formatBR((totalDH+totalPIX)-totalDesp),17,y+36);
-doc.setTextColor(0,100,0);doc.text('LIQUIDO: R$ '+formatBR((totalDH+totalPIX)-totalDesp),17,y+42);
-doc.setFontSize(12);doc.setTextColor(30,58,95);doc.setFont('helvetica','bold');doc.text('TOTAL VENDIDO: R$ '+formatBR(totalVendas),90,y+5);
-doc.setFontSize(10);doc.setTextColor(100,100,100);doc.setFont('helvetica','normal');
-doc.text('TOTAL DH:',90,y+11);doc.text('R$ '+formatBR(totalDH),130,y+11);
-doc.text('TOTAL PIX:',90,y+18);doc.text('R$ '+formatBR(totalPIX),130,y+18);
-doc.text('TOTAL FALTA:',90,y+25);doc.text('R$ '+formatBR(totalFalta),130,y+25);
-doc.text('TOTAL DESP:',90,y+32);doc.text('R$ '+formatBR(totalDesp),130,y+32);
-doc.setFont('helvetica','bold');doc.text('LUCRO FINAL:',90,y+39);doc.text('R$ '+formatBR((totalDH+totalPIX)-totalDesp),130,y+39);
-var fy=y+60;doc.setFontSize(6.5);doc.setTextColor(120,120,120);doc.text('EL SHADAI DISTRIBUIDORA DE GAS',W/2,fy,{align:'center'});
-doc.save('DIA_'+hoje.replace(/\//g,'-')+'.pdf');}catch(e){alert('Erro PDF: '+e.message);}}
-function gerarPDFMes(){try{
-var mes=getMesAno();var vendasMes=vendas.filter(function(v){return v.mesAno==mes});var despesasMes=despesas.filter(function(d){return d.mesAno==mes});
-if(vendasMes.length==0&&despesasMes.length==0){alert('Nada mes');return;}
-var jsPDF=window.jspdf.jsPDF;var doc=new jsPDF('p','mm','a4');var W=210;
-doc.setFillColor(255,255,255);doc.rect(0,0,W,297,'F');
-doc.setTextColor(30,58,95);doc.setFont('helvetica','bold');doc.setFontSize(24);doc.text('EL SHADAI',W/2,22,{align:'center'});
-doc.setFontSize(11);doc.setFont('helvetica','normal');doc.setTextColor(60,60,60);doc.text('SALVAR MES - '+mes,W/2,29,{align:'center'});
-var emissao=new Date().toLocaleString('pt-BR');doc.setFontSize(8);doc.setTextColor(120,120,120);doc.text('Relatorio Mensal - '+emissao,W/2,35,{align:'center'});
-doc.setDrawColor(220,220,220);doc.line(15,38,W-15,38);
-doc.setTextColor(80,80,80);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text('DETALHAMENTO VENDAS - '+mes,15,46);
-var startY=50;var colW=[22,16,32,26,26,26,26,20];var colX=[15];for(var i=1;i<colW.length;i++){colX[i]=colX[i-1]+colW[i-1];}var tableW=colW.reduce(function(a,b){return a+b;},0);
-var headers=['QTD','UNIT','CLIENTE','TOTAL','DH','PIX','FALTA','TIPO'];
-doc.setFillColor(230,230,230);doc.setDrawColor(150,150,150);doc.roundedRect(15,startY,tableW,8,1,1,'FD');
-doc.setTextColor(0,0,0);doc.setFontSize(7.5);doc.setFont('helvetica','bold');for(var i=0;i<headers.length;i++){doc.text(headers[i],colX[i]+colW[i]/2,startY+5,{align:'center'});if(i>0) doc.line(colX[i],startY,colX[i],startY+8);}
-var y=startY+8;var totalDH=0,totalPIX=0,totalFalta=0,totalVendas=0,totalGas=0,totalAgua=0;
-doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(20,20,20);
-for(var i=0;i<vendasMes.length;i++){var v=vendasMes[i];if(y>260){doc.addPage();y=15;}var unit=v.unit||(v.qtd>0?v.total/v.qtd:0);var tipoQtd=v.qtd+'x '+(v.tipo=='gas'?'GAS':'AGUA');var row=[tipoQtd,'R$ '+unit.toFixed(0),(v.nome||'Avulso').substring(0,15),'R$ '+formatBR(v.total),'R$ '+formatBR(v.pagoDH||0),'R$ '+formatBR(v.pagoPIX||0),'R$ '+formatBR(v.restante||0),v.pgTipo||'VISTA'];doc.setDrawColor(200,200,200);doc.rect(15,y,tableW,8);for(var c=1;c<colX.length;c++){doc.line(colX[c],y,colX[c],y+8);}for(var c=0;c<row.length;c++){var align=c==2?'left':'center';var x=align=='left'?colX[c]+2:colX[c]+colW[c]/2;doc.text(row[c],x,y+5,{align:align});}y+=8;totalDH+=(v.pagoDH||0);totalPIX+=(v.pagoPIX||0);totalFalta+=(v.restante||0);totalVendas+=v.total;if(v.tipo=='gas') totalGas+=v.qtd;else totalAgua+=v.qtd;}
-y+=6;
-if(despesasMes.length>0){
-if(y>210){doc.addPage();y=15;}
-doc.setTextColor(198,40,40);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.text('DESPESAS DO MES - '+mes,15,y);y+=6;
-var dColW=[90,40,30];var dColX=[15,105,145];var dW=160;
-doc.setFillColor(255,235,238);doc.setDrawColor(198,40,40);doc.roundedRect(15,y,dW,8,1,1,'FD');
-doc.setTextColor(0,0,0);doc.setFontSize(7);doc.setFont('helvetica','bold');doc.text('DESCRICAO',dColX[0]+dColW[0]/2,y+5,{align:'center'});doc.text('VALOR',dColX[1]+dColW[1]/2,y+5,{align:'center'});doc.text('DIA',dColX[2]+dColW[2]/2,y+5,{align:'center'});y+=8;
-doc.setFont('helvetica','normal');
-for(var j=0;j<despesasMes.length;j++){if(y>270){doc.addPage();y=15;}var d=despesasMes[j];doc.setDrawColor(200,200,200);doc.rect(15,y,dW,8);doc.text((d.d||'').substring(0,30),17,y+5);doc.text('R$ '+formatBR(d.v),dColX[1]+dColW[1]/2,y+5,{align:'center'});doc.text(d.dia, dColX[2]+dColW[2]/2, y+5,{align:'center'});y+=8;}
-y+=4;
+function gerarPDFRB(){
+  var {jsPDF}=window.jspdf; var doc=new jsPDF('p','mm','a4');
+  var hoje=getDiaHoje(); var hora=new Date().toLocaleTimeString('pt-BR');
+  var vendasDia=vendas.filter(function(v){return v.dia==hoje});
+  var despesasDia=despesas.filter(function(d){return d.dia==hoje});
+  var totalV=vendasDia.reduce(function(a,b){return a+b.total},0);
+  var totalDH=vendasDia.reduce(function(a,b){return a+(b.pagoDH||0)},0);
+  var totalPIX=vendasDia.reduce(function(a,b){return a+(b.pagoPIX||0)},0);
+  var totalFalta=vendasDia.reduce(function(a,b){return a+(b.restante||0)},0);
+  var totalDesp=despesasDia.reduce(function(a,b){return a+b.v},0);
+  var lucro=totalV-totalDesp;
+  var qtdGas=vendasDia.filter(function(v){return v.tipo=='gas'}).reduce(function(a,b){return a+b.qtd},0);
+  var qtdAgua=vendasDia.filter(function(v){return v.tipo=='agua'}).reduce(function(a,b){return a+b.qtd},0);
+  doc.setFontSize(14); doc.setFont(undefined,'bold'); doc.setTextColor(23,55,90);
+  doc.text('(RB) SISTEMA DIGITAL',105,18,{align:'center'});
+  doc.setFontSize(10); doc.setFont(undefined,'normal'); doc.setTextColor(80);
+  doc.text('SALVAR DIA - '+hoje,105,24,{align:'center'});
+  doc.setFontSize(7); doc.text('Relatorio Dia - '+hoje+', '+hora,105,28,{align:'center'});
+  doc.setDrawColor(200); doc.line(10,30,200,30);
+  doc.setFontSize(9); doc.setFont(undefined,'bold'); doc.setTextColor(0);
+  doc.text('DETALHAMENTO DE VENDAS',14,36);
+  var body=vendasDia.map(function(v){
+    return [
+      v.qtd+'x '+v.tipo.toUpperCase(),
+      'R$ '+(v.unit||v.total/v.qtd).toFixed(2),
+      (v.nome||'Avulso').substring(0,20),
+      'R$ '+v.total.toFixed(2).replace('.',','),
+      'R$ '+(v.pagoDH||0).toFixed(2).replace('.',','),
+      'R$ '+(v.pagoPIX||0).toFixed(2).replace('.',','),
+      'R$ '+(v.restante||0).toFixed(2).replace('.',','),
+      v.restante>0?'CREDITO':'VISTA'
+    ];
+  });
+  if(body.length==0) body=[['-','-','Nenhuma venda hoje','-','-','-','-','-']];
+  doc.autoTable({startY:38,head:[['QTD','UNIT','CLIENTE','TOTAL','DH','PIX','FALTA','TIPO']],body:body,theme:'grid',headStyles:{fillColor:[220,220,220],textColor:0,fontSize:7,halign:'center',fontStyle:'bold'},bodyStyles:{fontSize:7,halign:'center'},styles:{cellPadding:1.5},margin:{left:10,right:10}});
+  var y=doc.lastAutoTable.finalY+4;
+  doc.setFontSize(9); doc.setFont(undefined,'bold'); doc.setTextColor(180,0,0);
+  doc.text('DESPESAS DO DIA - '+hoje,14,y); y+=2;
+  var bodyD=despesasDia.map(function(d){return [d.d,'R$ '+d.v.toFixed(2).replace('.',',')];});
+  if(bodyD.length==0) bodyD=[['Nenhuma despesa','R$ 0,00']];
+  doc.autoTable({startY:y,head:[['DESCRICAO','VALOR']],body:bodyD,theme:'grid',headStyles:{fillColor:[255,200,200],textColor:0,fontSize:7,halign:'center'},bodyStyles:{fontSize:7},margin:{left:10,right:10}});
+  y=doc.lastAutoTable.finalY+6;
+  doc.setDrawColor(100); doc.rect(10,y,85,38);
+  doc.setFontSize(7); doc.setTextColor(0); doc.setFont(undefined,'bold');
+  doc.text('RESUMO DO DIA',12,y+4);
+  doc.setFont(undefined,'normal'); doc.setFontSize(6.5);
+  doc.text('GAS CHEIO INICIAL: '+(estoque.cheio+qtdGas),12,y+9);
+  doc.setFont(undefined,'bold'); doc.text('GAS VENDIDO: '+qtdGas,12,y+13);
+  doc.setFont(undefined,'normal');
+  doc.text('RESTA P/ VENDER: '+estoque.cheio,12,y+17);
+  doc.text('QTD AGUA: '+qtdAgua,12,y+21);
+  doc.text('VENDAS: '+vendasDia.length,12,y+25);
+  doc.text('DESPESAS: R$ '+totalDesp.toFixed(2).replace('.',','),12,y+29);
+  doc.setFont(undefined,'bold'); doc.setTextColor(180,0,0);
+  doc.text('LUCRO: R$ '+lucro.toFixed(2).replace('.',','),12,y+34);
+  doc.setTextColor(23,55,90); doc.setFontSize(9);
+  doc.text('TOTAL VENDIDO: R$ '+totalV.toFixed(2).replace('.',','),105,y+4);
+  doc.setFontSize(7); doc.setTextColor(60); doc.setFont(undefined,'normal');
+  doc.text('TOTAL DH:',105,y+10); doc.text('R$ '+totalDH.toFixed(2).replace('.',','),140,y+10);
+  doc.text('TOTAL PIX:',105,y+15); doc.text('R$ '+totalPIX.toFixed(2).replace('.',','),140,y+15);
+  doc.text('TOTAL FALTA:',105,y+20); doc.text('R$ '+totalFalta.toFixed(2).replace('.',','),140,y+20);
+  doc.text('TOTAL DESP:',105,y+25); doc.text('R$ '+totalDesp.toFixed(2).replace('.',','),140,y+25);
+  doc.setFont(undefined,'bold'); doc.text('LUCRO FINAL:',105,y+31); doc.text('R$ '+lucro.toFixed(2).replace('.',','),140,y+31);
+  doc.setFontSize(5); doc.setTextColor(120); doc.setFont(undefined,'normal');
+  doc.text('(RB) SISTEMA DIGITAL - EL SHADAI DISTRIBUIDORA DE GAS',105,y+42,{align:'center'});
+  doc.save('(RB)_SALVAR_DIA_'+hoje.replace(/\//g,'-')+'.pdf');
 }
-var totalDesp=despesasMes.reduce(function(a,b){return a+b.v},0);
-if(y>200){doc.addPage();y=15;}
-doc.setDrawColor(180,180,180);doc.rect(15,y,72,52);
-doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(80,80,80);doc.text('RESUMO MES '+mes,17,y+5);
-doc.setFontSize(8);doc.setTextColor(0,0,0);doc.setFont('helvetica','bold');
-doc.text('QTD GAS: '+totalGas,17,y+11);doc.text('QTD AGUA: '+totalAgua,17,y+17);doc.text('VENDAS: '+vendasMes.length,17,y+23);
-doc.text('DESP: R$ '+formatBR(totalDesp),17,y+29);
-doc.setTextColor(198,40,40);doc.text('LUCRO: R$ '+formatBR((totalDH+totalPIX)-totalDesp),17,y+36);
-doc.setFontSize(12);doc.setTextColor(30,58,95);doc.setFont('helvetica','bold');doc.text('TOTAL VENDIDO: R$ '+formatBR(totalVendas),90,y+5);
-doc.setFontSize(10);doc.setTextColor(100,100,100);doc.setFont('helvetica','normal');
-doc.text('TOTAL DH:',90,y+11);doc.text('R$ '+formatBR(totalDH),130,y+11);
-doc.text('TOTAL PIX:',90,y+18);doc.text('R$ '+formatBR(totalPIX),130,y+18);
-doc.text('TOTAL FALTA:',90,y+25);doc.text('R$ '+formatBR(totalFalta),130,y+25);
-doc.text('TOTAL DESP:',90,y+32);doc.text('R$ '+formatBR(totalDesp),130,y+32);
-doc.setFont('helvetica','bold');doc.text('LUCRO MES:',90,y+39);doc.text('R$ '+formatBR((totalDH+totalPIX)-totalDesp),130,y+39);
-var fy=y+60;doc.setFontSize(6.5);doc.setTextColor(120,120,120);doc.text('EL SHADAI DISTRIBUIDORA DE GAS',W/2,fy,{align:'center'});
-doc.save('MES_'+mes.replace('/','-')+'.pdf');}catch(e){alert('Erro PDF MES: '+e.message);}}
+function gerarPDFRBMes(){
+  var {jsPDF}=window.jspdf; var doc=new jsPDF('p','mm','a4');
+  var mes=getMesAno(); var hoje=getDiaHoje();
+  var vendasMes=vendas.filter(function(v){return v.mesAno==mes});
+  var despesasMes=despesas.filter(function(d){return d.mesAno==mes});
+  var totalV=vendasMes.reduce(function(a,b){return a+b.total},0);
+  var totalDH=vendasMes.reduce(function(a,b){return a+(b.pagoDH||0)},0);
+  var totalPIX=vendasMes.reduce(function(a,b){return a+(b.pagoPIX||0)},0);
+  var totalDesp=despesasMes.reduce(function(a,b){return a+b.v},0);
+  var lucro=totalV-totalDesp;
+  var qtdGas=vendasMes.filter(function(v){return v.tipo=='gas'}).reduce(function(a,b){return a+b.qtd},0);
+  doc.setFontSize(14); doc.setFont(undefined,'bold'); doc.setTextColor(23,55,90);
+  doc.text('(RB) SISTEMA DIGITAL',105,18,{align:'center'});
+  doc.setFontSize(10); doc.text('SALVAR MES - '+mes,105,24,{align:'center'});
+  doc.setFontSize(7); doc.setTextColor(80); doc.text('Relatorio Mes - '+hoje,105,28,{align:'center'});
+  doc.setDrawColor(200); doc.line(10,30,200,30);
+  doc.setFontSize(9); doc.setFont(undefined,'bold'); doc.setTextColor(0);
+  doc.text('DETALHAMENTO DE VENDAS DO MES - '+mes,14,36);
+  var body=vendasMes.map(function(v){return [v.dia+' '+v.qtd+'x '+v.tipo.toUpperCase(),'R$ '+(v.unit||0).toFixed(0),(v.nome||'Avulso').substring(0,18),'R$ '+v.total.toFixed(2),'R$ '+(v.pagoDH||0).toFixed(0),'R$ '+(v.pagoPIX||0).toFixed(0),'R$ '+(v.restante||0).toFixed(0),v.restante>0?'CREDITO':'VISTA'];});
+  doc.autoTable({startY:38,head:[['QTD','UNIT','CLIENTE','TOTAL','DH','PIX','FALTA','TIPO']],body:body.length?body:[['-','-','Sem vendas','-','-','-','-','-']],theme:'grid',headStyles:{fillColor:[220,220,220],textColor:0,fontSize:7,halign:'center'},bodyStyles:{fontSize:6,halign:'center'},margin:{left:10,right:10}});
+  var y=doc.lastAutoTable.finalY+6;
+  doc.setDrawColor(100); doc.rect(10,y,85,30);
+  doc.setFontSize(7); doc.setFont(undefined,'bold'); doc.text('RESUMO DO MES: '+mes,12,y+5);
+  doc.setFont(undefined,'normal'); doc.text('GAS VENDIDO: '+qtdGas,12,y+10);
+  doc.text('VENDAS: '+vendasMes.length,12,y+15);
+  doc.text('DESPESAS: R$ '+totalDesp.toFixed(2),12,y+20);
+  doc.setFont(undefined,'bold'); doc.setTextColor(180,0,0); doc.text('LUCRO: R$ '+lucro.toFixed(2),12,y+26);
+  doc.setTextColor(23,55,90); doc.setFontSize(9); doc.text('TOTAL VENDIDO: R$ '+totalV.toFixed(2),105,y+5);
+  doc.setFontSize(7); doc.setTextColor(60); doc.setFont(undefined,'normal');
+  doc.text('TOTAL DH: R$ '+totalDH.toFixed(2),105,y+12);
+  doc.text('TOTAL PIX: R$ '+totalPIX.toFixed(2),105,y+18);
+  doc.text('LUCRO FINAL: R$ '+lucro.toFixed(2),105,y+25);
+  doc.save('(RB)_SALVAR_MES_'+mes.replace(/\//g,'-')+'.pdf');
+}
 function render(){
 var vendasF=filtrar(vendas);var despesasF=filtrar(despesas);
-var totalV=vendasF.reduce(function(a,b){return a+b.total},0);var totalDH=vendasF.reduce(function(a,b){return a+(b.pagoDH||0)},0);var totalPIX=vendasF.reduce(function(a,b){return a+(b.pagoPIX||0)},0);var totalA=vendasF.reduce(function(a,b){return a+(b.restante||0)},0);var totalD=despesasF.reduce(function(a,b){return a+b.v},0);var lucro=(totalDH+totalPIX)-totalD;
-document.getElementById('kpiDH').innerText='R$ '+totalDH.toFixed(2);document.getElementById('kpiPIX').innerText='R$ '+totalPIX.toFixed(2);document.getElementById('kpiReceber').innerText='R$ '+totalA.toFixed(2);document.getElementById('kpiVendas').innerText='R$ '+totalV.toFixed(2);document.getElementById('kpiDesp').innerText='R$ '+totalD.toFixed(2);document.getElementById('kpiLucro').innerText='R$ '+lucro.toFixed(2);
-document.getElementById('resumoCard').innerHTML='<b>📊 Resumo '+(filtroAtual=='hoje'?'HOJE':filtroAtual=='mes'?'MÊS':'TUDO')+'</b><br>QTD GAS:'+vendasF.filter(function(v){return v.tipo=='gas'}).reduce(function(a,b){return a+b.qtd},0)+' | AGUA:'+vendasF.filter(function(v){return v.tipo=='agua'}).reduce(function(a,b){return a+b.qtd},0)+'<br>DH: R$ '+totalDH.toFixed(2)+' | PIX: R$ '+totalPIX.toFixed(2)+' | Receber: R$ '+totalA.toFixed(2)+' | Desp: R$ '+totalD.toFixed(2);
+var totalV=vendasF.reduce(function(a,b){return a+b.total},0);
+var totalDH=vendasF.reduce(function(a,b){return a+(b.pagoDH||0)},0);
+var totalPIX=vendasF.reduce(function(a,b){return a+(b.pagoPIX||0)},0);
+var totalA=vendasF.reduce(function(a,b){return a+(b.restante||0)},0);
+var totalD=despesasF.reduce(function(a,b){return a+b.v},0);
+var lucro=totalV-totalD;
+document.getElementById('kpiDH').innerText='R$ '+totalDH.toFixed(2);
+document.getElementById('kpiPIX').innerText='R$ '+totalPIX.toFixed(2);
+document.getElementById('kpiReceber').innerText='R$ '+totalA.toFixed(2);
+document.getElementById('kpiVendas').innerText='R$ '+totalV.toFixed(2);
+document.getElementById('kpiDesp').innerText='R$ '+totalD.toFixed(2);
+document.getElementById('kpiLucro').innerText='R$ '+lucro.toFixed(2);
+document.getElementById('resumoCard').innerHTML='<b style="color:#22d3ee"> Resumo de- '+(filtroAtual=='hoje'?'HOJE':filtroAtual=='mes'?'MÊS':'TUDO')+'</b><br>GAS:'+vendasF.filter(function(v){return v.tipo=='gas'}).reduce(function(a,b){return a+b.qtd},0)+' | AGUA:'+vendasF.filter(function(v){return v.tipo=='agua'}).reduce(function(a,b){return a+b.qtd},0)+'<br>LUCRO = VENDAS - DESPESAS = R$ '+lucro.toFixed(2);
 document.getElementById('estoqueDash').innerHTML='<div>🔥 Cheio: <b>'+estoque.cheio+'</b></div><div>♻️ Vazio: <b>'+estoque.vazio+'</b></div><div>💧 Cheia: <b>'+estoque.aguaCheia+'</b></div><div>🚰 Vazia: <b>'+estoque.aguaVazia+'</b></div>';
 document.getElementById('estCheioNum').innerText=estoque.cheio;document.getElementById('estVazioNum').innerText=estoque.vazio;document.getElementById('estAguaCheiaNum').innerText=estoque.aguaCheia;document.getElementById('estAguaVaziaNum').innerText=estoque.aguaVazia;
-var clientesUnicos={};var listaUnica=[];
-clientes.forEach(function(c){var k=c.nome.trim().toLowerCase(); if(!clientesUnicos[k]){clientesUnicos[k]=c; listaUnica.push(c);}});
+var listaUnica=[];var map={};clientes.forEach(function(c){var k=c.nome.trim().toLowerCase();if(!map[k]){map[k]=true;listaUnica.push(c);}});
 document.getElementById('selCliente').innerHTML='<option value="">Avulso</option>'+listaUnica.map(function(c){return '<option value="'+c.id+'">'+c.nome+'</option>'}).join('');
 var meses=[];vendas.forEach(function(v){if(meses.indexOf(v.mesAno)==-1)meses.push(v.mesAno)});var selM=document.getElementById('filtroMesHist');var atual=selM.value;selM.innerHTML='<option value="todos">Todos</option>'+meses.map(function(m){return '<option value="'+m+'">'+m+'</option>'}).join('');selM.value=atual;
 var vendasHist=atual&&atual!='todos'?vendas.filter(function(v){return v.mesAno==atual}):vendas;
-document.getElementById('tbHist').innerHTML=vendasHist.map(function(v){var prod=v.tipo=='gas'?'🔥':'💧';var unit=v.unit||(v.qtd>0?v.total/v.qtd:0);return '<tr><td>'+v.dia+'</td><td>'+prod+' '+v.qtd+'</td><td>R$ '+unit.toFixed(0)+'</td><td>'+(v.nome||'Avulso').substring(0,8)+'</td><td>R$ '+v.total+'</td><td>R$ '+(v.pagoDH||0)+'</td><td>R$ '+(v.pagoPIX||0)+'</td><td>R$ '+(v.restante||0)+'</td><td><button onclick="editarVenda('+v.id+')" style="background:#ffb300;border:0;border-radius:6px;padding:4px 6px">✏️</button> <button onclick="excluirVenda('+v.id+')" style="background:#c62828;color:#fff;border:0;border-radius:6px;padding:4px 6px">🗑️</button></td></tr>'}).join('');
-var busca=(document.getElementById('buscaCliente').value||'').toLowerCase();
-var cliFiltrados=clientes.filter(function(c){return c.nome.toLowerCase().includes(busca) || c.zap.includes(busca);});
-document.getElementById('listaClientes').innerHTML=cliFiltrados.map(function(c){
-return '<div class="cli-item"><div><b>'+c.nome+'</b><br><small>'+c.zap+' '+(c.end||'')+'</small></div><div style="display:flex;gap:4px"><button onclick="editarCliente('+c.id+')" class="btn btn-lapis" style="padding:6px 10px;width:auto;margin:0">✏️</button><button onclick="excluirCliente('+c.id+')" class="btn btn-excluir" style="padding:6px 10px;width:auto;margin:0">🗑️</button></div></div>';
-}).join('');
-var fiados=vendas.filter(function(v){return v.restante>0});
-document.getElementById('listaReceber').innerHTML=fiados.length==0?'<p style="text-align:center">Nenhum devendo 🙏</p>':fiados.map(function(v){return '<div style="background:#0f1f16;border:1px solid #c62828;border-radius:12px;padding:10px;margin-bottom:8px"><div><b style="font-size:13px">'+v.nome+'</b><br><small>'+v.dia+' - '+v.qtd+'x '+(v.tipo=='gas'?'🔥 GAS':'💧 AGUA')+' - R$ '+v.total+'</small><br>DH: R$ '+(v.pagoDH||0)+' | PIX: R$ '+(v.pagoPIX||0)+'<br><b style="color:#ffab40;font-size:13px">Falta: R$ '+(v.restante).toFixed(2)+'</b></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px"><button class="btn btn-verde" style="padding:8px;font-size:10px;margin:0" onclick="receberParcial('+v.id+')">💰 PARCIAL</button><button class="btn btn-azul" style="padding:8px;font-size:10px;margin:0" onclick="receberTotal('+v.id+')">✅ RECEBEU TUDO</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:5px"><button class="btn" style="padding:8px;font-size:10px;margin:0;background:#2e7d32" onclick="receberDH('+v.id+')">💵 RECEBER DH</button><button class="btn" style="padding:8px;font-size:10px;margin:0;background:#1565c0" onclick="receberPIX('+v.id+')">💳 RECEBER PIX</button></div><div style="display:flex;gap:4px;margin-top:5px"><button class="btn" style="padding:6px;font-size:9px;margin-top:0;background:#25d366;flex:1" onclick="cobrarZap('+v.id+')">📲 COBRAR ZAP</button><button class="btn btn-lapis" style="padding:6px;font-size:9px;margin-top:0;flex:1" onclick="editarVenda('+v.id+')">✏️ EDITAR</button></div></div>'}).join('');
-document.getElementById('listDesp').innerHTML=despesasF.map(function(d){return '<div class="cli-item"><div><b>'+d.d+'</b><br><small>'+d.dia+' - R$ '+d.v+'</small></div><div style="display:flex;gap:4px"><button onclick="editarDesp('+d.id+')" class="btn btn-lapis" style="padding:6px 10px;width:auto;margin:0">✏️</button><button onclick="excluirDesp('+d.id+')" class="btn btn-excluir" style="padding:6px 10px;width:auto;margin:0">🗑️</button></div></div>'}).join('');
-}
+document.getElementById('tbHist').innerHTML=vendasHist.map(function(v){var prod=v.tipo=='gas'?'🔥':'💧';var unit=v.unit||(v.qtd>0?v.total/v.qtd:0);return '<tr><td>'+v.dia+'</td><td>'+prod+' '+v.qtd+'</td><td>R$ '+unit.toFixed(0)+'</td><td>'+(v.nome||'Avulso').substring(0,8)+'</td><td>R$ '+v.total+'</td><td>R$ '+(v.pagoDH||0)+'</td><td>R$ '+(v.pagoPIX||0)+'</td><td>R$ '+(v.restante||0)+'</td><td><button onclick="editarVenda('+v.id+')" style="background:#0ea5e9;border:0;border-radius:6px;padding:4px 6px">✏️</button></td></tr>'}).join('');
+var busca=(document.getElementById('buscaCliente').value||'').toLowerCase();var cliFil=clientes.filter(function(c){return c.nome.toLowerCase().includes(busca)||c.zap.includes(busca);});
+document.getElementById('listaClientes').innerHTML=cliFil.map(function(c){return '<div class="cli-item"><div><b>'+c.nome+'</b><br><small>'+c.zap+'</small></div><div style="display:flex;gap:4px"><button onclick="editarCliente('+c.id+')" class="btn btn-lapis" style="padding:6px 10px;width:auto;margin:0">✏️</button><button onclick="excluirCliente('+c.id+')" class="btn btn-excluir" style="padding:6px 10px;width:auto;margin:0">🗑️</button></div></div>';}).join('');
+var fiados=vendas.filter(function(v){return v.restante>0});document.getElementById('listaReceber').innerHTML=fiados.length==0?'<p style="text-align:center;color:#38bdf8">Nenhum devendo 🙏</p>':fiados.map(function(v){return '<div style="background:rgba(15,23,42,0.7);border:1px solid rgba(56,189,248,0.2);border-radius:14px;padding:12px;margin-bottom:10px"><div><b style="color:#7dd3fc">'+v.nome+'</b><br><small>'+v.dia+' - '+v.qtd+'× '+v.tipo.toUpperCase()+' - R$ '+v.total+'</small><br><b style="color:#f87171">Falta: R$ '+v.restante.toFixed(2)+'</b></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px"><button class="btn btn-verde" style="margin:0;padding:9px" onclick="receberTotal('+v.id+')">✅ RECEBEU</button><button class="btn" style="margin:0;padding:9px;background:#25d366" onclick="cobrarZap('+v.id+')">📲 COBRAR</button></div></div>'}).join('');document.getElementById('listDesp').innerHTML=despesasF.map(function(d){return '<div class="cli-item"><div><b>'+d.d+'</b><br><small>'+d.dia+' - R$ '+d.v+'</small></div><div style="display:flex;gap:4px"><button onclick="editarDesp('+d.id+')" class="btn btn-lapis" style="padding:6px 10px;width:auto;margin:0">✏️</button><button onclick="excluirDesp('+d.id+')" class="btn btn-excluir" style="padding:6px 10px;width:auto;margin:0">🗑️</button></div></div>'}).join('');}
 document.getElementById('prodTipo').addEventListener('change',function(){document.getElementById('prodValor').value=this.value=='gas'?86:9;calc();});
 calc();render();
 </script>
